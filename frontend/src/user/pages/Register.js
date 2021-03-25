@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../shared/context/auth-context';
 import useInputState from "../../hooks/useInputState";
@@ -6,6 +7,8 @@ import useInputState from "../../hooks/useInputState";
 function Register(props) {
     // const { registerUser } = props;
     const auth = useContext(AuthContext);
+
+    const history = useHistory();
 
     const [value, handleChange, reset] = useInputState("");
     const [value2, handleChange2, reset2] = useInputState("");
@@ -26,6 +29,7 @@ function Register(props) {
                     // console.log(response.data)
                     if (response.status === 200) {
                         auth.login(response.data) //login user after registering
+                        history.push('/chirps'); //redirect to chirps
                     }
                 })
         } catch (error) {
