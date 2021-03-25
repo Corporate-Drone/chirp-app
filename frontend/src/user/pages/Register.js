@@ -28,7 +28,7 @@ function Register(props) {
                 .then(response => {
                     // console.log(response.data)
                     if (response.status === 200) {
-                        auth.login(response.data) //login user after registering
+                        auth.login(response.data._id,response.data.username) //login user after registering
                         history.push('/chirps'); //redirect to chirps
                     }
                 })

@@ -15,15 +15,18 @@ import './App.css';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(false);
+  const [username, setUsername] = useState(false);
 
-  const login = useCallback(uid => {   //useCallback prevents rerender (not recreated)
+  const login = useCallback((uid, username) => {   //useCallback prevents rerender (not recreated)
     setIsLoggedIn(true);
     setUserId(uid);
+    setUsername(username);
   }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
     setUserId(null);
+    setUsername(null);
   }, []);
 
   let routes;
@@ -62,7 +65,7 @@ function App() {
 
   return (
     <AuthContext.Provider //wrapped around all links
-      value={{ isLoggedIn: isLoggedIn, userId: userId, login: login, logout: logout }}
+      value={{ isLoggedIn: isLoggedIn, userId: userId, username: username, login: login, logout: logout }}
     >
       <Router>
         <Navbar />

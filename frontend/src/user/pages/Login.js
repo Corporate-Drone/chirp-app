@@ -22,9 +22,9 @@ function Login(props) {
       }
       axios.post('http://localhost:5000/auth/login', data)
         .then(response => {
-          console.log(response.data.username)
+          console.log(response.data)
           if (response.status === 200) {
-            auth.login(response.data.username)
+            auth.login(response.data._id,response.data.username)
             history.push('/chirps');
           }
         })

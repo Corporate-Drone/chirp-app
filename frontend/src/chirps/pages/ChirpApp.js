@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import ChirpList from "../components/ChirpList"
 import ChirpForm from "../components/ChirpForm";
 import getDate from "../../javascripts/currentDate";
+import { AuthContext } from '../../shared/context/auth-context';
 
 import './ChirpApp.css';
 
 function ChirpApp() {
+    const auth = useContext(AuthContext);
+
     const initialChirps = [
         { id: 1, info: 'Clean Fishtank', replies: [{ yuri: 'hello' }], rechirps: 0, rechirpId: 0, likes: 0, date: '1/1/21' },
         { id: 2, info: 'Wash Car', replies: [], rechirps: 0, rechirpId: 0, likes: 0, date: '1/10/21' },
@@ -22,9 +25,9 @@ function ChirpApp() {
         })
     }
 
-    const addChirp = newChirp => {
-        setChirps([...chirps, { id: uuidv4(), info: newChirp, replies: [], rechirps: 0, rechirpId: 0, likes: 0, date: getDate() }])
-    }
+    // const addChirp = newChirp => {
+    //     setChirps([...chirps, { id: uuidv4(), info: newChirp, replies: [], rechirps: 0, rechirpId: 0, likes: 0, date: getDate() }])
+    // }
 
     const removeChirp = chirpId => {
         const updatedChirps = chirps.filter(c => c.id !== chirpId);
@@ -67,7 +70,8 @@ function ChirpApp() {
     return (
         <div className="ChirpApp">
             {sortDate()}
-            <ChirpForm addChirp={addChirp} />
+            {auth.isLoggedIn &&
+            <ChirpForm/>}
             <ChirpList
                 allChirps={chirps}
                 removeChirp={removeChirp}
