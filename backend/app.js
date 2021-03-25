@@ -5,6 +5,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const usersRoutes = require('./routes/users-routes');
+const chirpsRoutes = require('./routes/chirps-routes');
 const HttpError = require('./models/http-error');
 const cors = require('cors');
 
@@ -42,33 +43,13 @@ app.use((req, res, next) => {
 })
 
 app.use('/auth', usersRoutes)
+app.use('/chirps', chirpsRoutes)
 
 app.use((req, res, next) => { //error handling for invalid routes
     const error = new HttpError('Could not find this route.', 404);
     return next(error);
 })
 
-// app.get('/logout', (req, res) => {
-//     req.logout();
-// });
-
-// app.post('/register', async (req, res) => {
-//     try {
-//         const { email, username, password } = req.body;
-//         const user = new User({ email, username });
-//         const registeredUser = await User.register(user, password);
-//         //login user after registering
-//         // req.login(registeredUser, err => {
-//         //     if (err) return next(err);
-//         //     //else
-//         //     // res.redirect('/chirps');
-//         // });
-//     } catch (error) {
-//         // return next(
-//         //     new HttpError('Registration failed, please try again.', 500)
-//         // );
-//     }
-// })
 
 app.use((error, req, res, next) => {
     if (res.headerSent) {

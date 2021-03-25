@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-const Reply = require('./reply');
 const Schema = mongoose.Schema;
+const opts = { toJSON: { virtuals: true } };
 
 const chirpSchema = new Schema({
-    title: String,
     date: String,
     text: String,
     likes: [

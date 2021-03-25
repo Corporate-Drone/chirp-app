@@ -6,14 +6,10 @@ const register = async (req, res, next) => {
         const { email, username, password } = req.body;
         const user = new User({ email, username });
         const registeredUser = await User.register(user, password);
-        const newUser = (req.body.username)
-        res.send(newUser);
-        //login user after registering
-        // req.login(registeredUser, err => {
-        //     if (err) return next(err);
-        //     //else
-        //     // res.redirect('/chirps');
-        // });
+        const fullUser = await User.findOne({ username: req.body.username })
+        // const newUser = (req.body.username)
+        res.send(fullUser);
+
     } catch (error) {
         return next(
             new HttpError('Registration failed, please try again.', 500)
