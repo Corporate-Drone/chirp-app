@@ -1,6 +1,16 @@
 const HttpError = require('../models/http-error');
 const Chirp = require('../models/chirp');
 
+const getAllChirps = async (req, res, next) => {
+    try {
+        const chirps = await Chirp.find({}).populate('author');
+        res.send(chirps)
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 const createChirp = async (req, res, next) => {
     try {
         const { text, replies, likes, date, author } = req.body;
@@ -16,4 +26,5 @@ const createChirp = async (req, res, next) => {
 
 }
 
+exports.getAllChirps = getAllChirps
 exports.createChirp = createChirp;
