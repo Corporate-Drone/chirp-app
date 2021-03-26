@@ -30,12 +30,14 @@ function ChirpApp() {
                     if (response.status === 200) {
                         console.log(response.data)
                         setChirps(response.data);
+                        setLoading(false);
                     }
                 })
         } catch (error) {
             console.log(error)
+            setLoading(false);
         }
-        setLoading(false);
+
 
         // sortDate();
     }
@@ -66,9 +68,31 @@ function ChirpApp() {
     //     setChirps([...chirps, { id: uuidv4(), info: newChirp, replies: [], rechirps: 0, rechirpId: 0, likes: 0, date: getDate() }])
     // }
 
-    const removeChirp = chirpId => {
-        const updatedChirps = chirps.filter(c => c.id !== chirpId);
-        setChirps(updatedChirps);
+    // const removeChirp = chirpId => {
+    //     const updatedChirps = chirps.filter(c => c.id !== chirpId);
+    //     setChirps(updatedChirps);
+    // }
+
+    const removeChirp = async (chirpId) => {
+        const authorizationToken = localStorage.getItem('token');
+        const headers = {
+            Authorization: authorizationToken
+        }
+        const data = {
+            id: chirpId
+        }
+        try {
+            await axios.delete('http://localhost:5000/chirps', { headers, data })
+                .then(response => {
+                    // console.log(response.data)
+                    if (response.status === 200) {
+                        fetchChirps();
+                        console.log(response.data)
+                    }
+                })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const likeChirp = chirpId => {
@@ -108,7 +132,7 @@ function ChirpApp() {
         <div className="ChirpApp">
             {/* {!isLoading && { sortDate() }} */}
             {auth.isLoggedIn &&
-                <ChirpForm />}
+                <ChirpForm fetchChirps={fetchChirps} />}
             {!isLoading && <ChirpList
                 allChirps={chirps}
                 removeChirp={removeChirp}
