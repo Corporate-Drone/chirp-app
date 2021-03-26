@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 import Login from './user/pages/Login';
 import Register from './user/pages/Register';
@@ -27,6 +28,13 @@ function App() {
     setIsLoggedIn(false);
     setUserId(null);
     setUsername(null);
+    axios.post('http://localhost:5000/auth/logout')
+      .then(response => {
+        // console.log(response.data)
+        if (response.status === 200) {
+          console.log(response.data)
+        }
+      })
   }, []);
 
   let routes;

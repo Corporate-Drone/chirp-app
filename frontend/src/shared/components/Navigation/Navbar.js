@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import { AuthContext } from '../../context/auth-context';
 
@@ -38,16 +38,19 @@ export default function ButtonAppBar() {
           </Typography>
                     {/* <Button color="inherit">Login</Button>
                     <Button color="inherit">Register</Button> */}
-                    <Button color="inherit">
-                        <NavLink to="/chirps">Chirps</NavLink>
+                    <Button component={Link} color="inherit" to="/chirps">
+                        {/* <NavLink to="/chirps">Chirps</NavLink> */}
+                        Chirps
                     </Button>
                     {!auth.isLoggedIn &&
-                        <Button color="inherit">
-                            <NavLink to="/auth/login">Login</NavLink>
+                        <Button component={Link} to="/auth/login" color="inherit">
+                        Login
+                            {/* <NavLink to="/auth/login">Login</NavLink> */}
                         </Button>}
                     {!auth.isLoggedIn &&
-                        <Button color="inherit">
-                            <NavLink to="/auth/register">Register</NavLink>
+                        <Button component={Link} to="/auth/register" color="inherit">
+                        {/* <NavLink to="/auth/register">Register</NavLink> */}
+                        Register
                         </Button>}
                     {auth.isLoggedIn &&
                         <Button color="inherit" onClick={auth.logout}>
