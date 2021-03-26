@@ -1,5 +1,6 @@
 const HttpError = require('../models/http-error');
 const Chirp = require('../models/chirp');
+const { findById } = require('../models/chirp');
 
 const getAllChirps = async (req, res, next) => {
     try {
@@ -17,14 +18,23 @@ const createChirp = async (req, res, next) => {
         // console.log(req.body);
         const chirp = new Chirp(req.body);
         await chirp.save();
-        console.log(chirp);
+        res.send('saved')
         //get author as well
     } catch (error) {
         console.log(error)
     }
+}
 
+const deleteChirp = async (req, res, next) => {
+    const chirpId = req.body.id;
+    try {
+        await Chirp.findByIdAndDelete(chirpId);
+        res.send('deleted')
+    } catch (error) {
 
+    }
 }
 
 exports.getAllChirps = getAllChirps
 exports.createChirp = createChirp;
+exports.deleteChirp = deleteChirp;

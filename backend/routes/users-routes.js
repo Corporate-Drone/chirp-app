@@ -28,6 +28,6 @@ router.post(
     }
 )
 
-router.get('/logout', usersControllers.logout);
+router.post('/logout', usersControllers.logout);
 
 module.exports = router;

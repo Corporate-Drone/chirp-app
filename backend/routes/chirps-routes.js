@@ -8,4 +8,8 @@ router.get('/', chirpsControllers.getAllChirps);
 
 router.post('/', chirpsControllers.createChirp);
 
+router.delete('/', chirpsControllers.deleteChirp);
+
+
+
 module.exports = router;

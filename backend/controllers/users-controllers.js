@@ -23,8 +23,14 @@ const login = (req, res, next) => {
     console.log('logged in!')
 }
 
-const logout = () => {
-    req.logout();
+const logout = (req, res, next) => {
+    // if (req.user) {
+    //     req.logout();
+    //     console.log('user logged out!')
+    // }
+    req.logout()
+    res.send({ message: 'Logged out!' })
+    
 }
 
 exports.register = register;
