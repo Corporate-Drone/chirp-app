@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 import ChirpList from "../components/ChirpList"
 import ChirpForm from "../components/ChirpForm";
 import getDate from "../../javascripts/currentDate";
@@ -17,7 +18,43 @@ function ChirpApp() {
     ]
 
     //object, setState for Object, set inital state
-    const [chirps, setChirps] = useState(initialChirps)
+    const [chirps, setChirps] = useState()
+    const [isLoading, setLoading] = useState(true);
+
+    const fetchChirps = async () => {
+        setLoading(true);
+        try {
+            await axios.get('http://localhost:5000/chirps')
+                .then(response => {
+                    // console.log(response.data)
+                    if (response.status === 200) {
+                        console.log(response.data)
+                        setChirps(response.data);
+                    }
+                })
+        } catch (error) {
+            console.log(error)
+        }
+        setLoading(false);
+
+        // sortDate();
+    }
+
+    useEffect(() => {
+        // Update chirps on refresh
+        fetchChirps();
+
+    }, []);
+
+    useEffect(() => {
+        // sort chirps from newest to oldest
+        if (chirps) {
+            console.log('sorted from newest to oldest!')
+            sortDate()
+        }
+
+    }, [isLoading, chirps]); //run when changes to isLoading or chirps
+
 
     function sortDate() {
         chirps.sort(function (a, b) {
@@ -69,16 +106,16 @@ function ChirpApp() {
 
     return (
         <div className="ChirpApp">
-            {sortDate()}
+            {/* {!isLoading && { sortDate() }} */}
             {auth.isLoggedIn &&
-            <ChirpForm/>}
-            <ChirpList
+                <ChirpForm />}
+            {!isLoading && <ChirpList
                 allChirps={chirps}
                 removeChirp={removeChirp}
                 likeChirp={likeChirp}
                 reChirp={reChirp}
                 addReply={addReply}
-            />
+            />}
         </div>
     );
 }
