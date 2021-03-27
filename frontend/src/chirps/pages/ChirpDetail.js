@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from 'axios';
 import Chirp from "../components/Chirp";
+import ChirpReply from "../components/ChirpReply";
 import ChirpReplyForm from "../components/ChirpReplyForm";
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -45,6 +46,7 @@ function ChirpDetail(props) {
         // sort chirps from newest to oldest
         if (loadedChirp) {
             console.log('Chirp is loaded.')
+            console.log(loadedChirp.replies)
         }
     }, [isLoading, loadedChirp]); //run when changes to isLoading or chirps
 
@@ -71,6 +73,29 @@ function ChirpDetail(props) {
         history.push('/chirps');
     }
 
+    const removeReply = async (replyId) => {
+        const authorizationToken = localStorage.getItem('token');
+        const headers = {
+            Authorization: authorizationToken
+        }
+        const data = {
+            id: replyId,
+            chirpId: chirpId
+        }
+        try {
+            await axios.delete(`http://localhost:5000/${userId}/status/${chirpId}/reply`, { headers, data })
+                .then(response => {
+                    // console.log(response.data)
+                    if (response.status === 200) {
+                        console.log(response.data)
+                    }
+                })
+        } catch (error) {
+            console.log(error)
+        }
+        history.push('/chirps');
+    }
+
 
     return (
         <div>
@@ -82,9 +107,22 @@ function ChirpDetail(props) {
                 replies={loadedChirp.replies}
                 text={loadedChirp.text}
                 removeChirp={removeChirp}
-
             />}
-            <div>Chirp replies will be placed here.</div>
+            {loadedChirp && loadedChirp.replies.map(c => (
+                // <div>{c.author.username}</div>
+                <ChirpReply
+                    key={c._id}
+                    username={c.author.username}
+                    date={c.date}
+                    text={c.text}
+                    likes={c.likes}
+                    id={c._id}
+                    userId={c.author._id}
+                    removeReply={removeReply}
+                />
+            ))}
+            {loadedChirp && loadedChirp.replies.length == 0 && <div>This chirp has no replies yet. Be the first to reply!</div>}
+            
         </div>
     );
 }

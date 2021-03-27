@@ -119,14 +119,14 @@ function ChirpApp() {
         // setChirps([...chirps,...duplicate]);
     }
 
-    const addReply = (chirpId, value) => {
-        let reply = chirps.map(c => (
-            c.id === chirpId ? { ...c, replies: value } : c
-        ))
-        console.log(chirpId, value);
-        setChirps(reply);
-        // console.log('hello')
-    }
+    // const addReply = (chirpId, value) => {
+    //     let reply = chirps.map(c => (
+    //         c.id === chirpId ? { ...c, replies: value } : c
+    //     ))
+    //     console.log(chirpId, value);
+    //     setChirps(reply);
+    //     // console.log('hello')
+    // }
 
     return (
         <div className="ChirpApp">
@@ -138,7 +138,7 @@ function ChirpApp() {
                 removeChirp={removeChirp}
                 likeChirp={likeChirp}
                 reChirp={reChirp}
-                addReply={addReply}
+                // addReply={addReply}
             />}
         </div>
     );
