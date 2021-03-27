@@ -6,6 +6,7 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const usersRoutes = require('./routes/users-routes');
 const chirpsRoutes = require('./routes/chirps-routes');
+const singleRoutes = require('./routes/single-routes');
 const HttpError = require('./models/http-error');
 const cors = require('cors');
 
@@ -42,8 +43,10 @@ app.use((req, res, next) => {
     next();
 })
 
+
 app.use('/auth', usersRoutes)
 app.use('/chirps', chirpsRoutes)
+app.use('/:uid', singleRoutes)
 
 app.use((req, res, next) => { //error handling for invalid routes
     const error = new HttpError('Could not find this route.', 404);

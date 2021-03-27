@@ -9,8 +9,17 @@ const getAllChirps = async (req, res, next) => {
     } catch (error) {
         console.log(error)
     }
-
 }
+
+// const getSingleChirp = async (req, res, next) => {
+//     const chirpId = req.body.id;
+//     try {
+//         const foundChirp = await Chirp.findById(chirpId).populate('author');
+//         res.send(foundChirp)
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
 const createChirp = async (req, res, next) => {
     try {
