@@ -20,16 +20,19 @@ function Chirp(props) {
 
     return (
         <div>
-            <p>{username}</p>
-            <p>{date}</p>
-            <p>{text}</p>
-            <p>{replies.length} {rechirps} {likes.length}</p>
+            <Link to={`/${username}/status/${id}`}>
+                <p>{username}</p>
+                <p>{date}</p>
+                <p>{text}</p>
+                <p>{replies.length} {rechirps} {likes.length}</p>
+            </Link>
             <button onClick={toggle}>Reply</button>
             <button onClick={() => reChirp(id)}>Rechirp</button>
             <button onClick={() => removeChirp(id)}>Remove</button>
             <button onClick={() => likeChirp(id)}>Like</button>
             {isReplying && <ChirpReplyForm id={id} addReply={addReply} />}
             <hr />
+
         </div>
     );
 }

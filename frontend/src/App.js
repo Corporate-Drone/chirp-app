@@ -45,7 +45,7 @@ function App() {
         <Route path="/chirps" exact>
           <ChirpApp />
         </Route>
-        <Route path="/chirps/:userId/:chirpId" exact>
+        <Route path="/:userId/status/:chirpId" exact>
           <ChirpDetail />
         </Route>
         <Redirect to="/" />
@@ -57,7 +57,7 @@ function App() {
         <Route path="/chirps" exact>
           <ChirpApp />
         </Route>
-        <Route path="/chirps/:userId/:chirpId" exact>
+        <Route path="/:userId/status/:chirpId" exact>
           <ChirpDetail />
         </Route>
         <Route path="/auth/login" exact>
