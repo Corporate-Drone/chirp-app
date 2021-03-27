@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const replySchema = new Schema({
-    body: String,
+    text: String,
     date: String,
     author: {
         type: Schema.Types.ObjectId,
