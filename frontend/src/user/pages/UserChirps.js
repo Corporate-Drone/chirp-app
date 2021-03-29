@@ -5,6 +5,7 @@ import { AuthContext } from '../../shared/context/auth-context';
 import { useParams, useHistory } from 'react-router-dom';
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 import Chirp from '../../chirps/components/Chirp';
+import sortDate from '../../javascripts/sortDate'
 
 function UserChirps(props) {
     const { userId } = useParams()
@@ -32,6 +33,7 @@ function UserChirps(props) {
         getUserChirps(userId);
 
     }, []);
+    
 
 
     useEffect(() => {
@@ -50,6 +52,7 @@ function UserChirps(props) {
                 username={c.author.username}
             />
         ))
+        sortDate(loadedChirps)
     }
 
     return (

@@ -4,6 +4,7 @@ import axios from 'axios';
 import ChirpList from "../components/ChirpList"
 import ChirpForm from "../components/ChirpForm";
 import getDate from "../../javascripts/currentDate";
+import sortDate from '../../javascripts/sortDate'
 import { AuthContext } from '../../shared/context/auth-context';
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 
@@ -53,17 +54,10 @@ function ChirpApp() {
         // sort chirps from newest to oldest
         if (chirps) {
             console.log('sorted from newest to oldest!')
-            sortDate()
+            sortDate(chirps)
         }
 
     }, [isLoading, chirps]); //run when changes to isLoading or chirps
-
-
-    function sortDate() {
-        chirps.sort(function (a, b) {
-            return new Date(b.date) - new Date(a.date);
-        })
-    }
 
     // const addChirp = newChirp => {
     //     setChirps([...chirps, { id: uuidv4(), info: newChirp, replies: [], rechirps: 0, rechirpId: 0, likes: 0, date: getDate() }])
