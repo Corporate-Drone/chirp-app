@@ -5,6 +5,7 @@ import ChirpList from "../components/ChirpList"
 import ChirpForm from "../components/ChirpForm";
 import getDate from "../../javascripts/currentDate";
 import { AuthContext } from '../../shared/context/auth-context';
+import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 
 import './ChirpApp.css';
 
@@ -130,6 +131,7 @@ function ChirpApp() {
 
     return (
         <div className="ChirpApp">
+            {isLoading && <CircularIndeterminate/>}
             {/* {!isLoading && { sortDate() }} */}
             {auth.isLoggedIn &&
                 <ChirpForm fetchChirps={fetchChirps} />}

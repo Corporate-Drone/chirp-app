@@ -7,7 +7,7 @@ import getDate from "../../javascripts/currentDate";
 
 
 function Chirp(props) {
-    const { replies, date, id, likes, rechirps, text, removeChirp, likeChirp, reChirp, username } = props;
+    const { replies, date, id, likes, rechirps, text, removeChirp, reChirp, username } = props;
     const [isReplying, toggle] = useToggleState(false);
 
     const history = useHistory();
@@ -31,6 +31,16 @@ function Chirp(props) {
             console.log(error)
         }
         history.push('/chirps');
+    }
+
+    const likeChirp = async (chirpId) => {
+        try {
+            await axios.post(`http://localhost:5000/${username}/status/${chirpId}/like`, {
+                id: chirpId
+            })
+        } catch (error) {
+            
+        }
     }
 
     // const username = author.username;

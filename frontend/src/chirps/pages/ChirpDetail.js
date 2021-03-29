@@ -4,6 +4,7 @@ import Chirp from "../components/Chirp";
 import ChirpReply from "../components/ChirpReply";
 import ChirpReplyForm from "../components/ChirpReplyForm";
 import { useParams, useHistory } from 'react-router-dom';
+import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 
 import useToggleState from "../../hooks/useToggleState";
 
@@ -122,7 +123,7 @@ function ChirpDetail(props) {
                 />
             ))}
             {loadedChirp && loadedChirp.replies.length == 0 && <div>This chirp has no replies yet. Be the first to reply!</div>}
-            
+            {isLoading && <CircularIndeterminate/>}
         </div>
     );
 }
