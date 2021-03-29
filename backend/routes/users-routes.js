@@ -12,9 +12,6 @@ router.post('/register', usersControllers.register);
 
 router.post(
     '/login',
-    function (req, res, next) {
-        next()
-    },
     passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }),
      async (req, res) => {
 

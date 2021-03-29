@@ -14,4 +14,6 @@ router.post('/status/:id/reply', singleControllers.replyToChirp);
 
 router.delete('/status/:id/reply', singleControllers.deleteReply);
 
+router.get('/', singleControllers.getUserChirps);
+
 module.exports = router;

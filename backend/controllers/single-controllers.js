@@ -19,6 +19,26 @@ const getSingleChirp = async (req, res, next) => {
     }
 }
 
+const getUserChirps = async (req, res, next) => {
+    const username = req.query.id
+
+    try {
+        const chirps = await Chirp.find({}).populate('author');
+
+        let userChirps = [];
+
+        for (chirp of chirps) {
+            if (username === chirp.author.username) {
+                userChirps.push(chirp)
+            }
+        }
+        res.send(userChirps)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const likeChirp = async (req, res, next) => {
     const chirp = await Chirp.findById(req.body.id);
     console.log(req.user)
@@ -75,6 +95,7 @@ const deleteReply = async (req, res, next) => {
 }
 
 exports.getSingleChirp = getSingleChirp;
+exports.getUserChirps = getUserChirps;
 exports.likeChirp = likeChirp;
 exports.replyToChirp = replyToChirp;
 exports.deleteReply = deleteReply;

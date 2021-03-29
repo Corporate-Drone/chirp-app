@@ -82,10 +82,10 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*'); //set header on resposne
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-Width, Content-Type, Accept, Authorization'); //incoming requests handle
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-    console.log('******REQ.USER******' + " " + req.user)
+    // console.log('******REQ.USER******' + " " + req.user)
     
-    console.log('******SESSION BELOW******')
-    console.log(req.session)
+    // console.log('******SESSION BELOW******')
+    // console.log(req.session)
     next();
 })
 
