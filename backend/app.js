@@ -8,22 +8,64 @@ const usersRoutes = require('./routes/users-routes');
 const chirpsRoutes = require('./routes/chirps-routes');
 const singleRoutes = require('./routes/single-routes');
 const HttpError = require('./models/http-error');
+const MongoDBStore = require('connect-mongo')(session);
 const cors = require('cors');
 
 const app = express();
 
 const connectUrl = 'mongodb+srv://our-first-user:leavebudget@cluster0.0xojg.mongodb.net/chirp?retryWrites=true&w=majority';
 
-const connectConfig = {
+mongoose.connect(connectUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false
-}
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log("Database connected");
+});
+
+
+// const connectConfig = {
+//     useNewUrlParser: true,
+//     useCreateIndex: true,
+//     useUnifiedTopology: true,
+//     useFindAndModify: false
+// }
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //used to parse req.body
+
+
+const secret = process.env.SECRET || 'thishouldbeabettersecret!';
+
+const store = new MongoDBStore({
+    url: connectUrl,
+    secret,
+    touchAfter: 24 * 60 * 60
+});
+
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+})
+
+const sessionConfig = {
+    name: 'session',
+    secret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}
+
+app.use(session(sessionConfig))
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -36,10 +78,14 @@ passport.deserializeUser(User.deserializeUser());
 
 // middleware
 app.use((req, res, next) => {
-    res.locals.currentUser = req.user; //passport user
+    // res.locals.currentUser = req.user; //passport user
     res.setHeader('Access-Control-Allow-Origin', '*'); //set header on resposne
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-Width, Content-Type, Accept, Authorization'); //incoming requests handle
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+    console.log('******REQ.USER******' + " " + req.user)
+    
+    console.log('******SESSION BELOW******')
+    console.log(req.session)
     next();
 })
 
@@ -47,6 +93,7 @@ app.use((req, res, next) => {
 app.use('/auth', usersRoutes)
 app.use('/chirps', chirpsRoutes)
 app.use('/:uid', singleRoutes)
+
 
 app.use((req, res, next) => { //error handling for invalid routes
     const error = new HttpError('Could not find this route.', 404);
@@ -62,12 +109,8 @@ app.use((error, req, res, next) => {
     res.send({ message: error.message || 'An unknown error occurred!' });
 })
 
-mongoose
-    .connect(connectUrl, connectConfig)
-    .then(() => {
-        console.log('+++ Database connected! +++');
-        app.listen(5000)
-    })
-    .catch(err => {
-        console.log(err);
-    });
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+    console.log(`Serving on port ${port}`)
+})

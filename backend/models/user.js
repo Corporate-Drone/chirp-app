@@ -18,6 +18,18 @@ const UserSchema = new Schema({
         required: true,
         unique: true
     },
+    following: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
+    followers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
     // image: ImageSchema,
     about: String
 });

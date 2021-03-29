@@ -17,13 +17,12 @@ router.post(
     },
     passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }),
      async (req, res) => {
-        // console.log('logged in', req.user);
-        //find full user information
+
          const fullUser = await User.findOne({ username: req.user.username })
-        //  console.log(fullUser);
-        // const userInfo = {
-        //     username: req.user.username
-        // };
+
+         console.log(req.user)
+         console.log(req.session)
+         
         res.send(fullUser);
     }
 )

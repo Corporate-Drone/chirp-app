@@ -19,9 +19,6 @@ const register = async (req, res, next) => {
 
 }
 
-const login = (req, res, next) => {
-    console.log('logged in!')
-}
 
 const logout = (req, res, next) => {
     // if (req.user) {
@@ -30,9 +27,8 @@ const logout = (req, res, next) => {
     // }
     req.logout()
     res.send({ message: 'Logged out!' })
-    
+
 }
 
 exports.register = register;
-exports.login = login;
 exports.logout = logout;

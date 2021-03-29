@@ -4,8 +4,6 @@ const Chirp = require('../models/chirp');
 const Reply = require('../models/reply');
 
 const getSingleChirp = async (req, res, next) => {
-    console.log('req received!')
-    console.log(req.body)
     const chirpId = req.body.id;
     try {
         const foundChirp = await (await Chirp.findById(chirpId).populate({
@@ -15,10 +13,28 @@ const getSingleChirp = async (req, res, next) => {
             }
         }).populate('author'));
 
-        console.log(foundChirp);
         res.send(foundChirp)
     } catch (error) {
         console.log(error)
+    }
+}
+
+const likeChirp = async (req, res, next) => {
+    const chirp = await Chirp.findById(req.body.id);
+    console.log(req.user)
+    // const user = await User.findOne({ username: username })
+    try {
+        //add or remove like from Chirp
+        if (chirp.likes.includes(req.user._id)) {
+            chirp.likes.pull(req.user._id);
+        } else {
+            chirp.likes.push(req.user);
+        }
+
+        await chirp.save();
+        res.send('Chirp like handled!')
+    } catch (error) {
+
     }
 }
 
@@ -54,10 +70,11 @@ const deleteReply = async (req, res, next) => {
         await Reply.findByIdAndDelete(replyId)
         res.send('Reply deleted!')
     } catch (error) {
-        
+
     }
 }
 
 exports.getSingleChirp = getSingleChirp;
+exports.likeChirp = likeChirp;
 exports.replyToChirp = replyToChirp;
 exports.deleteReply = deleteReply;
