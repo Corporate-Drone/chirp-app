@@ -4,7 +4,7 @@ const Chirp = require('../models/chirp');
 const Reply = require('../models/reply');
 
 const getSingleChirp = async (req, res, next) => {
-    const chirpId = req.body.id;
+    const chirpId = req.query.id;
     try {
         const foundChirp = await (await Chirp.findById(chirpId).populate({
             path: 'replies',

@@ -6,7 +6,7 @@ const HttpError = require('../models/http-error');
 const User = require('../models/user');
 const singleControllers = require('../controllers/single-controllers');
 
-router.post('/status/:id', singleControllers.getSingleChirp);
+router.get('/status/:id', singleControllers.getSingleChirp);
 
 router.post('/status/:id/like', singleControllers.likeChirp);
 
