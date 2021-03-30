@@ -13,12 +13,6 @@ import './ChirpApp.css';
 function ChirpApp() {
     const auth = useContext(AuthContext);
 
-    const initialChirps = [
-        { id: 1, info: 'Clean Fishtank', replies: [{ yuri: 'hello' }], rechirps: 0, rechirpId: 0, likes: 0, date: '1/1/21' },
-        { id: 2, info: 'Wash Car', replies: [], rechirps: 0, rechirpId: 0, likes: 0, date: '1/10/21' },
-        { id: 3, info: 'Grow Beard', replies: [], rechirps: 0, rechirpId: 0, likes: 0, date: '1/2/21' }
-    ]
-
     //object, setState for Object, set inital state
     const [chirps, setChirps] = useState()
     const [isLoading, setLoading] = useState(true);

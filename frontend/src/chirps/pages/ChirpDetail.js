@@ -18,11 +18,9 @@ function ChirpDetail(props) {
         setLoading(true);
 
         try {
-            const res = await axios.post(`http://localhost:5000/${userId}/status/${chirpId}`, {
-                id: chirpId
-            })
+            const res = await axios.get(`http://localhost:5000/${userId}/status/${chirpId}`, { params: { id: chirpId } })
                 .then(response => {
-                    // console.log(response.data)
+                    
                     if (response.status === 200) {
                         console.log(response.data)
                         setLoadedChirp(response.data);
@@ -96,7 +94,6 @@ function ChirpDetail(props) {
         }
         history.push('/chirps');
     }
-
 
     return (
         <div>
