@@ -1,6 +1,7 @@
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
 
+
 const register = async (req, res, next) => {
     try {
         const { email, username, password } = req.body;

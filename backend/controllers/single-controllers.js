@@ -40,19 +40,21 @@ const getUserChirps = async (req, res, next) => {
 }
 
 const likeChirp = async (req, res, next) => {
-    const chirp = await Chirp.findById(req.body.id);
-    console.log(req.user)
-    // const user = await User.findOne({ username: username })
+    const chirp = await Chirp.findById(req.body.id).populate('author');
+    const username = req.body.username
+
+    const user = await User.findOne({ username: username })
     try {
         //add or remove like from Chirp
-        if (chirp.likes.includes(req.user._id)) {
-            chirp.likes.pull(req.user._id);
+        if (chirp.likes.includes(user._id)) {
+            chirp.likes.pull(user._id);
         } else {
-            chirp.likes.push(req.user);
+            chirp.likes.push(user);
         }
 
         await chirp.save();
-        res.send('Chirp like handled!')
+        console.log(user)
+        res.send(user)
     } catch (error) {
 
     }

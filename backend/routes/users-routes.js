@@ -12,7 +12,7 @@ router.post('/register', usersControllers.register);
 
 router.post(
     '/login',
-    passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }),
+    passport.authenticate('local'),
      async (req, res) => {
 
          const fullUser = await User.findOne({ username: req.user.username })
@@ -20,9 +20,10 @@ router.post(
          console.log(req.user)
          console.log(req.session)
          
-        res.send(fullUser);
+         res.send(fullUser);
     }
 )
+
 
 router.post('/logout', usersControllers.logout);
 
