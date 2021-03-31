@@ -16,12 +16,13 @@ function ChirpReply(props) {
 
     return (
         <div>
-            {/* <Link to={`/${username}/status/${id}`}> */}
+            <Link to={`/${username}/status/${id}`}>
+                <p>Replying to -Username Here-</p>
                 <p>{username}</p>
                 <p>{date}</p>
                 <p>{text}</p>
                 <p>{likes.length}</p>
-            {/* </Link> */}
+            </Link>
             {/* <button onClick={toggle}>Reply</button>
             <button onClick={() => reChirp(id)}>Rechirp</button>
             <button onClick={() => removeChirp(id)}>Remove</button>

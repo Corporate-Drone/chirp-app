@@ -16,7 +16,8 @@ function ChirpDetail(props) {
 
     const fetchSingleChirp = async () => {
         setLoading(true);
-
+        //if reply fetch the thread and display the whole thread
+        //else do below
         try {
             const res = await axios.get(`http://localhost:5000/${userId}/status/${chirpId}`, { params: { id: chirpId } })
                 .then(response => {
@@ -119,7 +120,7 @@ function ChirpDetail(props) {
                     removeReply={removeReply}
                 />
             ))}
-            {loadedChirp && loadedChirp.replies.length == 0 && <div>This chirp has no replies yet. Be the first to reply!</div>}
+            {/* {loadedChirp && loadedChirp.replies.length == 0 && <div>This chirp has no replies yet. Be the first to reply!</div>} */}
             {isLoading && <CircularIndeterminate/>}
         </div>
     );

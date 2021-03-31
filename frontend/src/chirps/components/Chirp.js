@@ -8,7 +8,7 @@ import { AuthContext } from '../../shared/context/auth-context';
 
 
 function Chirp(props) {
-    const { replies, date, id, likes, rechirps, text, removeChirp, reChirp, username } = props;
+    const { replies, date, id, likes, rechirps, text, removeChirp, reChirp, username, isReply } = props;
     const [isReplying, toggle] = useToggleState(false);
 
     const auth = useContext(AuthContext);
@@ -54,9 +54,15 @@ function Chirp(props) {
         }
     }
 
+    let replyUsername;
+    if (isReply) {
+        replyUsername = 'Replying to <Username>';
+    }
+
     return (
         <div>
             <Link to={`/${username}/status/${id}`}>
+                {replyUsername}
                 {/* <Link to={`/${username}`}>
                     <p>{username}</p>
                 </Link> */}
