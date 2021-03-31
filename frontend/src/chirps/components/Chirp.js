@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import ChirpReplyForm from "./ChirpReplyForm";
 import useToggleState from "../../hooks/useToggleState";
 import getDate from "../../javascripts/currentDate";
+import { AuthContext } from '../../shared/context/auth-context';
 
 
 function Chirp(props) {
     const { replies, date, id, likes, rechirps, text, removeChirp, reChirp, username } = props;
     const [isReplying, toggle] = useToggleState(false);
+
+    const auth = useContext(AuthContext);
+    
 
     const history = useHistory();
 
@@ -36,23 +40,26 @@ function Chirp(props) {
     const likeChirp = async (chirpId) => {
         try {
             await axios.post(`http://localhost:5000/${username}/status/${chirpId}/like`, {
-                id: chirpId
+                id: chirpId,
+                username: auth.username
             })
+                .then(response => {
+                    // console.log(response.data)
+                    if (response.status === 200) {
+                        console.log(response.data)
+                    }
+                })
         } catch (error) {
-            
+
         }
     }
-
-    // const username = author.username;
-    // const [isReplying, setReplying] = useState(false);
-
-    // function reply() {
-    //     setReplying(true);
-    // }
 
     return (
         <div>
             <Link to={`/${username}/status/${id}`}>
+                {/* <Link to={`/${username}`}>
+                    <p>{username}</p>
+                </Link> */}
                 <p>{username}</p>
                 <p>{date}</p>
                 <p>{text}</p>

@@ -58,6 +58,11 @@ function UserChirps(props) {
     return (
         <div>
             {isLoading && <CircularIndeterminate />}
+            {!isLoading && <div>
+                {userId}
+                <button>Follow</button>
+            </div>}
+            {/* display join date */}
             {!isLoading && <div>{chirps}</div>}
         </div>
     )
