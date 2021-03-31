@@ -1,11 +1,15 @@
 const HttpError = require('../models/http-error');
 const Chirp = require('../models/chirp');
+const Reply = require('../models/reply');
 const { findById } = require('../models/chirp');
 
 const getAllChirps = async (req, res, next) => {
     try {
         const chirps = await Chirp.find({}).populate('author');
-        res.send(chirps)
+        const replies = await Reply.find({}).populate('author');
+        const allChirps = [...chirps, ...replies]
+        res.send(allChirps)
+        // res.send(chirps)
     } catch (error) {
         console.log(error)
     }

@@ -6,6 +6,7 @@ const Reply = require('../models/reply');
 const getSingleChirp = async (req, res, next) => {
     const chirpId = req.query.id;
     try {
+        //find Chirp, else find reply
         const foundChirp = await (await Chirp.findById(chirpId).populate({
             path: 'replies',
             populate: {
@@ -13,7 +14,20 @@ const getSingleChirp = async (req, res, next) => {
             }
         }).populate('author'));
 
-        res.send(foundChirp)
+        //If a chirp isn't found, find & send back a Reply
+        if (foundChirp) {
+            res.send(foundChirp)
+        } else {
+            const foundReply = await (await Reply.findById(chirpId).populate({
+                path: 'replies',
+                populate: {
+                    path: 'author'
+                }
+            }).populate('author'));
+            res.send(foundReply);
+        }
+
+        // res.send(foundChirp)
     } catch (error) {
         console.log(error)
     }
@@ -71,6 +85,7 @@ const replyToChirp = async (req, res, next) => {
         reply.text = text;
         reply.date = date;
         reply.likes = [];
+        reply.isReply = true;
 
         chirp.replies.push(reply);
         await chirp.save();
