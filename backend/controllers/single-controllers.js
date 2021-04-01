@@ -78,6 +78,7 @@ const replyToChirp = async (req, res, next) => {
     try {
         const { id, text, username, date } = req.body;
         const chirp = await Chirp.findById(id);
+        const parentChirpUser = await User.findOne({ _id: chirp.author })
         const user = await User.findOne({ username: username })
 
         const reply = new Reply()
@@ -86,6 +87,8 @@ const replyToChirp = async (req, res, next) => {
         reply.date = date;
         reply.likes = [];
         reply.isReply = true;
+        reply.parentChirpId = id;
+        reply.parentUsername = parentChirpUser.username
 
         chirp.replies.push(reply);
         await chirp.save();

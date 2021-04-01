@@ -17,8 +17,8 @@ router.post(
 
          const fullUser = await User.findOne({ username: req.user.username })
 
-         console.log(req.user)
-         console.log(req.session)
+        //  console.log(req.user)
+        //  console.log(req.session)
          
          res.send(fullUser);
     }

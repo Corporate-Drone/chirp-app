@@ -22,7 +22,9 @@ const replySchema = new Schema({
             ref: 'Reply'
         }
     ],
-    isReply: 'Boolean'
+    isReply: Boolean,
+    parentChirpId: String,
+    parentUsername: String
 }, opts);
 
 module.exports = mongoose.model("Reply", replySchema);
