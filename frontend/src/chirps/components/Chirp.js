@@ -8,7 +8,7 @@ import { AuthContext } from '../../shared/context/auth-context';
 
 
 function Chirp(props) {
-    const { replies, date, id, likes, rechirps, text, removeChirp, reChirp, username, isReply } = props;
+    const { replies, date, id, likes, rechirps, text, removeChirp, reChirp, username, isReply, parentChirpId, parentUsername } = props;
     const [isReplying, toggle] = useToggleState(false);
 
     const auth = useContext(AuthContext);
@@ -21,7 +21,7 @@ function Chirp(props) {
             const res = await axios.post(`http://localhost:5000/${username}/status/${chirpId}/reply`, {
                 id: chirpId,
                 text: value,
-                username: username,
+                username: auth.username,
                 date: getDate()
             })
                 .then(response => {
@@ -56,21 +56,28 @@ function Chirp(props) {
 
     let replyUsername;
     if (isReply) {
-        replyUsername = 'Replying to <Username>';
+        replyUsername = (
+             <Link to={`/${parentUsername}/status/${parentChirpId}`}>
+             <p>{username}</p>
+             <p>{date}</p>
+             <p>{text}</p>
+             <p>{replies.length} {rechirps} {likes.length}</p>
+         </Link>
+        )
+    } else {
+        replyUsername = (
+            <Link to={`/${username}/status/${id}`}>
+            <p>{username}</p>
+            <p>{date}</p>
+            <p>{text}</p>
+            <p>{replies.length} {rechirps} {likes.length}</p>
+        </Link>
+        )
     }
 
     return (
         <div>
-            <Link to={`/${username}/status/${id}`}>
-                {replyUsername}
-                {/* <Link to={`/${username}`}>
-                    <p>{username}</p>
-                </Link> */}
-                <p>{username}</p>
-                <p>{date}</p>
-                <p>{text}</p>
-                <p>{replies.length} {rechirps} {likes.length}</p>
-            </Link>
+            {replyUsername}
             <button onClick={toggle}>Reply</button>
             <button onClick={() => reChirp(id)}>Rechirp</button>
             <button onClick={() => removeChirp(id)}>Remove</button>
