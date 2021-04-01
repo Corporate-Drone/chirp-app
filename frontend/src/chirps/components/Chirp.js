@@ -12,7 +12,7 @@ function Chirp(props) {
     const [isReplying, toggle] = useToggleState(false);
 
     const auth = useContext(AuthContext);
-    
+
 
     const history = useHistory();
 
@@ -57,21 +57,22 @@ function Chirp(props) {
     let replyUsername;
     if (isReply) {
         replyUsername = (
-             <Link to={`/${parentUsername}/status/${parentChirpId}`}>
-             <p>{username}</p>
-             <p>{date}</p>
-             <p>{text}</p>
-             <p>{replies.length} {rechirps} {likes.length}</p>
-         </Link>
+            <Link to={`/${parentUsername}/status/${parentChirpId}`}>
+                <p>Replying to {parentUsername}</p>
+                <p>{username}</p>
+                <p>{date}</p>
+                <p>{text}</p>
+                <p>{replies.length} {rechirps} {likes.length}</p>
+            </Link>
         )
     } else {
         replyUsername = (
             <Link to={`/${username}/status/${id}`}>
-            <p>{username}</p>
-            <p>{date}</p>
-            <p>{text}</p>
-            <p>{replies.length} {rechirps} {likes.length}</p>
-        </Link>
+                <p>{username}</p>
+                <p>{date}</p>
+                <p>{text}</p>
+                <p>{replies.length} {rechirps} {likes.length}</p>
+            </Link>
         )
     }
 

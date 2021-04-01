@@ -118,6 +118,7 @@ function ChirpDetail(props) {
                     id={c._id}
                     userId={c.author._id}
                     removeReply={removeReply}
+                    parentUsername={c.parentUsername}
                 />
             ))}
             {/* {loadedChirp && loadedChirp.replies.length == 0 && <div>This chirp has no replies yet. Be the first to reply!</div>} */}

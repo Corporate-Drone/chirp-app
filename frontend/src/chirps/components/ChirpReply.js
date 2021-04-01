@@ -8,7 +8,7 @@ import getDate from "../../javascripts/currentDate";
 
 
 function ChirpReply(props) {
-    const { date, id, likes, text, removeChirp, likeChirp, username, removeReply } = props;
+    const { date, id, likes, text, removeChirp, likeChirp, username, removeReply, parentUsername } = props;
     const [isReplying, toggle] = useToggleState(false);
 
     const history = useHistory();
@@ -17,7 +17,7 @@ function ChirpReply(props) {
     return (
         <div>
             <Link to={`/${username}/status/${id}`}>
-                <p>Replying to -Username Here-</p>
+                <p>Replying to {parentUsername}</p>
                 <p>{username}</p>
                 <p>{date}</p>
                 <p>{text}</p>
