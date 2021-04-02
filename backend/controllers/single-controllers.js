@@ -78,46 +78,24 @@ const replyToChirp = async (req, res, next) => {
     try {
         const { id, text, username, date } = req.body;
         const chirp = await Chirp.findById(id);
-        if (chirp) {
-            const parentChirpUser = await User.findOne({ _id: chirp.author })
-            const user = await User.findOne({ username: username })
-    
-            const reply = new Reply()
-            reply.author = user;
-            reply.text = text;
-            reply.date = date;
-            reply.likes = [];
-            reply.isReply = true;
-            reply.parentChirpId = id;
-            reply.parentUsername = parentChirpUser.username
-    
-            chirp.replies.push(reply);
-            await chirp.save();
-            await reply.save();
-            res.send('comment added!')
+        const parentChirpUser = await User.findOne({ _id: chirp.author })
+        const user = await User.findOne({ username: username })
 
-        } else {
-            const reply = await Reply.findById(id);
-            const parentChirpUser = await User.findOne({ _id: reply.author })
-            const user = await User.findOne({ username: username })
-    
-            const secondReply = new Reply()
-            secondReply.author = user;
-            secondReply.text = text;
-            secondReply.date = date;
-            secondReply.likes = [];
-            secondReply.isReply = true;
-            secondReply.parentChirpId = id;
-            secondReply.parentUsername = parentChirpUser.username
-    
-            reply.replies.push(secondReply);
-            await reply.save();
-            await secondReply.save();
-            console.log(reply)
-            res.send('comment added!')
-        }
+        const reply = new Chirp()
+        reply.author = user;
+        reply.text = text;
+        reply.date = date;
+        reply.likes = [];
+        reply.isReply = true;
+        reply.parentChirpId = id;
+        reply.parentUsername = parentChirpUser.username
+
+        chirp.replies.push(reply);
+        await chirp.save();
+        await reply.save();
+        res.send('comment added!')
     } catch (error) {
-
+        console.log(error)
     }
 }
 
@@ -126,13 +104,7 @@ const deleteReply = async (req, res, next) => {
     const chirpId = req.body.chirpId
     try {
         console.log('***DELETE REQUEST RECEIVED***')
-        const chirp = await Chirp.findById(chirpId);
-        if (chirp) {
-        //remove reply from Chirp
         await Chirp.findByIdAndUpdate(chirpId, { $pull: { replies: replyId } })
-        } else { //if id is not found in Chirp, use it to find the Reply parent to remove it from
-            await Reply.findByIdAndUpdate(chirpId, { $pull: { replies: replyId } })
-        }
 
         await Reply.findByIdAndDelete(replyId)
         res.send('Reply deleted!')

@@ -23,6 +23,8 @@ const replySchema = new Schema({
         }
     ],
     isReply: Boolean,
+    anchorChirpId: String,
+    anchorUsername: String,
     parentChirpId: String,
     parentUsername: String
 }, opts);
