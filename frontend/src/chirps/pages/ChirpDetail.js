@@ -51,51 +51,6 @@ function ChirpDetail(props) {
         }
     }, [isLoading, loadedChirp]); //run when changes to isLoading or chirps
 
-    // const removeChirp = async (chirpId) => {
-    //     const authorizationToken = localStorage.getItem('token');
-    //     const headers = {
-    //         Authorization: authorizationToken
-    //     }
-    //     const data = {
-    //         id: chirpId
-    //     }
-    //     try {
-    //         await axios.delete('http://localhost:5000/chirps', { headers, data })
-    //             .then(response => {
-    //                 // console.log(response.data)
-    //                 if (response.status === 200) {
-    //                     fetchChirps();
-    //                     console.log(response.data)
-    //                 }
-    //             })
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    //     history.push('/chirps');
-    // }
-
-    // const removeReply = async (replyId) => {
-    //     const authorizationToken = localStorage.getItem('token');
-    //     const headers = {
-    //         Authorization: authorizationToken
-    //     }
-    //     const data = {
-    //         id: replyId,
-    //         chirpId: chirpId
-    //     }
-    //     try {
-    //         await axios.delete(`http://localhost:5000/${userId}/status/${chirpId}/reply`, { headers, data })
-    //             .then(response => {
-    //                 // console.log(response.data)
-    //                 if (response.status === 200) {
-    //                     console.log(response.data)
-    //                 }
-    //             })
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    //     history.push('/chirps');
-    // }
 
     return (
         <div>
@@ -112,19 +67,34 @@ function ChirpDetail(props) {
             />}
             {loadedChirp && loadedChirp.replies.map(c => (
                 // <div>{c.author.username}</div>
-                <ChirpReply
-                    key={c._id}
-                    username={c.author.username}
-                    date={c.date}
-                    text={c.text}
-                    likes={c.likes}
-                    replies={c.replies}
-                    id={c._id}
-                    userId={c.author._id}
-                    // removeReply={removeReply}
-                    parentUsername={c.parentUsername}
-                    parentChirpId={c.parentChirpId}
-                />
+                // <ChirpReply
+                //     key={c._id}
+                //     username={c.author.username}
+                //     date={c.date}
+                //     text={c.text}
+                //     likes={c.likes}
+                //     replies={c.replies}
+                //     id={c._id}
+                //     userId={c.author._id}
+                //     // removeReply={removeReply}
+                //     parentUsername={c.parentUsername}
+                //     parentChirpId={c.parentChirpId}
+                //     isReply={c.isReply}
+                // />
+                <Chirp
+                key={c._id}
+                username={c.author.username}
+                date={c.date}
+                text={c.text}
+                likes={c.likes}
+                replies={c.replies}
+                id={c._id}
+                userId={c.author._id}
+                // removeReply={removeReply}
+                parentUsername={c.parentUsername}
+                parentChirpId={c.parentChirpId}
+                isReply={c.isReply}
+            />
             ))}
             {/* {loadedChirp && loadedChirp.replies.length == 0 && <div>This chirp has no replies yet. Be the first to reply!</div>} */}
             {isLoading && <CircularIndeterminate/>}

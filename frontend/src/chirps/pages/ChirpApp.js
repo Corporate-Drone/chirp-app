@@ -53,36 +53,6 @@ function ChirpApp() {
 
     }, [isLoading, chirps]); //run when changes to isLoading or chirps
 
-    // const addChirp = newChirp => {
-    //     setChirps([...chirps, { id: uuidv4(), info: newChirp, replies: [], rechirps: 0, rechirpId: 0, likes: 0, date: getDate() }])
-    // }
-
-    // const removeChirp = chirpId => {
-    //     const updatedChirps = chirps.filter(c => c.id !== chirpId);
-    //     setChirps(updatedChirps);
-    // }
-
-    // const removeChirp = async (chirpId) => {
-    //     const authorizationToken = localStorage.getItem('token');
-    //     const headers = {
-    //         Authorization: authorizationToken
-    //     }
-    //     const data = {
-    //         id: chirpId
-    //     }
-    //     try {
-    //         await axios.delete('http://localhost:5000/chirps', { headers, data })
-    //             .then(response => {
-    //                 // console.log(response.data)
-    //                 if (response.status === 200) {
-    //                     fetchChirps();
-    //                     console.log(response.data)
-    //                 }
-    //             })
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
 
     const likeChirp = chirpId => {
         let toggleLike = chirps.map(c => (
@@ -102,20 +72,8 @@ function ChirpApp() {
         }
         setChirps([...chirps, ...newChirps]);
 
-        // let duplicate = chirps.map(c => (
-        //     c.id === chirpId ? { ...c, id: uuidv4() } : c
-        // ))
-        // setChirps([...chirps,...duplicate]);
     }
 
-    // const addReply = (chirpId, value) => {
-    //     let reply = chirps.map(c => (
-    //         c.id === chirpId ? { ...c, replies: value } : c
-    //     ))
-    //     console.log(chirpId, value);
-    //     setChirps(reply);
-    //     // console.log('hello')
-    // }
 
     return (
         <div className="ChirpApp">
@@ -125,10 +83,8 @@ function ChirpApp() {
                 <ChirpForm fetchChirps={fetchChirps} />}
             {!isLoading && <ChirpList
                 allChirps={chirps}
-                // removeChirp={removeChirp}
                 likeChirp={likeChirp}
                 reChirp={reChirp}
-                // addReply={addReply}
             />}
         </div>
     );
