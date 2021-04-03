@@ -106,7 +106,7 @@ const deleteReply = async (req, res, next) => {
         console.log('***DELETE REQUEST RECEIVED***')
         await Chirp.findByIdAndUpdate(chirpId, { $pull: { replies: replyId } })
 
-        await Reply.findByIdAndDelete(replyId)
+        await Chirp.findByIdAndDelete(replyId)
         res.send('Reply deleted!')
     } catch (error) {
 

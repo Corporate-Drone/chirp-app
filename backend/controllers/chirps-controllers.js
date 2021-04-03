@@ -40,7 +40,12 @@ const createChirp = async (req, res, next) => {
 
 const deleteChirp = async (req, res, next) => {
     const chirpId = req.body.id;
+    const parentId = req.body.chirpId;
+    const isReply = req.body.isReply;
     try {
+        if (isReply) {
+            await Chirp.findByIdAndUpdate(parentId, { $pull: { replies: chirpId } })
+        }
         await Chirp.findByIdAndDelete(chirpId);
         res.send('deleted')
     } catch (error) {
