@@ -62,27 +62,27 @@ function ChirpApp() {
     //     setChirps(updatedChirps);
     // }
 
-    const removeChirp = async (chirpId) => {
-        const authorizationToken = localStorage.getItem('token');
-        const headers = {
-            Authorization: authorizationToken
-        }
-        const data = {
-            id: chirpId
-        }
-        try {
-            await axios.delete('http://localhost:5000/chirps', { headers, data })
-                .then(response => {
-                    // console.log(response.data)
-                    if (response.status === 200) {
-                        fetchChirps();
-                        console.log(response.data)
-                    }
-                })
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    // const removeChirp = async (chirpId) => {
+    //     const authorizationToken = localStorage.getItem('token');
+    //     const headers = {
+    //         Authorization: authorizationToken
+    //     }
+    //     const data = {
+    //         id: chirpId
+    //     }
+    //     try {
+    //         await axios.delete('http://localhost:5000/chirps', { headers, data })
+    //             .then(response => {
+    //                 // console.log(response.data)
+    //                 if (response.status === 200) {
+    //                     fetchChirps();
+    //                     console.log(response.data)
+    //                 }
+    //             })
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     const likeChirp = chirpId => {
         let toggleLike = chirps.map(c => (
@@ -125,7 +125,7 @@ function ChirpApp() {
                 <ChirpForm fetchChirps={fetchChirps} />}
             {!isLoading && <ChirpList
                 allChirps={chirps}
-                removeChirp={removeChirp}
+                // removeChirp={removeChirp}
                 likeChirp={likeChirp}
                 reChirp={reChirp}
                 // addReply={addReply}

@@ -8,10 +8,34 @@ import getDate from "../../javascripts/currentDate";
 
 
 function ChirpReply(props) {
-    const { date, id, likes, text, removeChirp, likeChirp, username, removeReply, parentUsername } = props;
+    const { date, id, likes, text, likeChirp, username, parentUsername, parentChirpId, replies } = props;
     const [isReplying, toggle] = useToggleState(false);
+    const { chirpId, userId } = useParams()
 
     const history = useHistory();
+
+    const removeReply = async (replyId, parentChirpId) => {
+        const authorizationToken = localStorage.getItem('token');
+        const headers = {
+            Authorization: authorizationToken
+        }
+        const data = {
+            id: replyId,
+            chirpId: parentChirpId
+        }
+        try {
+            await axios.delete(`http://localhost:5000/${userId}/status/${chirpId}/reply`, { headers, data })
+                .then(response => {
+                    // console.log(response.data)
+                    if (response.status === 200) {
+                        console.log(response.data)
+                    }
+                })
+        } catch (error) {
+            console.log(error)
+        }
+        history.push('/chirps');
+    }
 
 
     return (
@@ -21,7 +45,7 @@ function ChirpReply(props) {
                 <p>{username}</p>
                 <p>{date}</p>
                 <p>{text}</p>
-                <p>{likes.length}</p>
+                <p>{replies.length} {likes.length}</p>
             </Link>
             {/* <button onClick={toggle}>Reply</button>
             <button onClick={() => reChirp(id)}>Rechirp</button>
@@ -29,7 +53,7 @@ function ChirpReply(props) {
             <button onClick={() => likeChirp(id)}>Like</button>
             {isReplying && <ChirpReplyForm id={id} addReply={addReply} />} */}
             <button>Like</button>
-            <button onClick={() => removeReply(id)}>Remove</button>
+            <button onClick={() => removeReply(id,parentChirpId)}>Remove</button>
             <hr />
 
         </div>

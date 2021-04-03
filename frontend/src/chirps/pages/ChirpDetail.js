@@ -13,6 +13,7 @@ function ChirpDetail(props) {
     const [loadedChirp, setLoadedChirp] = useState();
     const [isLoading, setLoading] = useState(true);
     const history = useHistory();
+    // const { parentUsername, parentChirpId } = props;
 
     const fetchSingleChirp = async () => {
         setLoading(true);
@@ -50,51 +51,51 @@ function ChirpDetail(props) {
         }
     }, [isLoading, loadedChirp]); //run when changes to isLoading or chirps
 
-    const removeChirp = async (chirpId) => {
-        const authorizationToken = localStorage.getItem('token');
-        const headers = {
-            Authorization: authorizationToken
-        }
-        const data = {
-            id: chirpId
-        }
-        try {
-            await axios.delete('http://localhost:5000/chirps', { headers, data })
-                .then(response => {
-                    // console.log(response.data)
-                    if (response.status === 200) {
-                        fetchChirps();
-                        console.log(response.data)
-                    }
-                })
-        } catch (error) {
-            console.log(error)
-        }
-        history.push('/chirps');
-    }
+    // const removeChirp = async (chirpId) => {
+    //     const authorizationToken = localStorage.getItem('token');
+    //     const headers = {
+    //         Authorization: authorizationToken
+    //     }
+    //     const data = {
+    //         id: chirpId
+    //     }
+    //     try {
+    //         await axios.delete('http://localhost:5000/chirps', { headers, data })
+    //             .then(response => {
+    //                 // console.log(response.data)
+    //                 if (response.status === 200) {
+    //                     fetchChirps();
+    //                     console.log(response.data)
+    //                 }
+    //             })
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    //     history.push('/chirps');
+    // }
 
-    const removeReply = async (replyId) => {
-        const authorizationToken = localStorage.getItem('token');
-        const headers = {
-            Authorization: authorizationToken
-        }
-        const data = {
-            id: replyId,
-            chirpId: chirpId
-        }
-        try {
-            await axios.delete(`http://localhost:5000/${userId}/status/${chirpId}/reply`, { headers, data })
-                .then(response => {
-                    // console.log(response.data)
-                    if (response.status === 200) {
-                        console.log(response.data)
-                    }
-                })
-        } catch (error) {
-            console.log(error)
-        }
-        history.push('/chirps');
-    }
+    // const removeReply = async (replyId) => {
+    //     const authorizationToken = localStorage.getItem('token');
+    //     const headers = {
+    //         Authorization: authorizationToken
+    //     }
+    //     const data = {
+    //         id: replyId,
+    //         chirpId: chirpId
+    //     }
+    //     try {
+    //         await axios.delete(`http://localhost:5000/${userId}/status/${chirpId}/reply`, { headers, data })
+    //             .then(response => {
+    //                 // console.log(response.data)
+    //                 if (response.status === 200) {
+    //                     console.log(response.data)
+    //                 }
+    //             })
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    //     history.push('/chirps');
+    // }
 
     return (
         <div>
@@ -105,7 +106,9 @@ function ChirpDetail(props) {
                 likes={loadedChirp.likes}
                 replies={loadedChirp.replies}
                 text={loadedChirp.text}
-                removeChirp={removeChirp}
+                // removeChirp={removeChirp}
+                parentChirpId={loadedChirp.parentChirpId}
+                parentUsername={loadedChirp.parentUsername}
             />}
             {loadedChirp && loadedChirp.replies.map(c => (
                 // <div>{c.author.username}</div>
@@ -115,10 +118,12 @@ function ChirpDetail(props) {
                     date={c.date}
                     text={c.text}
                     likes={c.likes}
+                    replies={c.replies}
                     id={c._id}
                     userId={c.author._id}
-                    removeReply={removeReply}
+                    // removeReply={removeReply}
                     parentUsername={c.parentUsername}
+                    parentChirpId={c.parentChirpId}
                 />
             ))}
             {/* {loadedChirp && loadedChirp.replies.length == 0 && <div>This chirp has no replies yet. Be the first to reply!</div>} */}
