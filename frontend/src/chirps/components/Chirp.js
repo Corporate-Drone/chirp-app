@@ -8,7 +8,7 @@ import { AuthContext } from '../../shared/context/auth-context';
 
 
 function Chirp(props) {
-    const { replies, date, id, likes, rechirps, text, reChirp, username, isReply, parentChirpId, parentUsername } = props;
+    const { replies, date, id, likes, rechirps, text, reChirp, username, isReply, parentChirpId, parentUsername, detailView } = props;
     const [isReplying, toggle] = useToggleState(false);
 
     const auth = useContext(AuthContext);
@@ -80,7 +80,18 @@ function Chirp(props) {
     }
 
     let replyUsername;
-    if (isReply) {
+    if (isReply && detailView) {
+        replyUsername = (
+            // link to actual chirp location when in detail view
+            <Link to={`/${username}/status/${id}`}>
+                <p>Replying to {parentUsername}</p>
+                <p>{username}</p>
+                <p>{date}</p>
+                <p>{text}</p>
+                <p>{replies.length} {rechirps} {likes.length}</p>
+            </Link>
+        )
+    } else if (isReply) {
         replyUsername = (
             <Link to={`/${parentUsername}/status/${parentChirpId}`}>
                 <p>Replying to {parentUsername}</p>
@@ -115,7 +126,7 @@ function Chirp(props) {
         <div>
             {replyUsername}
             <button onClick={toggle}>Reply</button>
-            <button onClick={() => reChirp(id)}>Rechirp</button>
+            {/* <button onClick={() => reChirp(id)}>Rechirp</button> */}
             <button onClick={() => removeChirp(id)}>Remove</button>
             <button onClick={() => likeChirp(id)}>Like</button>
             {isReplying && <ChirpReplyForm id={id} addReply={addReply} />}
