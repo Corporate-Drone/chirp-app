@@ -83,42 +83,91 @@ function Chirp(props) {
     if (isReply && detailView) {
         replyUsername = (
             // link to actual chirp location when in detail view
+            // <Link to={`/${username}/status/${id}`}>
+            //     <Link to={`/${parentUsername}`}><p>Replying to {parentUsername}</p></Link>
+            //     <Link to={`/${username}`}><p>{username}</p></Link>
+            //     <p>{date}</p>
+            //     <p>{text}</p>
+            //     <p>{replies.length} {rechirps} {likes.length}</p>
+            // </Link>
+            <div class="container">
             <Link to={`/${username}/status/${id}`}>
-                <p>Replying to {parentUsername}</p>
-                <p>{username}</p>
-                <p>{date}</p>
-                <p>{text}</p>
-                <p>{replies.length} {rechirps} {likes.length}</p>
+              <p>{date}</p>
+              <p>{text}</p>
+              <p>{replies.length} {likes.length}</p>
             </Link>
+            <Link to={`/${parentUsername}`}>
+              <p>Replying to {parentUsername}</p>
+            </Link>
+            <Link to={`/${username}`}>
+              <p>{username}</p>
+            </Link>
+          </div>
         )
     } else if (isReply) {
         replyUsername = (
+            // <Link to={`/${parentUsername}/status/${parentChirpId}`}>
+            //     <p>Replying to {parentUsername}</p>
+            //     <p>{username}</p>
+            //     <p>{date}</p>
+            //     <p>{text}</p>
+            //     <p>{replies.length} {rechirps} {likes.length}</p>
+            // </Link>
+            <div class="container">
             <Link to={`/${parentUsername}/status/${parentChirpId}`}>
-                <p>Replying to {parentUsername}</p>
-                <p>{username}</p>
-                <p>{date}</p>
-                <p>{text}</p>
-                <p>{replies.length} {rechirps} {likes.length}</p>
+              <p>{date}</p>
+              <p>{text}</p>
+              <p>{replies.length} {likes.length}</p>
             </Link>
+            <Link to={`/${parentUsername}`}>
+              <p>Replying to {parentUsername}</p>
+            </Link>
+            <Link to={`/${username}`}>
+              <p>{username}</p>
+            </Link>
+          </div>
         )
-    } else if(parentUsername) {
+    } else if (parentUsername) {
         replyUsername = (
+            // <Link to={`/${username}/status/${id}`}>
+            //     <p>Replying to {parentUsername}</p>
+            //     <p>{username}</p>
+            //     <p>{date}</p>
+            //     <p>{text}</p>
+            //     <p>{replies.length} {rechirps} {likes.length}</p>
+            // </Link>
+            <div class="container">
             <Link to={`/${username}/status/${id}`}>
-                <p>Replying to {parentUsername}</p>
-                <p>{username}</p>
-                <p>{date}</p>
-                <p>{text}</p>
-                <p>{replies.length} {rechirps} {likes.length}</p>
+              <p>{date}</p>
+              <p>{text}</p>
+              <p>{replies.length} {likes.length}</p>
             </Link>
+            <Link to={`/${parentUsername}`}>
+              <p>Replying to {parentUsername}</p>
+            </Link>
+            <Link to={`/${username}`}>
+              <p>{username}</p>
+            </Link>
+          </div>
         )
     } else { //don't display any parent info
         replyUsername = (
+            // <Link to={`/${username}/status/${id}`}>
+            //     <p>{username}</p>
+            //     <p>{date}</p>
+            //     <p>{text}</p>
+            //     <p>{replies.length} {rechirps} {likes.length}</p>
+            // </Link>
+            <div class="container">
             <Link to={`/${username}/status/${id}`}>
-                <p>{username}</p>
-                <p>{date}</p>
-                <p>{text}</p>
-                <p>{replies.length} {rechirps} {likes.length}</p>
+              <p>{date}</p>
+              <p>{text}</p>
+              <p>{replies.length} {likes.length}</p>
             </Link>
+            <Link to={`/${username}`}>
+              <p>{username}</p>
+            </Link>
+          </div>
         )
     }
 
