@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
-// const ImageSchema = new Schema({
-//     url: String,
-//     filename: String
-// })
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+})
 
 //smaller image dislay for edit page
 // ImageSchema.virtual('thumbnail').get(function () {
@@ -30,7 +30,7 @@ const UserSchema = new Schema({
             ref: "User"
         }
     ],
-    // image: ImageSchema,
+    image: ImageSchema,
     about: String
 });
 

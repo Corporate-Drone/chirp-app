@@ -20,6 +20,28 @@ const register = async (req, res, next) => {
 
 }
 
+const getUser = async (req, res, next) => {
+    const { id } = req.query
+    try {
+        const foundUser = await User.findById(id)
+        console.log(foundUser)
+        res.send(foundUser);
+    } catch (error) {
+
+    }
+}
+
+const setup = async (req, res, next) => {
+    try {
+        const { image, userId, about } = req.body;
+        // update about me text
+        const updatedUser = await User.findByIdAndUpdate(userId, { about },{new: true});
+        res.send(updatedUser)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 const logout = (req, res, next) => {
     // if (req.user) {
@@ -32,4 +54,6 @@ const logout = (req, res, next) => {
 }
 
 exports.register = register;
+exports.getUser = getUser;
+exports.setup = setup;
 exports.logout = logout;

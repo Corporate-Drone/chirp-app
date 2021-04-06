@@ -8,6 +8,10 @@ const usersControllers = require('../controllers/users-controllers');
 
 router.post('/register', usersControllers.register);
 
+router.post('/setup', usersControllers.setup);
+
+router.get('/setup', usersControllers.getUser);
+
 // router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), usersControllers.login);
 
 router.post(
