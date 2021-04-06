@@ -90,7 +90,7 @@ function Chirp(props) {
             //     <p>{text}</p>
             //     <p>{replies.length} {rechirps} {likes.length}</p>
             // </Link>
-            <div class="container">
+            <div className="container">
             <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
               <p>{text}</p>
@@ -113,7 +113,7 @@ function Chirp(props) {
             //     <p>{text}</p>
             //     <p>{replies.length} {rechirps} {likes.length}</p>
             // </Link>
-            <div class="container">
+            <div className="container">
             <Link to={`/${parentUsername}/status/${parentChirpId}`}>
               <p>{date}</p>
               <p>{text}</p>
@@ -136,7 +136,7 @@ function Chirp(props) {
             //     <p>{text}</p>
             //     <p>{replies.length} {rechirps} {likes.length}</p>
             // </Link>
-            <div class="container">
+            <div className="container">
             <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
               <p>{text}</p>
@@ -158,7 +158,7 @@ function Chirp(props) {
             //     <p>{text}</p>
             //     <p>{replies.length} {rechirps} {likes.length}</p>
             // </Link>
-            <div class="container">
+            <div className="container">
             <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
               <p>{text}</p>

@@ -52,6 +52,10 @@ export default function ButtonAppBar() {
                         {/* <NavLink to="/auth/register">Register</NavLink> */}
                         Register
                         </Button>}
+                        {auth.isLoggedIn &&
+                        <Button component={Link} to="/auth/setup" color="inherit">
+                            Profile
+                        </Button>}
                     {auth.isLoggedIn &&
                         <Button color="inherit" onClick={auth.logout}>
                             Logout

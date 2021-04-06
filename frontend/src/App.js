@@ -5,6 +5,7 @@ import axios from 'axios';
 import Login from './user/pages/Login';
 import Register from './user/pages/Register';
 import UserChirps from './user/pages/UserChirps'
+import UserSetup from './user/pages/UserSetup';
 
 import { AuthContext } from './shared/context/auth-context';
 import Navbar from './shared/components/Navigation/Navbar';
@@ -48,6 +49,9 @@ function App() {
         </Route>
         <Route path="/:userId" exact>
           <UserChirps />
+        </Route>
+        <Route path="/auth/setup" exact>
+          <UserSetup />
         </Route>
         <Route path="/:userId/status/:chirpId" exact>
           <ChirpDetail />
