@@ -11,6 +11,7 @@ function ChirpList(props) {
             reChirp={reChirp}
             addReply={addReply}
             username={c.author.username}
+            author={c.author}
             
         />
     ))

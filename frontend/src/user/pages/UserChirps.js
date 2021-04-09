@@ -10,6 +10,7 @@ import sortDate from '../../javascripts/sortDate'
 function UserChirps(props) {
     const { userId } = useParams()
     const [loadedChirps, setLoadedChirps] = useState();
+    const [loadedUser, setLoadedUser] = useState();
     const [isLoading, setLoading] = useState(true);
 
     const getUserChirps = async (userId) => {
@@ -40,6 +41,7 @@ function UserChirps(props) {
         // sort chirps from newest to oldest
         if (loadedChirps) {
             console.log('Chirps are loaded.')
+            setLoadedUser(loadedChirps[0].author)
         }
     }, [isLoading, loadedChirps]); //run when changes to isLoading or chirps
 
@@ -50,6 +52,7 @@ function UserChirps(props) {
                 key={c.id}
                 {...c}
                 username={c.author.username}
+                author={c.author}
             />
         ))
         sortDate(loadedChirps)
@@ -62,6 +65,9 @@ function UserChirps(props) {
                 {userId}
                 <button>Follow</button>
             </div>}
+            {loadedUser && loadedUser.about && <div>{loadedUser.about}</div>}
+            {loadedUser && <div>{loadedUser.following.length} following</div>}
+            {loadedUser && <div>{loadedUser.followers.length} followers</div>}
             {/* display join date */}
             {!isLoading && <div>{chirps}</div>}
         </div>

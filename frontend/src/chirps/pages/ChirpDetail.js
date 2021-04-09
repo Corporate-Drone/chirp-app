@@ -70,6 +70,7 @@ function ChirpDetail(props) {
                 // removeChirp={removeChirp}
                 parentChirpId={loadedChirp.parentChirpId}
                 parentUsername={loadedChirp.parentUsername}
+                author={loadedChirp.author}
             />}
             {!isLoading && loadedChirp && loadedChirp.replies.map(c => (
                 <Chirp
@@ -86,6 +87,7 @@ function ChirpDetail(props) {
                     parentChirpId={c.parentChirpId}
                     isReply={c.isReply}
                     detailView={true}
+                    author={c.author}
                 />
             ))}
             {/* {loadedChirp && loadedChirp.replies.length == 0 && <div>This chirp has no replies yet. Be the first to reply!</div>} */}

@@ -78,13 +78,14 @@ function UserSetup() {
                     setupUser(value)
                     reset();
                 }}
+                enctype="multipart/form-data"
             >
                 <div>
                     <label htmlFor="image" className="form-label">Upload a profile picture </label>
-                    <input className="form-control-file" type="file" id="image" name="image" />
+                    <input type="file" id="image" name="image" />
                 </div>
                 <div>
-                    <label className="form-label" htmlFor="about">About Me</label>
+                    <label htmlFor="about">About Me</label>
                     <textarea
                         className="form-control"
                         type="text"

@@ -5,10 +5,11 @@ import ChirpReplyForm from "./ChirpReplyForm";
 import useToggleState from "../../hooks/useToggleState";
 import getDate from "../../javascripts/currentDate";
 import { AuthContext } from '../../shared/context/auth-context';
+import avatarplaceholder from '../../images/avatarplaceholder.gif'
 
 
 function Chirp(props) {
-    const { replies, date, id, likes, rechirps, text, reChirp, username, isReply, parentChirpId, parentUsername, detailView } = props;
+    const { replies, date, id, likes, rechirps, text, reChirp, username, isReply, parentChirpId, parentUsername, detailView, author } = props;
     const [isReplying, toggle] = useToggleState(false);
 
     const auth = useContext(AuthContext);
@@ -82,14 +83,6 @@ function Chirp(props) {
     let replyUsername;
     if (isReply && detailView) {
         replyUsername = (
-            // link to actual chirp location when in detail view
-            // <Link to={`/${username}/status/${id}`}>
-            //     <Link to={`/${parentUsername}`}><p>Replying to {parentUsername}</p></Link>
-            //     <Link to={`/${username}`}><p>{username}</p></Link>
-            //     <p>{date}</p>
-            //     <p>{text}</p>
-            //     <p>{replies.length} {rechirps} {likes.length}</p>
-            // </Link>
             <div className="container">
             <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
@@ -106,13 +99,6 @@ function Chirp(props) {
         )
     } else if (isReply) {
         replyUsername = (
-            // <Link to={`/${parentUsername}/status/${parentChirpId}`}>
-            //     <p>Replying to {parentUsername}</p>
-            //     <p>{username}</p>
-            //     <p>{date}</p>
-            //     <p>{text}</p>
-            //     <p>{replies.length} {rechirps} {likes.length}</p>
-            // </Link>
             <div className="container">
             <Link to={`/${parentUsername}/status/${parentChirpId}`}>
               <p>{date}</p>
@@ -129,13 +115,6 @@ function Chirp(props) {
         )
     } else if (parentUsername) {
         replyUsername = (
-            // <Link to={`/${username}/status/${id}`}>
-            //     <p>Replying to {parentUsername}</p>
-            //     <p>{username}</p>
-            //     <p>{date}</p>
-            //     <p>{text}</p>
-            //     <p>{replies.length} {rechirps} {likes.length}</p>
-            // </Link>
             <div className="container">
             <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
@@ -152,12 +131,6 @@ function Chirp(props) {
         )
     } else { //don't display any parent info
         replyUsername = (
-            // <Link to={`/${username}/status/${id}`}>
-            //     <p>{username}</p>
-            //     <p>{date}</p>
-            //     <p>{text}</p>
-            //     <p>{replies.length} {rechirps} {likes.length}</p>
-            // </Link>
             <div className="container">
             <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
@@ -171,8 +144,21 @@ function Chirp(props) {
         )
     }
 
+    let profilePicture;
+    if (!author.image) {
+        profilePicture = (
+            // <img src="https://html.sammy-codes.com/images/small-profile.jpeg"></img>
+            <img src={avatarplaceholder} width="100" height="100"></img>
+        )
+    } else {
+        profilePicture = (
+            <img src={author.image.url}></img>
+        )
+    }
+
     return (
         <div>
+            {profilePicture}
             {replyUsername}
             <button onClick={toggle}>Reply</button>
             {/* <button onClick={() => reChirp(id)}>Rechirp</button> */}
