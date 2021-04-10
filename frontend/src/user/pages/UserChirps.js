@@ -6,6 +6,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 import Chirp from '../../chirps/components/Chirp';
 import sortDate from '../../javascripts/sortDate'
+import avatarplaceholder from '../../images/avatarplaceholder.gif'
 
 function UserChirps(props) {
     const { userId } = useParams()
@@ -65,6 +66,8 @@ function UserChirps(props) {
                 {userId}
                 <button>Follow</button>
             </div>}
+            {loadedUser && loadedUser.image && <img src={loadedUser.image.url}/>}
+            {loadedUser && !loadedUser.image && <img src={avatarplaceholder}/>}
             {loadedUser && loadedUser.about && <div>{loadedUser.about}</div>}
             {loadedUser && <div>{loadedUser.following.length} following</div>}
             {loadedUser && <div>{loadedUser.followers.length} followers</div>}

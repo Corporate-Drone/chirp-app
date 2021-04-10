@@ -147,12 +147,11 @@ function Chirp(props) {
     let profilePicture;
     if (!author.image) {
         profilePicture = (
-            // <img src="https://html.sammy-codes.com/images/small-profile.jpeg"></img>
-            <img src={avatarplaceholder} width="100" height="100"></img>
+            <img src={avatarplaceholder} width="100" height="100"/>
         )
     } else {
         profilePicture = (
-            <img src={author.image.url}></img>
+            <img src={author.image.url} width="100" height="100"/>
         )
     }
 
