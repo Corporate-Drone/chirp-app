@@ -33,10 +33,24 @@ const getUser = async (req, res, next) => {
 
 const setup = async (req, res, next) => {
     try {
-        const { image, userId, about } = req.body;
+        const { userId, about } = req.body;
         // update about me text
         const updatedUser = await User.findByIdAndUpdate(userId, { about },{new: true});
         res.send(updatedUser)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const updateImage = async (req, res, next) => {
+    try {
+        const { userId, url, filename } = req.body;
+        const updatedUser = await User.findByIdAndUpdate(userId, {
+            image: {
+                url: url,
+                filename: filename
+            }
+        },{new: true});
     } catch (error) {
         console.log(error)
     }
@@ -56,4 +70,5 @@ const logout = (req, res, next) => {
 exports.register = register;
 exports.getUser = getUser;
 exports.setup = setup;
+exports.updateImage = updateImage;
 exports.logout = logout;
