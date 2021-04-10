@@ -3,6 +3,8 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import useInputState from "../../hooks/useInputState";
 import { AuthContext } from '../../shared/context/auth-context';
+import avatarplaceholder from '../../images/avatarplaceholder.gif'
+import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 
 function UserSetup() {
     const auth = useContext(AuthContext);
@@ -38,7 +40,7 @@ function UserSetup() {
         fetchUser();
 
     }, []);
- 
+
 
     useEffect(() => {
         //send image info to backend after successful upload to Cloudinary
@@ -46,57 +48,64 @@ function UserSetup() {
             const data = {
                 userId: auth.userId,
                 url: loadedImage.secure_url,
-                filename: loadedImage.public_id.slice(6)
+                filename: loadedImage.public_id
             }
             axios.post('http://localhost:5000/auth/setup/upload', data)
                 .then(response => {
                     if (response.status === 200) {
-                    console.log('Successful')
-                }
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    },[loadedImage])
-
-    function setupUser(about) {
-        try {
-            const data = {
-                userId: auth.userId,
-                about
-            }
-            axios.post('http://localhost:5000/auth/setup', data)
-                .then(response => {
-                    if (response.status === 200) {
                         setLoadedUser(response.data)
-                        console.log(loadedUser)
+                        setLoading(false); //set true from handleImageUpload()
                     }
                 })
         } catch (error) {
             console.log(error)
+            setLoading(false); //set true from handleImageUpload()
         }
-        history.push('/auth/setup');
+        
+    }, [loadedImage])
+
+    function setupUser(about) {
+        //update About Me only if a value has been entered
+        if (about !== "") {
+            try {
+                const data = {
+                    userId: auth.userId,
+                    about
+                }
+                axios.post('http://localhost:5000/auth/setup', data)
+                    .then(response => {
+                        if (response.status === 200) {
+                            setLoadedUser(response.data)
+                        }
+                    })
+            } catch (error) {
+                console.log(error)
+            }
+            history.push('/auth/setup');
+        }
     }
 
     const handleImageUpload = () => {
-        const { files } = document.querySelector('input[type="file"]')
-        const formData = new FormData();
-        formData.append('file', files[0]);
-        // replace this with your upload preset name
-        formData.append('upload_preset', 'znbfdysx');
-        const options = {
-          method: 'POST',
-          body: formData,
-        };
-        
-        // replace cloudname with your Cloudinary cloud_name
-        return fetch('https://api.Cloudinary.com/v1_1/dw2bqpmjv/image/upload', options)
-          .then(res => res.json())
-            .then(res =>
-                setLoadedImage(res)
-            )
-          .catch(err => console.log(err));
-      }
+        if (document.getElementById("image").value != "") {
+            setLoading(true);
+            const { files } = document.querySelector('input[type="file"]')
+            const formData = new FormData();
+            formData.append('file', files[0]);
+            
+            formData.append('upload_preset', 'znbfdysx');
+            const options = {
+                method: 'POST',
+                body: formData,
+            };
+            
+            return fetch('https://api.Cloudinary.com/v1_1/dw2bqpmjv/image/upload', options)
+                .then(res => res.json())
+                .then(res =>
+                    setLoadedImage(res)
+                )
+                .catch(err => console.log(err));
+        }
+    }
 
     let userAbout;
     if (loadedUser && loadedUser.about) {
@@ -105,44 +114,52 @@ function UserSetup() {
         userAbout = ('N/A')
     }
 
+    let userImage;
+    if (loadedUser && !loadedUser.image) {
+        userImage = (< img src={avatarplaceholder} />)
+    } else if (loadedUser && loadedUser.image) {
+        userImage = (< img src={loadedUser.image.url} />)
+    }
+
     return (
         <div>
-            <div>
+            {isLoading && <CircularIndeterminate />}
+            {!isLoading && <div>
+                <div>
+                    {userImage}
                 Current Profile Picture
             </div>
-            <div>
-                Current About Me: {userAbout}
-            </div>
-            <form
-                // onSubmit={e => {
-                //     e.preventDefault();
-                //     setupUser(value)
-                //     reset();
-                // }}
-                onSubmit={e => {
-                    e.preventDefault();
-                    handleImageUpload();
-                }}
-                encType="multipart/form-data"
-            >
                 <div>
-                    <label htmlFor="image" className="form-label">Upload a profile picture </label>
-                    <input type="file" id="image" name="image" />
+                    Current About Me: {userAbout}
                 </div>
-                <div>
-                    <label htmlFor="about">About Me</label>
-                    <textarea
-                        className="form-control"
-                        type="text"
-                        id="about"
-                        name="about"
-                        onChange={handleChange}
-                        value={value}
-                    >
-                    </textarea>
-                </div>
-                <button>Save</button>
-            </form>
+                <form
+                    onSubmit={e => {
+                        e.preventDefault();
+                        setupUser(value)
+                        handleImageUpload();
+                        reset();
+                    }}
+                    encType="multipart/form-data"
+                >
+                    <div>
+                        <label htmlFor="image" className="form-label">Upload a profile picture </label>
+                        <input type="file" id="image" name="image" />
+                    </div>
+                    <div>
+                        <label htmlFor="about">Update About Me</label>
+                        <textarea
+                            className="form-control"
+                            type="text"
+                            id="about"
+                            name="about"
+                            onChange={handleChange}
+                            value={value}
+                        >
+                        </textarea>
+                    </div>
+                    <button>Save</button>
+                </form>
+            </div>}
         </div>
     )
 }
