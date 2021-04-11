@@ -85,6 +85,7 @@ function ChirpApp() {
                 allChirps={chirps}
                 likeChirp={likeChirp}
                 reChirp={reChirp}
+                fetchChirps={fetchChirps}
             />}
         </div>
     );

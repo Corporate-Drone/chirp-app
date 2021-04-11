@@ -9,8 +9,9 @@ import avatarplaceholder from '../../images/avatarplaceholder.gif'
 
 
 function Chirp(props) {
-    const { replies, date, id, likes, rechirps, text, reChirp, username, isReply, parentChirpId, parentUsername, detailView, author } = props;
+    const { replies, date, id, likes, rechirps, text, reChirp, username, isReply, parentChirpId, parentUsername, detailView, author,fetchChirps } = props;
     const [isReplying, toggle] = useToggleState(false);
+    const [isLiked, setLiked] = useState();
 
     const auth = useContext(AuthContext);
 
@@ -35,7 +36,11 @@ function Chirp(props) {
         } catch (error) {
             console.log(error)
         }
-        history.push('/chirps');
+        if (fetchChirps) {
+            fetchChirps();
+        } else {
+            history.push('/chirps');
+        }
     }
 
     const likeChirp = async (chirpId) => {
@@ -48,10 +53,22 @@ function Chirp(props) {
                     // console.log(response.data)
                     if (response.status === 200) {
                         console.log(response.data)
+                        // setLiked(response.data)
+                        // console.log(isLiked)
+                        // console.log(response.data.likes)
+                        // if (response.data.likes.includes(auth.username)) {
+                        //     console.log('unliked!')
+                        // }
+                        //display "unlike" if auth.user is in response.data.likes
                     }
                 })
         } catch (error) {
-
+            console.log(error)
+        }
+        if (fetchChirps) {
+            fetchChirps();
+        } else {
+            history.push('/chirps');
         }
     }
 
@@ -70,15 +87,27 @@ function Chirp(props) {
                 .then(response => {
                     // console.log(response.data)
                     if (response.status === 200) {
-                        fetchChirps();
                         console.log(response.data)
                     }
                 })
         } catch (error) {
             console.log(error)
         }
-        history.push('/chirps');
+        //run function if fetchChirps was passed down from ChirpApp or redirect to /chirps if deleted from Chirp detail
+        if (fetchChirps) {
+            fetchChirps();
+        } else {
+            history.push('/chirps');
+        }
     }
+
+    useEffect(() => {
+        if ( auth.isLoggedIn && likes.includes(auth.userId)) {
+            setLiked(true)
+        } else {
+            setLiked(false)
+        }
+    },[])
 
     let replyUsername;
     if (isReply && detailView) {
@@ -162,7 +191,8 @@ function Chirp(props) {
             <button onClick={toggle}>Reply</button>
             {/* <button onClick={() => reChirp(id)}>Rechirp</button> */}
             <button onClick={() => removeChirp(id)}>Remove</button>
-            <button onClick={() => likeChirp(id)}>Like</button>
+            {!isLiked && <button onClick={() => likeChirp(id)}>Like</button>}
+            {isLiked && <button onClick={() => likeChirp(id)}>Unlike</button>}
             {isReplying && <ChirpReplyForm id={id} addReply={addReply} />}
             <hr />
 
