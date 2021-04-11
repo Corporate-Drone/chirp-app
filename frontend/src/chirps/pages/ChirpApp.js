@@ -53,28 +53,6 @@ function ChirpApp() {
 
     }, [isLoading, chirps]); //run when changes to isLoading or chirps
 
-
-    const likeChirp = chirpId => {
-        let toggleLike = chirps.map(c => (
-            c.id === chirpId ? { ...c, likes: c.likes + 1 } : c
-        ))
-        setChirps(toggleLike);
-    }
-
-    const reChirp = chirpId => {
-        let newChirps = [];
-        for (let chirp of chirps) {
-            if (chirp.id === chirpId) {
-                //give it a new id
-                let newId = { ...chirp, id: uuidv4(), rechirpId: chirpId }
-                newChirps.push(newId)
-            }
-        }
-        setChirps([...chirps, ...newChirps]);
-
-    }
-
-
     return (
         <div className="ChirpApp">
             {isLoading && <CircularIndeterminate/>}
@@ -83,8 +61,6 @@ function ChirpApp() {
                 <ChirpForm fetchChirps={fetchChirps} />}
             {!isLoading && <ChirpList
                 allChirps={chirps}
-                likeChirp={likeChirp}
-                reChirp={reChirp}
                 fetchChirps={fetchChirps}
             />}
         </div>

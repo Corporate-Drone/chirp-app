@@ -9,7 +9,7 @@ import avatarplaceholder from '../../images/avatarplaceholder.gif'
 
 
 function Chirp(props) {
-    const { replies, date, id, likes, rechirps, text, reChirp, username, isReply, parentChirpId, parentUsername, detailView, author,fetchChirps } = props;
+    const { replies, date, id, likes, text, username, isReply, parentChirpId, parentUsername, detailView, author,fetchChirps } = props;
     const [isReplying, toggle] = useToggleState(false);
     const [isLiked, setLiked] = useState();
 
@@ -37,9 +37,11 @@ function Chirp(props) {
             console.log(error)
         }
         if (fetchChirps) {
+            //refresh Chirps if on /chirps
             fetchChirps();
         } else {
-            history.push('/chirps');
+            //redirect to the thread containing the reply
+            history.push(`/${username}/status/${chirpId}/`);
         }
     }
 
@@ -53,22 +55,17 @@ function Chirp(props) {
                     // console.log(response.data)
                     if (response.status === 200) {
                         console.log(response.data)
-                        // setLiked(response.data)
-                        // console.log(isLiked)
-                        // console.log(response.data.likes)
-                        // if (response.data.likes.includes(auth.username)) {
-                        //     console.log('unliked!')
-                        // }
-                        //display "unlike" if auth.user is in response.data.likes
                     }
                 })
         } catch (error) {
             console.log(error)
         }
         if (fetchChirps) {
+            //refresh Chirps if on /chirps
             fetchChirps();
         } else {
-            history.push('/chirps');
+            //redirect to the thread containing the reply
+            history.push(`/${username}/status/${chirpId}/`);
         }
     }
 
@@ -174,7 +171,7 @@ function Chirp(props) {
     }
 
     let profilePicture;
-    if (!author.image) {
+    if (!author.image || author.image.url === undefined) {
         profilePicture = (
             <img src={avatarplaceholder} width="100" height="100"/>
         )
@@ -189,7 +186,6 @@ function Chirp(props) {
             {profilePicture}
             {replyUsername}
             <button onClick={toggle}>Reply</button>
-            {/* <button onClick={() => reChirp(id)}>Rechirp</button> */}
             <button onClick={() => removeChirp(id)}>Remove</button>
             {!isLiked && <button onClick={() => likeChirp(id)}>Like</button>}
             {isLiked && <button onClick={() => likeChirp(id)}>Unlike</button>}
