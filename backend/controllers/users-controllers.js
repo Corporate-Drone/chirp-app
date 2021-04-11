@@ -1,5 +1,6 @@
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
+const { cloudinary } = require('../cloudinary');
 
 
 const register = async (req, res, next) => {
@@ -45,12 +46,17 @@ const setup = async (req, res, next) => {
 const updateImage = async (req, res, next) => {
     try {
         const { userId, url, filename } = req.body;
+        const foundUser = await User.findById(userId)
+        if (foundUser.image.filename) { //delete previous profile picture
+            await cloudinary.uploader.destroy(foundUser.image.filename);
+        }
         const updatedUser = await User.findByIdAndUpdate(userId, {
             image: {
                 url: url,
                 filename: filename
             }
-        },{new: true});
+        }, { new: true });
+        res.send(updatedUser)
     } catch (error) {
         console.log(error)
     }
