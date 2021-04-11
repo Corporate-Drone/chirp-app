@@ -68,7 +68,7 @@ const likeChirp = async (req, res, next) => {
 
         await chirp.save();
         console.log(user)
-        res.send(user)
+        res.send(chirp)
     } catch (error) {
 
     }

@@ -43,6 +43,24 @@ const setup = async (req, res, next) => {
     }
 }
 
+const deleteImage = async (req, res, next) => {
+    try {
+        console.log('***DELETE REQUEST RECEIVED***')
+        console.log(req.body)
+        const { userId, url, filename } = req.body;
+        await cloudinary.uploader.destroy(filename);
+        const updatedUser = await User.findByIdAndUpdate(userId, {
+            image: {
+                url: undefined,
+                filename: undefined
+            }
+        }, { new: true });
+        res.send(updatedUser);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const updateImage = async (req, res, next) => {
     try {
         const { userId, url, filename } = req.body;
@@ -76,5 +94,6 @@ const logout = (req, res, next) => {
 exports.register = register;
 exports.getUser = getUser;
 exports.setup = setup;
+exports.deleteImage = deleteImage;
 exports.updateImage = updateImage;
 exports.logout = logout;

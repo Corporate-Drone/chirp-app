@@ -15,6 +15,8 @@ router.post('/setup', usersControllers.setup);
 
 router.post('/setup/upload', usersControllers.updateImage);
 
+router.delete('/setup/upload', usersControllers.deleteImage);
+
 router.get('/setup', usersControllers.getUser);
 
 // router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), usersControllers.login);
