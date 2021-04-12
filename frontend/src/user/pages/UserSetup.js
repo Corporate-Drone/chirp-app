@@ -134,6 +134,41 @@ function UserSetup() {
         }
     }
 
+    const deleteAccount = () => {
+        try {
+            const authorizationToken = localStorage.getItem('token');
+            const headers = {
+                Authorization: authorizationToken
+            }
+
+            let data;
+            if (loadedUser.image) {
+                data = {
+                    userId: auth.userId,
+                    url: loadedUser.image.url,
+                    filename: loadedUser.image.filename,
+                    username: auth.username
+                }
+            } else {
+                data = {
+                    userId: auth.userId,
+                    username: auth.username
+                }
+            }
+
+            axios.delete('http://localhost:5000/auth/setup/', { headers, data })
+                .then(response => {
+                    if (response.status === 200) {
+                        setLoading(false);
+                    }
+                })
+        } catch (error) {
+            console.log(error)
+        }
+        auth.logout();
+        history.push('/');
+    }
+
     let userAbout;
     if (loadedUser && loadedUser.about) {
         userAbout = (loadedUser.about)
@@ -189,7 +224,7 @@ function UserSetup() {
                 <div>
                     <button onClick={() => removeImage()}>Remove Profile Picture</button>
                 </div>
-                <button>Delete Account</button>
+                <button onClick={deleteAccount}>Delete Account</button>
             </div>}
         </div>
     )
