@@ -13,6 +13,8 @@ router.post('/register', usersControllers.register);
 
 router.post('/setup', usersControllers.setup);
 
+router.delete('/setup', usersControllers.deleteUser);
+
 router.post('/setup/upload', usersControllers.updateImage);
 
 router.delete('/setup/upload', usersControllers.deleteImage);
