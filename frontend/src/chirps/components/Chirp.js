@@ -126,7 +126,8 @@ function Chirp(props) {
     } else if (isReply) {
         replyUsername = (
             <div className="container">
-            <Link to={`/${parentUsername}/status/${parentChirpId}`}>
+            {/* <Link to={`/${parentUsername}/status/${parentChirpId}`}> */}
+            <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
               <p>{text}</p>
               <p>{replies.length} {likes.length}</p>
