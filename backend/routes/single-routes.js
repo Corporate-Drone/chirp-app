@@ -16,4 +16,6 @@ router.delete('/status/:id/reply', singleControllers.deleteReply);
 
 router.get('/', singleControllers.getUserChirps);
 
+router.post('/', singleControllers.followUser);
+
 module.exports = router;

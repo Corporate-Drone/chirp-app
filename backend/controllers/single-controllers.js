@@ -113,8 +113,35 @@ const deleteReply = async (req, res, next) => {
     }
 }
 
+const followUser = async (req, res, next) => {
+    const { actionUsername, reqUserId } = req.body;
+    const userToFollow = await User.findOne({ username: actionUsername })
+    const requestingUser = await User.findById(reqUserId)
+    try {
+        if (userToFollow.username !== requestingUser.username) {
+            //add or remove user from followers
+        if (userToFollow.followers.includes(requestingUser._id)) {
+            userToFollow.followers.pull(requestingUser._id);
+            requestingUser.following.pull(userToFollow._id);
+            console.log('pull')
+        } else {
+            userToFollow.followers.push(requestingUser._id);
+            requestingUser.following.push(userToFollow._id);
+            console.log('push')
+        }
+        }
+        
+    } catch (error) {
+        console.log(error)
+    }
+    await userToFollow.save();
+    await requestingUser.save();
+    res.send('Saved')
+}
+
 exports.getSingleChirp = getSingleChirp;
 exports.getUserChirps = getUserChirps;
 exports.likeChirp = likeChirp;
 exports.replyToChirp = replyToChirp;
 exports.deleteReply = deleteReply;
+exports.followUser = followUser;

@@ -2,6 +2,7 @@ const HttpError = require('../models/http-error');
 const Chirp = require('../models/chirp');
 const Reply = require('../models/reply');
 const { findById } = require('../models/chirp');
+const chirp = require('../models/chirp');
 
 const getAllChirps = async (req, res, next) => {
     try {
@@ -43,9 +44,12 @@ const deleteChirp = async (req, res, next) => {
     const parentId = req.body.chirpId;
     const isReply = req.body.isReply;
     try {
+        //remove from thread if Chirp is a reply
         if (isReply) {
             await Chirp.findByIdAndUpdate(parentId, { $pull: { replies: chirpId } })
         }
+
+        //delete the chirp
         await Chirp.findByIdAndDelete(chirpId);
         res.send('deleted')
     } catch (error) {
