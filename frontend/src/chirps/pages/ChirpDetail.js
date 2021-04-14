@@ -50,8 +50,6 @@ function ChirpDetail(props) {
                         console.log(response.data)
                         setLoadedParent(response.data);
                         setLoading(false);
-                        console.log('request for parent made!')
-                        console.log(setLoadedParent)
                     }
                 })
         } catch (error) {

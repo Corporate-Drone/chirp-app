@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import useInputState from "../../hooks/useInputState";
 import { AuthContext } from '../../shared/context/auth-context';
@@ -14,12 +14,14 @@ function UserChirps(props) {
     const [loadedUser, setLoadedUser] = useState();
     const [isLoading, setLoading] = useState(true);
 
+    const auth = useContext(AuthContext);
+
     const getUserChirps = async (userId) => {
         setLoading(true);
         try {
             const res = await axios.get("http://localhost:5000/:userId", { params: { id: userId } })
                 .then(response => {
-                    
+
                     if (response.status === 200) {
                         setLoadedChirps(response.data)
                         console.log(response.data)
@@ -35,7 +37,24 @@ function UserChirps(props) {
         getUserChirps(userId);
 
     }, []);
-    
+
+    const followUser = async () => {
+        try {
+            const data = {
+                actionUsername: userId,
+                reqUserId: auth.userId
+            }
+            axios.post('http://localhost:5000/:userId', data)
+                .then(response => {
+                    console.log(response.data)
+                    if (response.status === 200) {
+                        console.log('post req made!')
+                    }
+                })
+        } catch (error) {
+
+        }
+    }
 
 
     useEffect(() => {
@@ -59,15 +78,21 @@ function UserChirps(props) {
         sortDate(loadedChirps)
     }
 
+    let followButton;
+    if (userId !== auth.username) {
+        followButton = (
+            <button onClick={followUser}>Follow</button>
+        )
+    }
+
     return (
         <div>
             {isLoading && <CircularIndeterminate />}
             {!isLoading && <div>
-                {userId}
-                <button>Follow</button>
+                {userId} {followButton}
             </div>}
-            {loadedUser && loadedUser.image && <img src={loadedUser.image.url}/>}
-            {loadedUser && !loadedUser.image && <img src={avatarplaceholder}/>}
+            {loadedUser && loadedUser.image && <img src={loadedUser.image.url} />}
+            {loadedUser && !loadedUser.image && <img src={avatarplaceholder} />}
             {loadedUser && loadedUser.about && <div>{loadedUser.about}</div>}
             {loadedUser && <div>{loadedUser.following.length} following</div>}
             {loadedUser && <div>{loadedUser.followers.length} followers</div>}
