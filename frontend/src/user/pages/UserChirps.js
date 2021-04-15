@@ -80,9 +80,15 @@ function UserChirps(props) {
 
     let followButton;
     if (userId !== auth.username) {
-        followButton = (
-            <button onClick={followUser}>Follow</button>
-        )
+        if (loadedUser && loadedUser.followers.includes(auth.userId)) {
+            followButton = (
+                <button onClick={followUser}>Unfollow</button>
+            )
+        } else {
+            followButton = (
+                <button onClick={followUser}>Follow</button>
+            )
+        }
     }
 
     return (

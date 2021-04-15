@@ -51,6 +51,12 @@ function App() {
         <Route path="/:userId" exact>
           <UserChirps />
         </Route>
+        <Route path="/:userId/followers" exact>
+          <UserFollow type={"followers"}/>
+        </Route >
+        <Route path="/:userId/following" exact>
+          <UserFollow type={"following"} />
+        </Route>
         <Route path="/auth/setup" exact>
           <UserSetup />
         </Route>
