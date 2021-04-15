@@ -18,4 +18,8 @@ router.get('/', singleControllers.getUserChirps);
 
 router.post('/', singleControllers.followUser);
 
+router.get('/followers', singleControllers.getConnections);
+
+router.get('/following', singleControllers.getConnections);
+
 module.exports = router;
