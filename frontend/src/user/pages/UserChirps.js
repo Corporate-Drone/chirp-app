@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import useInputState from "../../hooks/useInputState";
 import { AuthContext } from '../../shared/context/auth-context';
-import { useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 import Chirp from '../../chirps/components/Chirp';
 import sortDate from '../../javascripts/sortDate'
@@ -94,8 +94,13 @@ function UserChirps(props) {
             {loadedUser && loadedUser.image && <img src={loadedUser.image.url} />}
             {loadedUser && !loadedUser.image && <img src={avatarplaceholder} />}
             {loadedUser && loadedUser.about && <div>{loadedUser.about}</div>}
-            {loadedUser && <div>{loadedUser.following.length} following</div>}
-            {loadedUser && <div>{loadedUser.followers.length} followers</div>}
+            <Link to={`/${userId}/following`}>
+                {loadedUser && <div>{loadedUser.following.length} following</div>}
+            </Link>
+            <Link to={`/${userId}/followers`}>
+                {loadedUser && <div>{loadedUser.followers.length} followers</div>}
+            </Link>
+
             {/* display join date */}
             {!isLoading && <div>{chirps}</div>}
         </div>

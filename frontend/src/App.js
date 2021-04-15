@@ -6,6 +6,7 @@ import Login from './user/pages/Login';
 import Register from './user/pages/Register';
 import UserChirps from './user/pages/UserChirps'
 import UserSetup from './user/pages/UserSetup';
+import UserFollow from './user/pages/UserFollow';
 
 import { AuthContext } from './shared/context/auth-context';
 import Navbar from './shared/components/Navigation/Navbar';
@@ -67,6 +68,12 @@ function App() {
         </Route>
         <Route path="/:userId" exact>
           <UserChirps />
+        </Route>
+        <Route path="/:userId/followers" exact>
+          <UserFollow type={"followers"}/>
+        </Route >
+        <Route path="/:userId/following" exact>
+          <UserFollow type={"following"} />
         </Route>
         <Route path="/:userId/status/:chirpId" exact>
           <ChirpDetail />
