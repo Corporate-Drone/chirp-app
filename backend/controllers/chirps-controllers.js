@@ -1,15 +1,28 @@
 const HttpError = require('../models/http-error');
 const Chirp = require('../models/chirp');
+const User = require('../models/user');
 const Reply = require('../models/reply');
 const { findById } = require('../models/chirp');
 const chirp = require('../models/chirp');
 
 const getAllChirps = async (req, res, next) => {
+    const { userId } = req.query;
     try {
         const chirps = await Chirp.find({}).populate('author');
         const replies = await Reply.find({}).populate('author');
         const allChirps = [...chirps, ...replies]
-        res.send(allChirps)
+        //get chirps from user following
+        const user = await User.findById(userId)
+
+        let followedChirps = [];
+        for (let chirp of chirps) {
+            //get user's own chirps & chirps based on users followed 
+            if (user.following.includes(chirp.author._id) || userId == chirp.author._id) {
+                followedChirps.push(chirp)
+            }
+        }
+        res.send(followedChirps)
+        // res.send(allChirps)
         // res.send(chirps)
     } catch (error) {
         console.log(error)
