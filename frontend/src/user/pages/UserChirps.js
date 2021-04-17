@@ -58,8 +58,7 @@ function UserChirps(props) {
 
 
     useEffect(() => {
-        // sort chirps from newest to oldest
-        if (loadedChirps) {
+        if (loadedChirps && loadedChirps.author) {
             console.log('Chirps are loaded.')
             setLoadedUser(loadedChirps[0].author)
         }
@@ -79,7 +78,9 @@ function UserChirps(props) {
     }
 
     let followButton;
+    let editButton;
     if (userId !== auth.username) {
+        //display appropriate follow button if profile isn't the current user's profile
         if (loadedUser && loadedUser.followers.includes(auth.userId)) {
             followButton = (
                 <button onClick={followUser}>Unfollow</button>
@@ -89,6 +90,13 @@ function UserChirps(props) {
                 <button onClick={followUser}>Follow</button>
             )
         }
+        //display profile edit button if profile is current user's profile
+    } else if(auth.isLoggedIn && userId == auth.username) {
+        editButton = (
+            <Link to="/auth/setup">
+                <button>Edit Profile</button>
+            </Link>
+        )
     }
 
     return (
@@ -97,6 +105,7 @@ function UserChirps(props) {
             {!isLoading && <div>
                 {userId} {followButton}
             </div>}
+            {!isLoading && <div>{editButton}</div>}
             {loadedUser && loadedUser.image && <img src={loadedUser.image.url} />}
             {loadedUser && !loadedUser.image && <img src={avatarplaceholder} />}
             {loadedUser && loadedUser.about && <div>{loadedUser.about}</div>}

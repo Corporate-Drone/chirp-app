@@ -53,7 +53,7 @@ export default function ButtonAppBar() {
                         Register
                         </Button>}
                         {auth.isLoggedIn &&
-                        <Button component={Link} to="/auth/setup" color="inherit">
+                        <Button component={Link} to={auth.username}color="inherit">
                             Profile
                         </Button>}
                     {auth.isLoggedIn &&

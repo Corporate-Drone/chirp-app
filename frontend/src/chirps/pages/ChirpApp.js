@@ -20,7 +20,8 @@ function ChirpApp() {
     const fetchChirps = async () => {
         setLoading(true);
         try {
-            await axios.get('http://localhost:5000/chirps')
+            if (auth.isLoggedIn) {
+                await axios.get('http://localhost:5000/chirps', { params: { userId: auth.userId } })
                 .then(response => {
                     // console.log(response.data)
                     if (response.status === 200) {
@@ -29,6 +30,8 @@ function ChirpApp() {
                         setLoading(false);
                     }
                 })
+            }
+
         } catch (error) {
             console.log(error)
             setLoading(false);
