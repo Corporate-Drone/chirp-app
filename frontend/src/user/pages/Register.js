@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 import { AuthContext } from '../../shared/context/auth-context';
 import useInputState from "../../hooks/useInputState";
 
@@ -9,10 +11,6 @@ function Register(props) {
     const auth = useContext(AuthContext);
 
     const history = useHistory();
-
-    const [value, handleChange, reset] = useInputState("");
-    const [value2, handleChange2, reset2] = useInputState("");
-    const [value3, handleChange3, reset3] = useInputState("");
 
     function registerUser(username, email, password) {
         // const headers = {
@@ -28,7 +26,7 @@ function Register(props) {
                 .then(response => {
                     // console.log(response.data)
                     if (response.status === 200) {
-                        auth.login(response.data._id,response.data.username) //login user after registering
+                        auth.login(response.data._id, response.data.username) //login user after registering
                         history.push('/chirps'); //redirect to chirps
                     }
                 })
@@ -40,45 +38,102 @@ function Register(props) {
 
 
     return (
-        <form
-            onSubmit={e => {
-                e.preventDefault();
-                registerUser(value, value2, value3)
-                // addChirp(value);
-                reset();
-                reset2();
-                reset3();
+        <Formik
+            initialValues={{
+                username: "",
+                email: "",
+                password: ""
             }}
+            onSubmit={async values => {
+                registerUser(values.username, values.email, values.password)
+            }}
+
+            validationSchema={Yup.object().shape({
+                username: Yup.string()
+                    .required("Required"),
+                password: Yup.string()
+                    .required("Required"),
+                email: Yup.string()
+                    .email()
+                    .required("Required")
+            })}
         >
-            <label htmlFor="username">Username</label>
-            <input
-                type='text'
-                name='username'
-                onChange={handleChange}
-                value={value}
-                id='username'
-                placeholder='Enter a username'
-            />
-            <label htmlFor="email">Email</label>
-            <input
-                type='email'
-                name='email'
-                onChange={handleChange2}
-                value={value2}
-                id='email'
-                placeholder='Enter an email'
-            />
-            <label htmlFor="password">Password</label>
-            <input
-                type='password'
-                name='password'
-                onChange={handleChange3}
-                value={value3}
-                id='password'
-                placeholder='Enter a password'
-            />
-            <button>Register</button>
-        </form>
+            {props => {
+                const {
+                    values,
+                    touched,
+                    errors,
+                    dirty,
+                    isSubmitting,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    handleReset
+                } = props;
+                return (
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="username">
+                            Username
+              </label>
+                        <input
+                            id="username"
+                            placeholder="Enter your username"
+                            type="text"
+                            value={values.username}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            className={
+                                errors.username && touched.username
+                                    ? "text-input error"
+                                    : "text-input"
+                            }
+                        />
+                        {errors.username && touched.username && (
+                            <div className="input-feedback">{errors.username}</div>
+                        )}
+
+                        <label htmlFor="email">
+                            Email
+                            </label>
+                        <input
+                            id="email"
+                            placeholder="Enter your email"
+                            type="text"
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            className={
+                                errors.email && touched.email
+                                    ? "text-input error"
+                                    : "text-input"
+                            }
+                        />
+                        {errors.email && touched.email && (
+                            <div className="input-feedback">{errors.email}</div>
+                        )}
+
+                        <label htmlFor="passowrd">Password</label>
+                        <input
+                            type="password"
+                            name="password"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.password}
+                        />
+                        {errors.password && touched.password && (
+                            <span className="error">
+                                {errors.password}
+                            </span>
+                        )}
+
+                        <button type="submit" disabled={isSubmitting}>
+                            Submit
+              </button>
+
+                    </form>
+                );
+            }}
+        </Formik>
     );
 }
 
