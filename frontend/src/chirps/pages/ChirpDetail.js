@@ -86,7 +86,7 @@ function ChirpDetail(props) {
     return (
         <div>
             {/* display parent chirp */}
-             {!isLoading && loadedParent && <Chirp
+             {!isLoading && loadedParent && loadedParent.id !== loadedChirp.id && <Chirp
                 username={loadedParent.author.username}
                 date={loadedParent.date}
                 id={loadedParent.id}
