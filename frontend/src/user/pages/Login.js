@@ -27,6 +27,7 @@ function Login(props) {
             history.push('/chirps');
           }
         })
+        .catch((err) => console.log(err.response.data.message));
     } catch (error) {
       console.log(error)
     }
