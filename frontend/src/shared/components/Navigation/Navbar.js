@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,10 +23,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 export default function ButtonAppBar() {
     const auth = useContext(AuthContext);
+    const history = useHistory();
     const classes = useStyles();
 
+    //logout user & redirect
+    const logout = () => {
+        auth.logout()
+        history.push('/');
+    }
+    
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -57,7 +66,7 @@ export default function ButtonAppBar() {
                             Profile
                         </Button>}
                     {auth.isLoggedIn &&
-                        <Button color="inherit" onClick={auth.logout}>
+                        <Button color="inherit" onClick={logout}>
                             Logout
                         </Button>}
                 </Toolbar>

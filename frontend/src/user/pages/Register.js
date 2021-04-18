@@ -42,7 +42,7 @@ function Register(props) {
 
     return (
         <div>
-            {displayError && <ErrorModal message={displayError} />}
+            {displayError && <ErrorModal message={displayError} setDisplayError={setDisplayError} />}
             <Formik
                 initialValues={{
                     username: "",
