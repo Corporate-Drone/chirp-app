@@ -1,17 +1,13 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import useInputState from "../../hooks/useInputState";
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 import getDate from "../../javascripts/currentDate";
 import { AuthContext } from '../../shared/context/auth-context';
 
 function ChirpForm(props) {
-    // const { addChirp } = props;
     const { fetchChirps } = props;
     const auth = useContext(AuthContext);
-
-    // const addChirp = newChirp => {
-    //     setChirps([...chirps, {info: newChirp, replies: [], rechirps: [], likes: 0, date: getDate() }])
-    // }
 
     const addChirp = async (newChirp) => {
         // setChirps([...chirps, { info: newChirp, replies: [], rechirps: [], likes: 0, date: getDate() }])
@@ -34,28 +30,66 @@ function ChirpForm(props) {
         } catch (error) {
             console.log(error)
         }
-        
+
     }
 
-    const [value, handleChange, reset] = useInputState("");
     return (
-            <form
-                onSubmit={e => {
-                    e.preventDefault();
-                    addChirp(value);
-                    reset();
-                }}
-            >
-                <input
-                    type='text'
-                    name='info'
-                    onChange={handleChange}
-                    value={value}
-                    id='info'
-                    placeholder='What is happening?'
-                />
-                <button>Send Chirp</button>
+        <Formik
+        initialValues={{
+          text: ""
+        }}
+        onSubmit={async values => {
+            addChirp(values.text)
+        }}
+  
+        validationSchema={Yup.object().shape({
+            text: Yup.string()
+            .required("Required")
+        })}
+      >
+        {props => {
+          const {
+            values,
+            touched,
+            errors,
+            dirty,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            handleReset
+          } = props;
+          return (
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="text" style={{ display: "block" }}>
+                Username
+              </label>
+              <input
+                id="text"
+                placeholder="What's happening?"
+                type="text"
+                value={values.text}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.text && touched.text
+                    ? "text-input error"
+                    : "text-input"
+                }
+              />
+              {errors.text && touched.text && (
+                <div className="input-feedback">{errors.text}</div>
+              )}
+  
+  
+              <button type="submit" disabled={isSubmitting}>
+                Submit
+              </button>
+  
             </form>
+          );
+        }}
+      </Formik>
     );
 }
 
