@@ -58,8 +58,7 @@ function UserChirps(props) {
 
 
     useEffect(() => {
-        if (loadedChirps && loadedChirps.author) {
-            console.log('Chirps are loaded.')
+        if (loadedChirps) {
             setLoadedUser(loadedChirps[0].author)
         }
     }, [isLoading, loadedChirps]); //run when changes to isLoading or chirps

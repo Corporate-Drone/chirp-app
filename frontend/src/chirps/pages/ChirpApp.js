@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import ChirpList from "../components/ChirpList"
@@ -12,6 +13,11 @@ import './ChirpApp.css';
 
 function ChirpApp() {
     const auth = useContext(AuthContext);
+    const history = useHistory();
+
+    if (!auth.isLoggedIn) {
+        history.push('/');
+    }
 
     //object, setState for Object, set inital state
     const [chirps, setChirps] = useState()

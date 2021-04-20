@@ -39,7 +39,8 @@ function ChirpForm(props) {
           text: ""
         }}
         onSubmit={async values => {
-            addChirp(values.text)
+          addChirp(values.text)
+          values.text = ""
         }}
   
         validationSchema={Yup.object().shape({
@@ -62,7 +63,7 @@ function ChirpForm(props) {
           return (
             <form onSubmit={handleSubmit}>
               <label htmlFor="text" style={{ display: "block" }}>
-                Username
+                Chirp
               </label>
               <input
                 id="text"
@@ -83,7 +84,7 @@ function ChirpForm(props) {
   
   
               <button type="submit" disabled={isSubmitting}>
-                Submit
+                Submit Chirp
               </button>
   
             </form>
