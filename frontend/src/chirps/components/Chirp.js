@@ -171,6 +171,7 @@ function Chirp(props) {
         )
     }
 
+    //display placeholder image if user has not uploaded a picture
     let profilePicture;
     if (!author.image || author.image.url === undefined) {
         profilePicture = (
@@ -182,12 +183,20 @@ function Chirp(props) {
         )
     }
 
+    //display remove button if Chirp belongs to current user
+    let removeButton;
+    if (username === auth.username) {
+        removeButton = (
+            <button onClick={() => removeChirp(id)}>Remove</button>
+        )
+    }
+
     return (
         <div>
             {profilePicture}
             {replyUsername}
             <button onClick={toggle}>Reply</button>
-            <button onClick={() => removeChirp(id)}>Remove</button>
+            {removeButton}
             {!isLiked && <button onClick={() => likeChirp(id)}>Like</button>}
             {isLiked && <button onClick={() => likeChirp(id)}>Unlike</button>}
             {isReplying && <ChirpReplyForm id={id} addReply={addReply} />}

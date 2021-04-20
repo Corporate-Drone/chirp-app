@@ -13,6 +13,7 @@ import Navbar from './shared/components/Navigation/Navbar';
 import ChirpList from "./chirps/components/ChirpList"
 import ChirpDetail from "./chirps/pages/ChirpDetail"
 import ChirpApp from './chirps/pages/ChirpApp';
+import Home from './chirps/pages/Home';
 
 import './App.css';
 
@@ -69,6 +70,9 @@ function App() {
   } else {
     routes = (
       <Switch>
+        <Route path="/" exact>
+          <Home />
+        </Route>
         <Route path="/chirps" exact>
           <ChirpApp />
         </Route>
