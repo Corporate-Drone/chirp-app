@@ -11,7 +11,8 @@ import avatarplaceholder from '../../images/avatarplaceholder.gif'
 function Chirp(props) {
     const { replies, date, id, likes, text, username, isReply, parentChirpId, parentUsername, detailView, author,fetchChirps } = props;
     const [isReplying, toggle] = useToggleState(false);
-    const [isLiked, setLiked] = useState();
+    const [isLiked, toggleLike] = useToggleState();
+    const [likeCount, setLikeCount] = useState();
 
     const auth = useContext(AuthContext);
 
@@ -60,13 +61,6 @@ function Chirp(props) {
         } catch (error) {
             console.log(error)
         }
-        if (fetchChirps) {
-            //refresh Chirps if on /chirps
-            fetchChirps();
-        } else {
-            //redirect to the thread containing the reply
-            history.push(`/${username}/status/${chirpId}/`);
-        }
     }
 
     const removeChirp = async (chirpId) => {
@@ -100,11 +94,23 @@ function Chirp(props) {
 
     useEffect(() => {
         if ( auth.isLoggedIn && likes.includes(auth.userId)) {
-            setLiked(true)
-        } else {
-            setLiked(false)
+            // setLiked(true)
+            toggleLike()
         }
-    },[])
+
+        setLikeCount(likes.length);
+    }, [])
+    
+    const handleLikeButton = async (chirpId) => {
+        if (isLiked) {
+            setLikeCount(likeCount - 1)
+        } else {
+            setLikeCount(likeCount + 1)
+        }
+        likeChirp(chirpId)
+        toggleLike()
+
+    }
 
     let replyUsername;
     if (isReply && detailView) {
@@ -113,7 +119,7 @@ function Chirp(props) {
             <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
               <p>{text}</p>
-              <p>{replies.length} {likes.length}</p>
+              <p>{replies.length} {likeCount}</p>
             </Link>
             <Link to={`/${parentUsername}`}>
               <p>Replying to {parentUsername}</p>
@@ -130,7 +136,7 @@ function Chirp(props) {
             <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
               <p>{text}</p>
-              <p>{replies.length} {likes.length}</p>
+              <p>{replies.length} {likeCount}</p>
             </Link>
             <Link to={`/${parentUsername}`}>
               <p>Replying to {parentUsername}</p>
@@ -146,7 +152,7 @@ function Chirp(props) {
             <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
               <p>{text}</p>
-              <p>{replies.length} {likes.length}</p>
+              <p>{replies.length} {likeCount}</p>
             </Link>
             <Link to={`/${parentUsername}`}>
               <p>Replying to {parentUsername}</p>
@@ -162,7 +168,7 @@ function Chirp(props) {
             <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
               <p>{text}</p>
-              <p>{replies.length} {likes.length}</p>
+              <p>{replies.length} {likeCount}</p>
             </Link>
             <Link to={`/${username}`}>
               <p>{username}</p>
@@ -197,8 +203,8 @@ function Chirp(props) {
             {replyUsername}
             <button onClick={toggle}>Reply</button>
             {removeButton}
-            {!isLiked && <button onClick={() => likeChirp(id)}>Like</button>}
-            {isLiked && <button onClick={() => likeChirp(id)}>Unlike</button>}
+            {!isLiked && <button onClick={() => handleLikeButton(id)}>Test Like</button>}
+            {isLiked && <button onClick={() => handleLikeButton(id)}>Test Unlike</button>}
             {isReplying && <ChirpReplyForm id={id} addReply={addReply} />}
             <hr />
 

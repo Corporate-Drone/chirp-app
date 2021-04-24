@@ -7,12 +7,15 @@ import CircularIndeterminate from '../../shared/components/UIElements/CircularIn
 import Chirp from '../../chirps/components/Chirp';
 import sortDate from '../../javascripts/sortDate'
 import avatarplaceholder from '../../images/avatarplaceholder.gif'
+import useToggleState from "../../hooks/useToggleState";
 
 function UserChirps(props) {
     const { userId } = useParams()
     const [loadedChirps, setLoadedChirps] = useState();
     const [loadedUser, setLoadedUser] = useState();
     const [isLoading, setLoading] = useState(true);
+    const [isFollowing, toggle] = useToggleState();
+    const [followCount, setFollowCount] = useState();
 
     const auth = useContext(AuthContext);
 
@@ -60,8 +63,28 @@ function UserChirps(props) {
     useEffect(() => {
         if (loadedChirps) {
             setLoadedUser(loadedChirps[0].author)
+
+            if (loadedUser) {
+                setFollowCount(loadedUser.followers.length);
+            }
+
+            //set isFollowing to true if current user is following
+            if (loadedUser && loadedUser.followers.includes(auth.userId)) {
+                toggle()
+            }
         }
     }, [isLoading, loadedChirps]); //run when changes to isLoading or chirps
+
+    const handleFollowButton = async () => {
+        if (isFollowing) {
+            setFollowCount(followCount - 1)
+        } else {
+            setFollowCount(followCount + 1)
+        }
+        followUser()
+        toggle()
+
+    }
 
     let chirps;
     if (loadedChirps) {
@@ -76,34 +99,37 @@ function UserChirps(props) {
         sortDate(loadedChirps)
     }
 
-    let followButton;
     let editButton;
+    let testButton;
     if (userId !== auth.username) {
-        //display appropriate follow button if profile isn't the current user's profile
-        if (loadedUser && loadedUser.followers.includes(auth.userId)) {
-            followButton = (
-                <button onClick={followUser}>Unfollow</button>
+        if (isFollowing) {
+            testButton = (
+                <button onClick={handleFollowButton}>Unfollow</button>
             )
+    
+    
         } else {
-            followButton = (
-                <button onClick={followUser}>Follow</button>
+            testButton = (
+                <button onClick={handleFollowButton}>Follow</button>
             )
         }
-        //display profile edit button if profile is current user's profile
-    } else if(auth.isLoggedIn && userId == auth.username) {
+    } else {
         editButton = (
             <Link to="/auth/setup">
                 <button>Edit Profile</button>
             </Link>
         )
     }
+   
 
     return (
         <div>
             {isLoading && <CircularIndeterminate />}
             {!isLoading && <div>
-                {userId} {followButton}
+                {userId}
+                {/* {followButton} */}
             </div>}
+            {testButton}
             {!isLoading && <div>{editButton}</div>}
             {loadedUser && loadedUser.image && <img src={loadedUser.image.url} />}
             {loadedUser && !loadedUser.image && <img src={avatarplaceholder} />}
@@ -112,7 +138,7 @@ function UserChirps(props) {
                 {loadedUser && <div>{loadedUser.following.length} following</div>}
             </Link>
             <Link to={`/${userId}/followers`}>
-                {loadedUser && <div>{loadedUser.followers.length} followers</div>}
+                {loadedUser && <div>{followCount} followers</div>}
             </Link>
 
             {/* display join date */}
