@@ -34,6 +34,10 @@ export default function ButtonAppBar() {
         auth.logout()
         history.push('/');
     }
+
+    const toProfile = () => {
+        history.push(`/${auth.username}`)
+    }
     
     return (
         <div className={classes.root}>
@@ -57,7 +61,7 @@ export default function ButtonAppBar() {
                         Register
                         </Button>}
                         {auth.isLoggedIn &&
-                        <Button component={Link} to={auth.username}color="inherit">
+                        <Button component={Link} onClick={toProfile} color="inherit">
                             Profile
                         </Button>}
                     {auth.isLoggedIn &&

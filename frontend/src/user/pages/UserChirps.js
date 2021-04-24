@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import useInputState from "../../hooks/useInputState";
 import { AuthContext } from '../../shared/context/auth-context';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 import Chirp from '../../chirps/components/Chirp';
 import sortDate from '../../javascripts/sortDate'
@@ -18,6 +18,7 @@ function UserChirps(props) {
     const [followCount, setFollowCount] = useState();
 
     const auth = useContext(AuthContext);
+    const location = useLocation();
 
     const getUserChirps = async (userId) => {
         setLoading(true);
@@ -38,8 +39,7 @@ function UserChirps(props) {
     useEffect(() => {
         // Update chirps on refresh
         getUserChirps(userId);
-
-    }, []);
+    },[location])
 
     const followUser = async () => {
         try {
