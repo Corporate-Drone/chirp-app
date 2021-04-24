@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -10,7 +10,6 @@ function ChirpForm(props) {
     const auth = useContext(AuthContext);
 
     const addChirp = async (newChirp) => {
-        // setChirps([...chirps, { info: newChirp, replies: [], rechirps: [], likes: 0, date: getDate() }])
         try {
             const data = {
                 text: newChirp,
@@ -23,7 +22,7 @@ function ChirpForm(props) {
                 .then(response => {
                     console.log(response.data)
                     if (response.status === 200) {
-                        console.log(response.data)
+                        console.log('Chirp posted!')
                         fetchChirps();
                     }
                 })

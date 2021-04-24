@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import ChirpList from "../components/ChirpList"
 import ChirpForm from "../components/ChirpForm";
-import getDate from "../../javascripts/currentDate";
 import sortDate from '../../javascripts/sortDate'
 import { AuthContext } from '../../shared/context/auth-context';
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
@@ -19,7 +18,6 @@ function ChirpApp() {
         history.push('/');
     }
 
-    //object, setState for Object, set inital state
     const [chirps, setChirps] = useState()
     const [isLoading, setLoading] = useState(true);
 
@@ -29,7 +27,6 @@ function ChirpApp() {
             if (auth.isLoggedIn) {
                 await axios.get('http://localhost:5000/chirps', { params: { userId: auth.userId } })
                 .then(response => {
-                    // console.log(response.data)
                     if (response.status === 200) {
                         console.log(response.data)
                         setChirps(response.data);
@@ -42,9 +39,6 @@ function ChirpApp() {
             console.log(error)
             setLoading(false);
         }
-
-
-        // sortDate();
     }
 
     useEffect(() => {
@@ -65,7 +59,6 @@ function ChirpApp() {
     return (
         <div className="ChirpApp">
             {isLoading && <CircularIndeterminate/>}
-            {/* {!isLoading && { sortDate() }} */}
             {auth.isLoggedIn &&
                 <ChirpForm fetchChirps={fetchChirps} />}
             {!isLoading && <ChirpList

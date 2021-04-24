@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import UserDisplay from '../components/UserDisplay';
@@ -41,13 +41,6 @@ function UserFollow(props) {
 
     let users;
     if (loadedConnections) {
-        // users = loadedConnections.map(u => (
-        //     <div>
-        //         <div>{u.username}</div>
-        //         <img src={u.image.url}/>
-        //     </div>
-            
-        // ))
         users = loadedConnections.map(u => (
             <UserDisplay
                 key={u._id}

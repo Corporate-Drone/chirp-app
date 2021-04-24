@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams, useHistory } from 'react-router-dom';
+import React from "react";
+import { Link } from 'react-router-dom';
 
 import avatarplaceholder from '../../images/avatarplaceholder.gif'
 

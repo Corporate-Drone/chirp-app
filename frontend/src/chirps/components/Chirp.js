@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import ChirpReplyForm from "./ChirpReplyForm";
 import useToggleState from "../../hooks/useToggleState";
@@ -28,9 +28,7 @@ function Chirp(props) {
                 date: getDate()
             })
                 .then(response => {
-                    // console.log(response.data)
                     if (response.status === 200) {
-                        console.log(response.data)
                         console.log('request made!')
                     }
                 })
@@ -53,9 +51,8 @@ function Chirp(props) {
                 username: auth.username
             })
                 .then(response => {
-                    // console.log(response.data)
                     if (response.status === 200) {
-                        console.log(response.data)
+                        console.log('Chirp liked!')
                     }
                 })
         } catch (error) {
@@ -78,7 +75,7 @@ function Chirp(props) {
                 .then(response => {
                     // console.log(response.data)
                     if (response.status === 200) {
-                        console.log(response.data)
+                        console.log('Chirp removed!')
                     }
                 })
         } catch (error) {
@@ -94,7 +91,6 @@ function Chirp(props) {
 
     useEffect(() => {
         if ( auth.isLoggedIn && likes.includes(auth.userId)) {
-            // setLiked(true)
             toggleLike()
         }
 
@@ -132,7 +128,6 @@ function Chirp(props) {
     } else if (isReply) {
         replyUsername = (
             <div className="container">
-            {/* <Link to={`/${parentUsername}/status/${parentChirpId}`}> */}
             <Link to={`/${username}/status/${id}`}>
               <p>{date}</p>
               <p>{text}</p>

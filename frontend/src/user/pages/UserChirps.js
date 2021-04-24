@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import useInputState from "../../hooks/useInputState";
 import { AuthContext } from '../../shared/context/auth-context';
-import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 import Chirp from '../../chirps/components/Chirp';
 import sortDate from '../../javascripts/sortDate'
@@ -28,7 +27,6 @@ function UserChirps(props) {
 
                     if (response.status === 200) {
                         setLoadedChirps(response.data)
-                        console.log(response.data)
                     }
                 })
         } catch (error) { console.log(error) }
@@ -127,9 +125,11 @@ function UserChirps(props) {
             {isLoading && <CircularIndeterminate />}
             {!isLoading && <div>
                 {userId}
-                {/* {followButton} */}
             </div>}
-            {testButton}
+            {!isLoading && testButton}
+            {!isLoading && loadedChirps && <div>
+                {loadedChirps.length} Chirps
+                </div>}
             {!isLoading && <div>{editButton}</div>}
             {loadedUser && loadedUser.image && <img src={loadedUser.image.url} />}
             {loadedUser && !loadedUser.image && <img src={avatarplaceholder} />}
@@ -140,8 +140,6 @@ function UserChirps(props) {
             <Link to={`/${userId}/followers`}>
                 {loadedUser && <div>{followCount} followers</div>}
             </Link>
-
-            {/* display join date */}
             {!isLoading && <div>{chirps}</div>}
         </div>
     )

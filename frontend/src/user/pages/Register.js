@@ -4,20 +4,15 @@ import axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../../shared/context/auth-context';
-import useInputState from "../../hooks/useInputState";
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 
 function Register(props) {
-    // const { registerUser } = props;
     const auth = useContext(AuthContext);
     const [displayError, setDisplayError] = useState();
 
     const history = useHistory();
 
     function registerUser(username, email, password) {
-        // const headers = {
-        //   'Content-Type': 'application/json',
-        // }
         try {
             const data = {
                 username,
@@ -26,7 +21,6 @@ function Register(props) {
             }
             axios.post('http://localhost:5000/auth/register', data)
                 .then(response => {
-                    // console.log(response.data)
                     if (response.status === 200) {
                         auth.login(response.data._id, response.data.username) //login user after registering
                         history.push('/chirps'); //redirect to chirps

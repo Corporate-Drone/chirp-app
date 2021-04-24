@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import useInputState from "../../hooks/useInputState";
 import { AuthContext } from '../../shared/context/auth-context';

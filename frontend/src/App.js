@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import axios from 'axios';
 
 import Login from './user/pages/Login';
@@ -10,7 +10,6 @@ import UserFollow from './user/pages/UserFollow';
 
 import { AuthContext } from './shared/context/auth-context';
 import Navbar from './shared/components/Navigation/Navbar';
-import ChirpList from "./chirps/components/ChirpList"
 import ChirpDetail from "./chirps/pages/ChirpDetail"
 import ChirpApp from './chirps/pages/ChirpApp';
 import Home from './chirps/pages/Home';

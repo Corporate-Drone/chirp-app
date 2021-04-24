@@ -3,13 +3,11 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import useInputState from "../../hooks/useInputState";
 import { AuthContext } from '../../shared/context/auth-context';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 
 
 function Login(props) {
-  // const { loginUser } = props;
   const auth = useContext(AuthContext);
   const [displayError, setDisplayError] = useState();
 

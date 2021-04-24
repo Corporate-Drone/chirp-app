@@ -1,21 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import Chirp from "../components/Chirp";
-import ChirpReply from "../components/ChirpReply";
-import ChirpReplyForm from "../components/ChirpReplyForm";
-import { useParams, useHistory, useLocation } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 
-import useToggleState from "../../hooks/useToggleState";
 
 function ChirpDetail(props) {
     const { chirpId, userId } = useParams()
     const [loadedChirp, setLoadedChirp] = useState();
     const [loadedParent, setLoadedParent] = useState();
     const [isLoading, setLoading] = useState(true);
-    const history = useHistory();
     const location = useLocation();
-    // const { parentUsername, parentChirpId } = props;
 
     const fetchSingleChirp = async () => {
         setLoading(true);
@@ -26,7 +21,6 @@ function ChirpDetail(props) {
                 .then(response => {
 
                     if (response.status === 200) {
-                        console.log(response.data)
                         setLoadedChirp(response.data);
                         setLoading(false);
                         console.log('request made!')
@@ -47,7 +41,6 @@ function ChirpDetail(props) {
                 .then(response => {
 
                     if (response.status === 200) {
-                        console.log(response.data)
                         setLoadedParent(response.data);
                         setLoading(false);
                     }
@@ -68,15 +61,6 @@ function ChirpDetail(props) {
         fetchSingleChirp();
     }, [location]);
 
-
-    // useEffect(() => {
-    //     // sort chirps from newest to oldest
-    //     if (loadedChirp) {
-    //         console.log('Chirp is loaded.')
-    //         console.log(loadedChirp.replies)
-    //     }
-    // }, [isLoading, loadedChirp]); //run when changes to isLoading or chirps
-
     useEffect(() => {
         if (loadedChirp && loadedChirp.isReply) {
             fetchParentChirp()
@@ -85,7 +69,6 @@ function ChirpDetail(props) {
 
     return (
         <div>
-            {/* display parent chirp */}
              {!isLoading && loadedParent && loadedParent.id !== loadedChirp.id && <Chirp
                 username={loadedParent.author.username}
                 date={loadedParent.date}
@@ -93,13 +76,11 @@ function ChirpDetail(props) {
                 likes={loadedParent.likes}
                 replies={loadedParent.replies}
                 text={loadedParent.text}
-                // removeChirp={removeChirp}
                 parentChirpId={loadedParent.parentChirpId}
                 parentUsername={loadedParent.parentUsername}
                 author={loadedParent.author}
             />}
 
-            {/* display loaded Chirp */}
             {!isLoading && loadedChirp && <Chirp
                 username={loadedChirp.author.username}
                 date={loadedChirp.date}
@@ -107,13 +88,11 @@ function ChirpDetail(props) {
                 likes={loadedChirp.likes}
                 replies={loadedChirp.replies}
                 text={loadedChirp.text}
-                // removeChirp={removeChirp}
                 parentChirpId={loadedChirp.parentChirpId}
                 parentUsername={loadedChirp.parentUsername}
                 author={loadedChirp.author}
             />}
 
-            {/* display loaded Chirp replies */}
             {!isLoading && loadedChirp && loadedChirp.replies.map(c => (
                 <Chirp
                     key={c._id}
@@ -124,7 +103,6 @@ function ChirpDetail(props) {
                     replies={c.replies}
                     id={c._id}
                     userId={c.author._id}
-                    // removeReply={removeReply}
                     parentUsername={c.parentUsername}
                     parentChirpId={c.parentChirpId}
                     isReply={c.isReply}
