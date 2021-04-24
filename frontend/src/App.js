@@ -10,6 +10,7 @@ import UserFollow from './user/pages/UserFollow';
 
 import { AuthContext } from './shared/context/auth-context';
 import Navbar from './shared/components/Navigation/Navbar';
+import Header from './shared/components/Navigation/Navbar-Responsive';
 import ChirpDetail from "./chirps/pages/ChirpDetail"
 import ChirpApp from './chirps/pages/ChirpApp';
 import Home from './chirps/pages/Home';
@@ -104,6 +105,7 @@ function App() {
     >
       <Router>
         <Navbar />
+        <Header/>
         <main>{routes}</main>
       </Router>
     </AuthContext.Provider>
