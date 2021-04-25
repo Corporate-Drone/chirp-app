@@ -9,7 +9,6 @@ import UserSetup from './user/pages/UserSetup';
 import UserFollow from './user/pages/UserFollow';
 
 import { AuthContext } from './shared/context/auth-context';
-import Navbar from './shared/components/Navigation/Navbar';
 import Header from './shared/components/Navigation/Navbar-Responsive';
 import ChirpDetail from "./chirps/pages/ChirpDetail"
 import ChirpApp from './chirps/pages/ChirpApp';
@@ -104,7 +103,6 @@ function App() {
       value={{ isLoggedIn: isLoggedIn, userId: userId, username: username, login: login, logout: logout }}
     >
       <Router>
-        <Navbar />
         <Header/>
         <main>{routes}</main>
       </Router>

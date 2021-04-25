@@ -12,6 +12,7 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
+import "./Navbar-Responsive.css";
 
 import { AuthContext } from '../../context/auth-context';
 
@@ -19,9 +20,8 @@ let headersData = [];
 
 const useStyles = makeStyles(() => ({
     header: {
-        backgroundColor: "#400CCC",
-        paddingRight: "79px",
-        paddingLeft: "118px",
+        backgroundColor: "#1DA1F2",
+        position: "static",
         "@media (max-width: 900px)": {
             paddingLeft: 0,
         },
@@ -43,7 +43,9 @@ const useStyles = makeStyles(() => ({
         justifyContent: "space-between",
     },
     drawerContainer: {
-        padding: "20px 30px",
+        display: "flex",
+        flexDirection: "column",
+        padding: "20px 50px",
     },
 }));
 
@@ -53,7 +55,7 @@ export default function Header() {
     const { header, logo, menuButton, toolbar, drawerContainer } = useStyles();
 
     const handleDrawerOpen = () =>
-    setState((prevState) => ({ ...prevState, drawerOpen: true }));
+        setState((prevState) => ({ ...prevState, drawerOpen: true }));
 
     const handleDrawerClose = () =>
         setState((prevState) => ({ ...prevState, drawerOpen: false }));
@@ -125,18 +127,6 @@ export default function Header() {
     const displayMobile = () => {
         return (
             <Toolbar>
-                <IconButton
-                    {...{
-                        edge: "start",
-                        color: "inherit",
-                        "aria-label": "menu",
-                        "aria-haspopup": "true",
-                        onClick: handleDrawerOpen,
-                    }}
-                >
-                    <MenuIcon />
-                </IconButton>
-
                 <Drawer
                     {...{
                         anchor: "left",
@@ -167,7 +157,20 @@ export default function Header() {
                         </Button>}</div>
                 </Drawer>
 
-                <div>{chirpLogo}</div>
+                <div className="hamburger">
+                    <div className="hamburger-logo">{chirpLogo}</div>
+                    <IconButton
+                        {...{
+                            color: "inherit",
+                            "aria-label": "menu",
+                            "aria-haspopup": "true",
+                            onClick: handleDrawerOpen,
+                        }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                </div>
+
             </Toolbar>
         );
     };
