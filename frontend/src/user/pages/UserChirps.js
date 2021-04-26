@@ -146,7 +146,3 @@ function UserChirps(props) {
 }
 
 export default UserChirps;
-
-//post request (userId from params):
-//get user information
-//get all chirps & replies created User
