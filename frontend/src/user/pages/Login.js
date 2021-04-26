@@ -118,7 +118,7 @@ function Login(props) {
 
 
                 <button className="Login-Submit" type="submit" disabled={isSubmitting}>
-                  Submit
+                  Login
             </button>
 
               </form>

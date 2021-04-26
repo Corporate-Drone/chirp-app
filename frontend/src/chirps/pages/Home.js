@@ -1,13 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { AuthContext } from '../../shared/context/auth-context';
+import './Home.css';
 
 function Home() {
     const auth = useContext(AuthContext);
     const history = useHistory();
 
     return (
-        <div>
+        <div className="Home">
             <h1>Happening Now</h1>
             <h2>Join Chirp today.</h2>
             <Link to="auth/register">

@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { AuthContext } from '../../shared/context/auth-context';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
+import './Register.css'
 
 function Register(props) {
     const auth = useContext(AuthContext);
@@ -35,7 +36,8 @@ function Register(props) {
 
 
     return (
-        <div>
+        <div className="Register">
+            <h1>Create your account</h1>
             {displayError && <ErrorModal message={displayError} setDisplayError={setDisplayError} />}
             <Formik
                 initialValues={{
@@ -71,62 +73,75 @@ function Register(props) {
                     } = props;
                     return (
                         <form onSubmit={handleSubmit}>
-                            <label htmlFor="username">
-                                Username
-              </label>
-                            <input
-                                id="username"
-                                placeholder="Enter your username"
-                                type="text"
-                                value={values.username}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                className={
-                                    errors.username && touched.username
-                                        ? "text-input error"
-                                        : "text-input"
-                                }
-                            />
-                            {errors.username && touched.username && (
-                                <div className="input-feedback">{errors.username}</div>
-                            )}
+                            <div className="Register-Username">
+                                {/* <label htmlFor="username">
+                                    Username
+              </label> */}
+                                <input
+                                    id="username"
+                                    placeholder="Enter your username"
+                                    type="text"
+                                    value={values.username}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className={
+                                        errors.username && touched.username
+                                            ? "text-input register-input error"
+                                            : "text-input register-input"
+                                    }
+                                />
+                                {errors.username && touched.username && (
+                                    <div className="input-feedback">{errors.username}</div>
+                                )}
+                            </div>
 
-                            <label htmlFor="email">
-                                Email
-                            </label>
-                            <input
-                                id="email"
-                                placeholder="Enter your email"
-                                type="text"
-                                value={values.email}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                className={
-                                    errors.email && touched.email
-                                        ? "text-input error"
-                                        : "text-input"
-                                }
-                            />
-                            {errors.email && touched.email && (
-                                <div className="input-feedback">{errors.email}</div>
-                            )}
+                            <div className="Register-Email">
+                                {/* <label htmlFor="email">
+                                    Email
+                            </label> */}
+                                <input
+                                    id="email"
+                                    placeholder="Enter your email"
+                                    type="text"
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className={
+                                        errors.email && touched.email
+                                            ? "text-input register-input error"
+                                            : "text-input register-input"
+                                    }
+                                />
+                                {errors.email && touched.email && (
+                                    <div className="input-feedback">{errors.email}</div>
+                                )}
+                            </div>
 
-                            <label htmlFor="passowrd">Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.password}
-                            />
-                            {errors.password && touched.password && (
-                                <span className="error">
-                                    {errors.password}
-                                </span>
-                            )}
+                            <div className="Register-Password">
+                                {/* <label htmlFor="passowrd">Password</label> */}
+                                <input
+                                    type="password"
+                                    name="password"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    value={values.password}
+                                    placeholder="Password"
+                                    className={
+                                        errors.password && touched.password
+                                            ? "password-input register-input error"
+                                            : "password-input register-input"
+                                    }
+                                />
+                                {errors.password && touched.password && (
+                                    <span className="error">
+                                        {errors.password}
+                                    </span>
+                                )}
+                            </div>
+
 
                             <button type="submit" disabled={isSubmitting}>
-                                Submit
+                                Register
               </button>
 
                         </form>
