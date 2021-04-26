@@ -1,6 +1,8 @@
 import React from "react";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import './ChirpReplyForm.css'
+import SendIcon from '@material-ui/icons/Send';
 
 function ChirpReplyForm(props) {
   const { addReply, id } = props;
@@ -17,7 +19,7 @@ function ChirpReplyForm(props) {
 
       validationSchema={Yup.object().shape({
         text: Yup.string()
-          .required("Required")
+          .required("Chirp cannot be blank.")
       })}
     >
       {props => {
@@ -33,10 +35,10 @@ function ChirpReplyForm(props) {
           handleReset
         } = props;
         return (
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="text" style={{ display: "block" }}>
+          <form onSubmit={handleSubmit} className="ChirpReplyForm">
+            {/* <label htmlFor="text" style={{ display: "block" }}>
               Reply
-              </label>
+              </label> */}
             <input
               id="text"
               placeholder="Chirp your reply"
@@ -46,18 +48,18 @@ function ChirpReplyForm(props) {
               onBlur={handleBlur}
               className={
                 errors.text && touched.text
-                  ? "text-input error"
-                  : "text-input"
+                  ? "text-input reply-input error"
+                  : "text-input reply-input"
               }
             />
             {errors.text && touched.text && (
-              <div className="input-feedback">{errors.text}</div>
+              <div className="input-feedback"></div>
             )}
 
 
             <button type="submit" disabled={isSubmitting}>
-              Submit Chirp
-              </button>
+              <SendIcon />
+            </button>
 
           </form>
         );

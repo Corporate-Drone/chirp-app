@@ -4,6 +4,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import getDate from "../../javascripts/currentDate";
 import { AuthContext } from '../../shared/context/auth-context';
+import './ChirpForm.css'
+import SendIcon from '@material-ui/icons/Send';
 
 function ChirpForm(props) {
     const { fetchChirps } = props;
@@ -44,7 +46,7 @@ function ChirpForm(props) {
   
         validationSchema={Yup.object().shape({
             text: Yup.string()
-            .required("Required")
+            .required("Chirp cannot be blank.")
         })}
       >
         {props => {
@@ -60,10 +62,10 @@ function ChirpForm(props) {
             handleReset
           } = props;
           return (
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="text" style={{ display: "block" }}>
+            <form onSubmit={handleSubmit} className="ChirpForm">
+              {/* <label htmlFor="text" style={{ display: "block" }}>
                 Chirp
-              </label>
+              </label> */}
               <input
                 id="text"
                 placeholder="What's happening?"
@@ -73,18 +75,17 @@ function ChirpForm(props) {
                 onBlur={handleBlur}
                 className={
                   errors.text && touched.text
-                    ? "text-input error"
-                    : "text-input"
+                    ? "text-input chirp-input error"
+                    : "text-input chirp-input"
                 }
               />
-              {errors.text && touched.text && (
-                <div className="input-feedback">{errors.text}</div>
-              )}
-  
-  
+
               <button type="submit" disabled={isSubmitting}>
-                Submit Chirp
+                <SendIcon/>
               </button>
+              {errors.text && touched.text && (
+                <div className="input-feedback"></div>
+              )}
   
             </form>
           );
