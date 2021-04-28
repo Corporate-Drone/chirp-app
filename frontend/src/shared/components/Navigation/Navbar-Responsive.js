@@ -12,6 +12,9 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
+import HomeIcon from '@material-ui/icons/Home';
+import PersonIcon from '@material-ui/icons/Person';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import "./Navbar-Responsive.css";
 
 import { AuthContext } from '../../context/auth-context';
@@ -102,7 +105,7 @@ export default function Header() {
                 {chirpLogo}
                 <div>
                     {auth.isLoggedIn && <Button component={Link} color="inherit" to="/chirps" onClick={handleDrawerClose}>
-                        Chirps
+                        <HomeIcon/>
                     </Button>}
                     {!auth.isLoggedIn &&
                         <Button component={Link} to="/auth/login" color="inherit">
@@ -114,11 +117,11 @@ export default function Header() {
                         </Button>}
                     {auth.isLoggedIn &&
                         <Button component={Link} onClick={toProfile} color="inherit">
-                            Profile
+                            <PersonIcon/>
                         </Button>}
                     {auth.isLoggedIn &&
                         <Button color="inherit" onClick={logout}>
-                            Logout
+                            <ExitToAppIcon/>
                         </Button>}</div>
             </Toolbar>
         );
@@ -177,7 +180,10 @@ export default function Header() {
 
     const chirpLogo = (
         <Typography variant="h6" component="h1" className={logo}>
+            <Link to={"/chirps"} className="logo-name">
             Chirp
+            </Link>
+            
         </Typography>
     );
 

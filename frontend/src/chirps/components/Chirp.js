@@ -6,10 +6,15 @@ import useToggleState from "../../hooks/useToggleState";
 import getDate from "../../javascripts/currentDate";
 import { AuthContext } from '../../shared/context/auth-context';
 import avatarplaceholder from '../../images/avatarplaceholder.gif'
+import ReplyIcon from '@material-ui/icons/Reply';
+import DeleteIcon from '@material-ui/icons/Delete';
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
+import './Chirp.css'
 
 
 function Chirp(props) {
-    const { replies, date, id, likes, text, username, isReply, parentChirpId, parentUsername, detailView, author,fetchChirps } = props;
+    const { replies, date, id, likes, text, username, isReply, parentChirpId, parentUsername, detailView, author, fetchChirps } = props;
     const [isReplying, toggle] = useToggleState(false);
     const [isLiked, toggleLike] = useToggleState();
     const [likeCount, setLikeCount] = useState();
@@ -90,13 +95,13 @@ function Chirp(props) {
     }
 
     useEffect(() => {
-        if ( auth.isLoggedIn && likes.includes(auth.userId)) {
+        if (auth.isLoggedIn && likes.includes(auth.userId)) {
             toggleLike()
         }
 
         setLikeCount(likes.length);
     }, [])
-    
+
     const handleLikeButton = async (chirpId) => {
         if (isLiked) {
             setLikeCount(likeCount - 1)
@@ -108,101 +113,145 @@ function Chirp(props) {
 
     }
 
-    let replyUsername;
-    if (isReply && detailView) {
-        replyUsername = (
-            <div className="container">
-            <Link to={`/${username}/status/${id}`}>
-              <p>{date}</p>
-              <p>{text}</p>
-              <p>{replies.length} {likeCount}</p>
-            </Link>
-            <Link to={`/${parentUsername}`}>
-              <p>Replying to {parentUsername}</p>
-            </Link>
-            <Link to={`/${username}`}>
-              <p>{username}</p>
-            </Link>
-          </div>
-        )
-    } else if (isReply) {
-        replyUsername = (
-            <div className="container">
-            <Link to={`/${username}/status/${id}`}>
-              <p>{date}</p>
-              <p>{text}</p>
-              <p>{replies.length} {likeCount}</p>
-            </Link>
-            <Link to={`/${parentUsername}`}>
-              <p>Replying to {parentUsername}</p>
-            </Link>
-            <Link to={`/${username}`}>
-              <p>{username}</p>
-            </Link>
-          </div>
-        )
-    } else if (parentUsername) {
-        replyUsername = (
-            <div className="container">
-            <Link to={`/${username}/status/${id}`}>
-              <p>{date}</p>
-              <p>{text}</p>
-              <p>{replies.length} {likeCount}</p>
-            </Link>
-            <Link to={`/${parentUsername}`}>
-              <p>Replying to {parentUsername}</p>
-            </Link>
-            <Link to={`/${username}`}>
-              <p>{username}</p>
-            </Link>
-          </div>
-        )
-    } else { //don't display any parent info
-        replyUsername = (
-            <div className="container">
-            <Link to={`/${username}/status/${id}`}>
-              <p>{date}</p>
-              <p>{text}</p>
-              <p>{replies.length} {likeCount}</p>
-            </Link>
-            <Link to={`/${username}`}>
-              <p>{username}</p>
-            </Link>
-          </div>
-        )
-    }
-
     //display placeholder image if user has not uploaded a picture
     let profilePicture;
     if (!author.image || author.image.url === undefined) {
         profilePicture = (
-            <img src={avatarplaceholder} width="100" height="100"/>
+            <img src={avatarplaceholder} width="100" height="100" />
         )
     } else {
         profilePicture = (
-            <img src={author.image.url} width="100" height="100"/>
+            <img src={author.image.url} width="100" height="100" />
         )
     }
+
+    let replyUsername;
+    if (isReply && detailView) {
+        replyUsername = (
+            <div className="Chirp-container">
+            <Link to={`/${username}`} className="Chirp-picture">
+                <div>{profilePicture}</div>
+            </Link>
+            <div className="top">
+                <div className="username-date">
+                    <Link to={`/${username}`} className="Chirp-username">
+                        <div>{username}</div>
+                    </Link>
+                    <Link to={`/${parentUsername}`}>
+                        <div>Replying to {parentUsername}</div>
+                    </Link>
+                    <Link to={`/${username}/status/${id}`}>
+                        <div>{date}</div>
+                    </Link>
+                </div>
+                <Link to={`/${username}/status/${id}`} id="Chirp-text">
+                    <p>{text}</p>
+                </Link>
+            </div>
+        </div>
+        )
+    } else if (isReply) {
+        replyUsername = (
+            <div className="Chirp-container">
+                <Link to={`/${username}`} className="Chirp-picture">
+                    <div>{profilePicture}</div>
+                </Link>
+                <div className="top">
+                    <div className="username-date">
+                        <Link to={`/${username}`} className="Chirp-username">
+                            <div>{username}</div>
+                        </Link>
+                        <Link to={`/${parentUsername}`}>
+                            <div>Replying to {parentUsername}</div>
+                        </Link>
+                        <Link to={`/${username}/status/${id}`}>
+                            <div>{date}</div>
+                        </Link>
+                    </div>
+                    <Link to={`/${username}/status/${id}`} id="Chirp-text">
+                        <p>{text}</p>
+                    </Link>
+                </div>
+            </div>
+        )
+    } else if (parentUsername) {
+        replyUsername = (
+            <div className="Chirp-container">
+                <Link to={`/${username}`} className="Chirp-picture">
+                    <div>{profilePicture}</div>
+                </Link>
+                <div className="top">
+                    <div className="username-date">
+                        <Link to={`/${username}`} className="Chirp-username">
+                            <div>{username}</div>
+                        </Link>
+                        <Link to={`/${parentUsername}`}>
+                            <div>Replying to {parentUsername}</div>
+                        </Link>
+                        <Link to={`/${username}/status/${id}`}>
+                            <div>{date}</div>
+                        </Link>
+                    </div>
+                    <Link to={`/${username}/status/${id}`} id="Chirp-text">
+                        <p>{text}</p>
+                    </Link>
+                </div>
+            </div>
+        )
+    } else { //don't display any parent info
+        replyUsername = (
+            <div className="Chirp-container">
+                <Link to={`/${username}`} className="Chirp-picture">
+                    <div>{profilePicture}</div>
+                </Link>
+                <div className="top">
+                    <div className="username-date">
+                        <Link to={`/${username}`} className="Chirp-username">
+                            <div>{username}</div>
+                        </Link>
+                        <Link to={`/${username}/status/${id}`}>
+                            <div>{date}</div>
+                        </Link>
+                    </div>
+                    <Link to={`/${username}/status/${id}`} id="Chirp-text">
+                        <p>{text}</p>
+                    </Link>
+                </div>
+            </div>
+        )
+    }
+
+
 
     //display remove button if Chirp belongs to current user
     let removeButton;
     if (username === auth.username) {
         removeButton = (
-            <button onClick={() => removeChirp(id)}>Remove</button>
+            <button className="Chirp-remove" onClick={() => removeChirp(id)}><DeleteIcon /></button>
         )
     }
 
     return (
         <div>
-            {profilePicture}
-            {replyUsername}
-            <button onClick={toggle}>Reply</button>
-            {removeButton}
-            {!isLiked && <button onClick={() => handleLikeButton(id)}>Test Like</button>}
-            {isLiked && <button onClick={() => handleLikeButton(id)}>Test Unlike</button>}
+            <div className="Chirp">
+                {replyUsername}
+                <div className="Chirp-buttons">
+                    <div>
+                        <button className="Chirp-reply" onClick={toggle}><ReplyIcon /> {replies.length}</button>
+                    </div>
+                    <div>
+                        {removeButton}
+                    </div>
+                    <div>
+                        {!isLiked && <button className="not-liked" onClick={() => handleLikeButton(id)}><FavoriteBorderOutlinedIcon /> {likeCount}</button>}
+                    </div>
+                    <div>
+                        {isLiked && <button id="liked" onClick={() => handleLikeButton(id)}><FavoriteOutlinedIcon /> {likeCount}</button>}
+                    </div>
+                </div>
+            </div>
             {isReplying && <ChirpReplyForm id={id} addReply={addReply} />}
-            <hr />
-
+            {/* <hr /> */}
         </div>
     );
 }

@@ -1,0 +1,107 @@
+.Chirp {
+    /* display: flex;
+    flex-direction: column; */
+    margin: auto;
+    margin-top: 1em;
+    border: 1px solid #b3b3b3;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+    border-radius: 1em;
+}
+
+.Chirp a{
+    text-decoration: none;
+}
+
+.Chirp {
+    /* border: 1px solid red; */
+    padding: 1em;
+    max-width: 650px;
+    min-width: 350px;
+}
+
+.Chirp-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    /* margin-top: 1em; */
+    /* border: 1px solid green; */
+    /* max-width: 500px; */
+}
+
+#Chirp-text {
+    color: #505252;
+    text-align: left;
+    font-weight: normal;
+}
+
+.top {
+    width: 100%;
+}
+
+.top a{
+    font-weight: bold;
+    color: #505252;
+}
+
+.Chirp-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+
+.Chirp img {
+    border-radius: 50%;
+}
+
+.Chirp .top {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2em;
+    /* border: 1px solid blue; */
+}
+
+.Chirp-picture {
+    margin-right: 1em;
+}
+
+.Chirp-username {
+    margin-right: 1em;
+}
+
+.username-date {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+/* .Chirp-text {
+    border: 1px solid red;
+} */
+
+.Chirp button {
+    /* width: 100px; */
+    /* margin: 20px 0; */
+    /* padding: 3.5px 20px; */
+    padding: 0;
+    border-style: none;
+    border-radius: 5px;
+    background: transparent;
+    border: none;
+    /* background-color: #1DA1F2; */
+    /* box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15); */
+    font-size: 17px;
+    font-weight: 500;
+    /* color: #fff; */
+    color: #b3b3b3;
+    cursor: pointer;
+    outline: none;
+    margin-left: 3em;
+    -webkit-appearance: none;
+}
+
+#liked {
+    color: #d95766;
+}

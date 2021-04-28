@@ -104,7 +104,7 @@ function App() {
     >
       <Router>
         <Header/>
-        <main>{routes}</main>
+        <main className="App">{routes}</main>
       </Router>
     </AuthContext.Provider>
   );

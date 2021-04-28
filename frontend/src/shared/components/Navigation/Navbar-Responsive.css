@@ -7,3 +7,8 @@
 .hamburger-logo {
     margin-top: 0.5em;
 }
+
+.logo-name {
+    text-decoration: none;
+    color: #fff;
+}
