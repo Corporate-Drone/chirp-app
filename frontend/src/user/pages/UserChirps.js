@@ -7,6 +7,8 @@ import Chirp from '../../chirps/components/Chirp';
 import sortDate from '../../javascripts/sortDate'
 import avatarplaceholder from '../../images/avatarplaceholder.gif'
 import useToggleState from "../../hooks/useToggleState";
+import PersonIcon from '@material-ui/icons/Person';
+import './UserChirps.css';
 
 function UserChirps(props) {
     const { userId } = useParams()
@@ -37,7 +39,7 @@ function UserChirps(props) {
     useEffect(() => {
         // Update chirps on refresh
         getUserChirps(userId);
-    },[location])
+    }, [location])
 
     const followUser = async () => {
         try {
@@ -81,7 +83,6 @@ function UserChirps(props) {
         }
         followUser()
         toggle()
-
     }
 
     let chirps;
@@ -98,48 +99,90 @@ function UserChirps(props) {
     }
 
     let editButton;
-    let testButton;
+    let followtButton;
     if (userId !== auth.username) {
         if (isFollowing) {
-            testButton = (
+            followtButton = (
                 <button onClick={handleFollowButton}>Unfollow</button>
             )
-    
-    
+
+
         } else {
-            testButton = (
+            followtButton = (
                 <button onClick={handleFollowButton}>Follow</button>
             )
         }
     } else {
         editButton = (
             <Link to="/auth/setup">
-                <button>Edit Profile</button>
+                <button className="UserChirps-edit-btn">Edit Profile</button>
             </Link>
         )
     }
-   
+
 
     return (
         <div>
             {isLoading && <CircularIndeterminate />}
-            {!isLoading && <div>
+            {/* {!isLoading && <div>
                 {userId}
             </div>}
-            {!isLoading && testButton}
+            {!isLoading && followtButton}
             {!isLoading && loadedChirps && <div>
                 {loadedChirps.length} Chirps
                 </div>}
             {!isLoading && <div>{editButton}</div>}
-            {loadedUser && loadedUser.image && <img src={loadedUser.image.url} />}
-            {loadedUser && !loadedUser.image && <img src={avatarplaceholder} />}
+            {loadedUser && loadedUser.image && <img className="UserChirps-picture" src={loadedUser.image.url} />}
+            {loadedUser && !loadedUser.image && <img className="UserChirps-picture" src={avatarplaceholder} />}
             {loadedUser && loadedUser.about && <div>{loadedUser.about}</div>}
             <Link to={`/${userId}/following`}>
                 {loadedUser && <div>{loadedUser.following.length} following</div>}
             </Link>
             <Link to={`/${userId}/followers`}>
                 {loadedUser && <div>{followCount} followers</div>}
-            </Link>
+            </Link> */}
+            {!isLoading && <div className="UserChirps-profile">
+                <div className="UserChirps-edit">
+                    <div><PersonIcon /> Profile</div>
+                    <div>
+                        {!isLoading && followtButton}
+                        {!isLoading && <div>{editButton}</div>}
+                    </div>
+                </div>
+                <div className="UserChirps-image-name">
+                    <div>
+                        {loadedUser && loadedUser.image && <img className="UserChirps-picture" src={loadedUser.image.url} />}
+                        {loadedUser && !loadedUser.image && <img className="UserChirps-picture" src={avatarplaceholder} />}
+                    </div>
+                    <div className="UserChirps-name-container">{!isLoading && <div className="UserChirps-name">
+                        {userId}
+                    </div>}
+                        <div className="UserChirps-about">
+                            {loadedUser && loadedUser.about && <div>{loadedUser.about}</div>}
+                        </div>
+                    </div>
+                </div>
+                <div className="UserChirps-follow">
+                    <div className="UserChirps-following">
+                        <Link to={`/${userId}/following`}>
+                            {loadedUser && <div><span className="UserChirps-count">{loadedUser.following.length}</span> following</div>}
+                        </Link>
+                    </div>
+                    <div className="UserChirps-followers">            <Link to={`/${userId}/followers`}>
+                        {loadedUser && <div><span className="UserChirps-count">{followCount} </span> followers</div>}
+                    </Link></div>
+                </div>
+                <div className="UserChirps-tab">
+                    <div className="UserChirps-chirps">
+                        {!isLoading && loadedChirps && <div>
+                            {loadedChirps.length} Chirps
+                </div>}
+                    </div>
+                    <div className="UserChirps-likes">
+                        Likes
+                    </div>
+                </div>
+            </div>}
             {!isLoading && <div>{chirps}</div>}
         </div>
     )
