@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
-
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import UserDisplay from '../components/UserDisplay';
+import './UserFollow.css'
 
 function UserFollow(props) {
     const { type } = props;
@@ -48,20 +49,65 @@ function UserFollow(props) {
                 image={u.image}
                 followers={u.followers}
                 following={u.following}
+                about={u.about}
             />
         ))
+
+        if (loadedConnections.length === 0) {
+            users = (
+                <div className="UserFollow-none">
+                    No {type} to display.
+                </div>
+            )
+        }
+    }
+
+    let followDisplay;
+    if (type === 'following') {
+        followDisplay = (
+            <div className="UserFollow-tabs">
+                <Link to={`/${userId}/followers`}>
+                    <div className="UserFollow-followers">
+                        Followers
+                    </div>
+                </Link>
+                <Link to={`/${userId}/following`}>
+                    <div className="UserFollow-following" id="clicked">
+                        Following
+                    </div>
+                </Link>
+            </div>
+        )
+    } else {
+        followDisplay = (
+            <div className="UserFollow-tabs">
+                <Link to={`/${userId}/followers`}>
+                    <div className="UserFollow-followers" id="clicked">
+                        Followers
+                    </div>
+                </Link>
+                <Link to={`/${userId}/following`}>
+                    <div className="UserFollow-following">
+                        Following
+                    </div>
+                </Link>
+            </div>
+        )
     }
 
 
     return (
-        <div>
-            <Link to={`/${userId}/followers`}>
-                <p>Followers</p>
-            </Link>
-            <Link to={`/${userId}/following`}>
-                <p>Following</p>
-            </Link>
+        <div className="UserFollow">
+            <div className="UserFollow-top">
+                <Link to={`/${userId}`}>
+                    <KeyboardBackspaceIcon />
+                </Link>
+                <div className="UserFollow-username">{userId}</div>
+            </div>
+            {followDisplay}
+            {!isLoading && < div className="UserFollow-users">
             {users}
+        </div>}
         </div>
     )
 }

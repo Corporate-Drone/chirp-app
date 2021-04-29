@@ -1,0 +1,48 @@
+.UserFollow {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 650px;
+    min-width: 350px;
+    border: 1px solid #b3b3b3;
+}
+
+.UserFollow-tabs {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+}
+
+.UserFollow-tabs a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #1DA1F2;
+}
+
+.UserFollow-top{
+    display: flex;
+}
+
+.UserFollow-username {
+    font-size: 17px;
+    font-weight: bold;
+    color: #505252;
+    margin-left: 1em;
+}
+
+.UserFollow-followers {
+    padding: 1em;
+}
+
+.UserFollow-following{
+    padding: 1em;
+}
+
+#clicked {
+    border-bottom: 1px solid #1DA1F2;
+}
+
+.UserFollow-none {
+    margin-top: 1em;
+    text-align: center;
+}
