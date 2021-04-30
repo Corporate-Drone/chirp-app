@@ -5,6 +5,7 @@ import useInputState from "../../hooks/useInputState";
 import { AuthContext } from '../../shared/context/auth-context';
 import avatarplaceholder from '../../images/avatarplaceholder.gif'
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
+import './UserSetup.css'
 
 function UserSetup() {
     const auth = useContext(AuthContext);
@@ -110,27 +111,27 @@ function UserSetup() {
     const removeImage = () => {
         if (loadedUser.image.url) {
             setLoading(true);
-        try {
-            const authorizationToken = localStorage.getItem('token');
-            const headers = {
-                Authorization: authorizationToken
+            try {
+                const authorizationToken = localStorage.getItem('token');
+                const headers = {
+                    Authorization: authorizationToken
+                }
+                const data = {
+                    userId: auth.userId,
+                    url: loadedUser.image.url,
+                    filename: loadedUser.image.filename
+                }
+                axios.delete('http://localhost:5000/auth/setup/upload', { headers, data })
+                    .then(response => {
+                        if (response.status === 200) {
+                            setLoadedUser(response.data)
+                            setLoading(false);
+                        }
+                    })
+            } catch (error) {
+                console.log(error)
+                setLoading(false);
             }
-            const data = {
-                userId: auth.userId,
-                url: loadedUser.image.url,
-                filename: loadedUser.image.filename
-            }
-            axios.delete('http://localhost:5000/auth/setup/upload', { headers, data })
-                .then(response => {
-                    if (response.status === 200) {
-                        setLoadedUser(response.data)
-                        setLoading(false);
-                    }
-                })
-        } catch (error) {
-            console.log(error)
-            setLoading(false);
-        }
         }
     }
 
@@ -173,27 +174,37 @@ function UserSetup() {
     if (loadedUser && loadedUser.about) {
         userAbout = (loadedUser.about)
     } else {
-        userAbout = ('N/A')
+        userAbout = ('About Me: N/A')
     }
 
     let userImage;
     if (loadedUser && !loadedUser.image || loadedUser && loadedUser.image.url === undefined) {
-        userImage = (< img src={avatarplaceholder} />)
+        userImage = (< img className="UserSetup-image" src={avatarplaceholder} />)
     } else if (loadedUser && loadedUser.image) {
-        userImage = (< img src={loadedUser.image.url} />)
+        userImage = (< img className="UserSetup-image" src={loadedUser.image.url} />)
     }
 
     return (
         <div>
             {isLoading && <CircularIndeterminate />}
-            {!isLoading && <div>
-                <div>
-                    {userImage}
-                Current Profile Picture
-            </div>
-                <div>
-                    Current About Me: {userAbout}
+            {!isLoading && <div className="UserSetup">
+                <div className="UserSetup-profile">
+                    <div>
+                        <div>
+                            {userImage}
+                        </div>
+                        <div>
+                            <button id="UserSetup-remove-picture" onClick={() => removeImage()}>Remove</button>
+                        </div>
+                    </div>
+                    <div className="UserSetup-about">
+                        {userAbout}
+                    </div>
+                    <div>
+                        <button id="UserSetup-remove-account" onClick={deleteAccount}>Delete User</button>
+                    </div>
                 </div>
+
                 <form
                     onSubmit={e => {
                         e.preventDefault();
@@ -203,11 +214,11 @@ function UserSetup() {
                     }}
                     encType="multipart/form-data"
                 >
-                    <div>
-                        <label htmlFor="image" className="form-label">Upload a profile picture </label>
+                    <div className="UserSetup-upload">
+                        <label htmlFor="image" className="form-label" id="upload">Upload</label>
                         <input type="file" id="image" name="image" />
                     </div>
-                    <div>
+                    <div className="UserSetup-update">
                         <label htmlFor="about">Update About Me</label>
                         <textarea
                             className="form-control"
@@ -219,12 +230,8 @@ function UserSetup() {
                         >
                         </textarea>
                     </div>
-                    <button>Save</button>
+                    <button id="UserSetup-save">Save</button>
                 </form>
-                <div>
-                    <button onClick={() => removeImage()}>Remove Profile Picture</button>
-                </div>
-                <button onClick={deleteAccount}>Delete Account</button>
             </div>}
         </div>
     )
