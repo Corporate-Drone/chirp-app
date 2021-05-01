@@ -1,14 +1,17 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import ErrorIcon from '@material-ui/icons/Error';
+import CloseIcon from '@material-ui/icons/Close';
+import './ErrorModal.css'
 
 function rand() {
     return Math.round(Math.random() * 20) - 10;
 }
 
 function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
+    const top = 50;
+    const left = 50;
 
     return {
         top: `${top}%`,
@@ -46,19 +49,20 @@ export default function ErrorModal(props) {
     };
 
     const body = (
-        <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Error</h2>
+        <div style={modalStyle} className={classes.paper} id="ErrorModal-container">
+            <button className="ErrorModal-close" onClick={handleClose}><CloseIcon /></button>
+            <h2 id="simple-modal-title"><ErrorIcon className="ErrorIcon" /> Error</h2>
             <p id="simple-modal-description">
                 {message}
             </p>
-            <button onClick={handleClose}>Close</button>
+
         </div>
     );
 
     //open Modal if error exists
     useEffect(() => {
         handleOpen();
-    },[])
+    }, [])
 
 
     return (
