@@ -23,6 +23,10 @@
     display: flex;
 }
 
+.UserFollow-top a {
+    color: #1DA1F2;
+}
+
 .UserFollow-username {
     font-size: 17px;
     font-weight: bold;

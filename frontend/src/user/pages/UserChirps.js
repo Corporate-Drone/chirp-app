@@ -13,9 +13,11 @@ import './UserChirps.css';
 function UserChirps(props) {
     const { userId } = useParams()
     const [loadedChirps, setLoadedChirps] = useState();
+    const [loadedLikes, setLoadedLikes] = useState();
     const [loadedUser, setLoadedUser] = useState();
     const [isLoading, setLoading] = useState(true);
     const [isFollowing, toggle] = useToggleState();
+    const [viewState, setViewState] = useState('chirps');
     const [followCount, setFollowCount] = useState();
 
     const auth = useContext(AuthContext);
@@ -36,9 +38,27 @@ function UserChirps(props) {
         setLoading(false);
     }
 
+    const getLikedChirps = async () => {
+        setLoading(true)
+        try {
+            const res = await axios.get("http://localhost:5000/:userId/likes", { params: { id: userId } })
+                .then(response => {
+
+                    if (response.status === 200) {
+                        setLoadedLikes(response.data)
+                    }
+                })
+
+        } catch (error) {
+            console.log(error)
+        }
+        setLoading(false);
+    }
+
     useEffect(() => {
         // Update chirps on refresh
         getUserChirps(userId);
+        getLikedChirps();
     }, [location])
 
     const followUser = async () => {
@@ -75,6 +95,10 @@ function UserChirps(props) {
         }
     }, [isLoading, loadedChirps]); //run when changes to isLoading or chirps
 
+    const handleView = async (type) => {
+        setViewState(type)
+    }
+
     const handleFollowButton = async () => {
         if (isFollowing) {
             setFollowCount(followCount - 1)
@@ -98,6 +122,19 @@ function UserChirps(props) {
         sortDate(loadedChirps)
     }
 
+    let likedChirps;
+    if (loadedLikes) {
+        likedChirps = loadedLikes.map(c => (
+            <Chirp
+                key={c.id}
+                {...c}
+                username={c.author.username}
+                author={c.author}
+            />
+        ))
+        sortDate(loadedLikes)
+    }
+
     let editButton;
     let followtButton;
     if (userId !== auth.username) {
@@ -117,6 +154,35 @@ function UserChirps(props) {
             <Link to="/auth/setup">
                 <button className="UserChirps-edit-btn">Edit Profile</button>
             </Link>
+        )
+    }
+
+    let viewDisplay;
+    if (viewState === 'chirps') {
+        viewDisplay = (
+            <div className="UserChirps-tab">
+                <div className="UserChirps-chirps" id="clicked" onClick={() => handleView('chirps')}>
+                {!isLoading && loadedChirps && <div>
+                            Chirps {loadedChirps.length}
+                        </div>}
+                </div>
+                {!isLoading && loadedLikes && <div className="UserChirps-likes" onClick={() => handleView('likes')}>
+                        Likes {loadedLikes.length}
+                    </div>}
+            </div>
+        )
+    } else {
+        viewDisplay = (
+            <div className="UserChirps-tab">
+                <div className="UserChirps-chirps" onClick={() => handleView('chirps')}>
+                {!isLoading && loadedChirps && <div>
+                            Chirps {loadedChirps.length}
+                        </div>}
+                </div>
+                {!isLoading && loadedLikes && <div className="UserChirps-likes" id="clicked" onClick={() => handleView('likes')}>
+                        Likes {loadedLikes.length}
+                    </div>}
+            </div>
         )
     }
 
@@ -172,18 +238,20 @@ function UserChirps(props) {
                         {loadedUser && <div><span className="UserChirps-count">{followCount} </span> followers</div>}
                     </Link></div>
                 </div>
-                <div className="UserChirps-tab">
-                    <div className="UserChirps-chirps">
+                {/* <div className="UserChirps-tab">
+                    <div className="UserChirps-chirps" onClick={() => handleView('chirps')}>
                         {!isLoading && loadedChirps && <div>
-                            {loadedChirps.length} Chirps
-                </div>}
+                            Chirps {loadedChirps.length}
+                        </div>}
                     </div>
-                    <div className="UserChirps-likes">
-                        Likes
-                    </div>
-                </div>
+                    {!isLoading && loadedLikes && <div className="UserChirps-likes" onClick={() => handleView('likes')}>
+                        Likes {loadedLikes.length}
+                    </div>}
+                </div> */}
+                {viewDisplay}
             </div>}
-            {!isLoading && <div>{chirps}</div>}
+            {!isLoading && viewState === 'chirps' && <div>{chirps}</div>}
+            {!isLoading && viewState === 'likes' && <div>{likedChirps}</div>}
         </div>
     )
 }
