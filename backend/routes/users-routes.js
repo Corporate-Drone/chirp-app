@@ -26,14 +26,22 @@ router.get('/setup', usersControllers.getUser);
 router.post(
     '/login',
     passport.authenticate('local'),
-     async (req, res) => {
-
+    async (req, res) => {
+        try {
+             
          const fullUser = await User.findOne({ username: req.user.username })
 
-        //  console.log(req.user)
-        //  console.log(req.session)
-         
-         res.send(fullUser);
+         //  console.log(req.user)
+         //  console.log(req.session)
+          
+          res.send(fullUser);
+        } catch (error) {
+            console.log(error)
+                        return next(
+                new HttpError('Login failed, please try again.', 500)
+            );
+         }
+
     }
 )
 

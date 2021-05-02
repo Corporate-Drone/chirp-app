@@ -23,10 +23,10 @@ const register = async (req, res, next) => {
         res.send(updatedUser);
 
     } catch (error) {
+        console.log(error.message)
         return next(
             new HttpError('Registration failed, please try again.', 500)
         );
-        console.log(error)
     }
 
 }
@@ -124,7 +124,7 @@ const deleteUser = async (req, res, next) => {
         }
 
         //delete profile picture in cloudinary
-        if (user.image && user.image.filename !== null) {
+        if (user.image && user.image.filename && user.image.filename !== null) {
             await cloudinary.uploader.destroy(user.image.filename);
         }
 

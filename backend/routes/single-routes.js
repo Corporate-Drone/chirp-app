@@ -22,4 +22,6 @@ router.get('/followers', singleControllers.getConnections);
 
 router.get('/following', singleControllers.getConnections);
 
+router.get('/likes', singleControllers.getLikedChirps);
+
 module.exports = router;

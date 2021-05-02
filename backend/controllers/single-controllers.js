@@ -53,6 +53,30 @@ const getUserChirps = async (req, res, next) => {
     }
 }
 
+const getLikedChirps = async (req, res, next) => {
+    const username = req.query.id
+    const user = await User.findOne({ username: username })
+
+    try {
+        const chirps = await Chirp.find({}).populate('author');
+
+        let likedChirps = [];
+
+        for (chirp of chirps) {
+            for (liked of chirp.likes) {
+                if (chirp.likes.includes(user.id)) {
+                    likedChirps.push(chirp)
+                }
+            }
+
+        }
+        res.send(likedChirps)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const likeChirp = async (req, res, next) => {
     const chirp = await Chirp.findById(req.body.id).populate('author');
     const username = req.body.username
@@ -157,6 +181,7 @@ const getConnections = async (req, res, next) => {
 
 exports.getSingleChirp = getSingleChirp;
 exports.getUserChirps = getUserChirps;
+exports.getLikedChirps = getLikedChirps
 exports.likeChirp = likeChirp;
 exports.replyToChirp = replyToChirp;
 exports.deleteReply = deleteReply;
