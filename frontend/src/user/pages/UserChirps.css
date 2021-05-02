@@ -39,11 +39,21 @@
 
 .UserChirps-name {
     margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.UserChirps-name-follow {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
 }
 
 .UserChirps-follow {
     display: flex;
-    /* justify-content: space-between; */
+}
+
+.UserChirps-follow a:hover{
+    text-decoration: underline;
 }
 
 .UserChirps-following {
@@ -66,6 +76,13 @@
     -webkit-appearance: none;
 }
 
+.UserChirps-profile button:hover {
+    background-color: #1DA1F2;
+    color: #fff;
+    border: 1px solid #1DA1F2;
+    transition: all 150ms ease-in-out;
+}
+
 .UserChirps-tab {
     display: flex;
     justify-content: center;
@@ -79,6 +96,10 @@
     font-weight: bold;
     color: #1DA1F2;
     cursor: pointer;
+}
+
+.tab:hover {
+    color:#2379af;
 }
 
 #clicked {

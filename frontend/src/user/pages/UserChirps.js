@@ -140,19 +140,19 @@ function UserChirps(props) {
     if (userId !== auth.username) {
         if (isFollowing) {
             followtButton = (
-                <button onClick={handleFollowButton}>Unfollow</button>
+                <button className="UserChirps-profile-btn" onClick={handleFollowButton}>Unfollow</button>
             )
 
 
         } else {
             followtButton = (
-                <button onClick={handleFollowButton}>Follow</button>
+                <button className="UserChirps-profile-btn" onClick={handleFollowButton}>Follow</button>
             )
         }
     } else {
         editButton = (
             <Link to="/auth/setup">
-                <button className="UserChirps-edit-btn">Edit Profile</button>
+                <button className="UserChirps-profile-btn">Edit Profile</button>
             </Link>
         )
     }
@@ -161,27 +161,27 @@ function UserChirps(props) {
     if (viewState === 'chirps') {
         viewDisplay = (
             <div className="UserChirps-tab">
-                <div className="UserChirps-chirps" id="clicked" onClick={() => handleView('chirps')}>
-                {!isLoading && loadedChirps && <div>
-                            Chirps {loadedChirps.length}
-                        </div>}
-                </div>
-                {!isLoading && loadedLikes && <div className="UserChirps-likes" onClick={() => handleView('likes')}>
-                        Likes {loadedLikes.length}
+                <div className="UserChirps-chirps tab" id="clicked" onClick={() => handleView('chirps')}>
+                    {!isLoading && loadedChirps && <div>
+                        Chirps {loadedChirps.length}
                     </div>}
+                </div>
+                {!isLoading && loadedLikes && <div className="UserChirps-likes tab" onClick={() => handleView('likes')}>
+                    Likes {loadedLikes.length}
+                </div>}
             </div>
         )
     } else {
         viewDisplay = (
             <div className="UserChirps-tab">
-                <div className="UserChirps-chirps" onClick={() => handleView('chirps')}>
-                {!isLoading && loadedChirps && <div>
-                            Chirps {loadedChirps.length}
-                        </div>}
-                </div>
-                {!isLoading && loadedLikes && <div className="UserChirps-likes" id="clicked" onClick={() => handleView('likes')}>
-                        Likes {loadedLikes.length}
+                <div className="UserChirps-chirps tab" onClick={() => handleView('chirps')}>
+                    {!isLoading && loadedChirps && <div>
+                        Chirps {loadedChirps.length}
                     </div>}
+                </div>
+                {!isLoading && loadedLikes && <div className="UserChirps-likes tab" id="clicked" onClick={() => handleView('likes')}>
+                    Likes {loadedLikes.length}
+                </div>}
             </div>
         )
     }
@@ -220,23 +220,26 @@ function UserChirps(props) {
                         {loadedUser && loadedUser.image && <img className="UserChirps-picture" src={loadedUser.image.url} />}
                         {loadedUser && !loadedUser.image && <img className="UserChirps-picture" src={avatarplaceholder} />}
                     </div>
-                    <div className="UserChirps-name-container">{!isLoading && <div className="UserChirps-name">
-                        {userId}
-                    </div>}
+                    <div className="UserChirps-about-container">
                         <div className="UserChirps-about">
                             {loadedUser && loadedUser.about && <div>{loadedUser.about}</div>}
                         </div>
                     </div>
                 </div>
-                <div className="UserChirps-follow">
-                    <div className="UserChirps-following">
-                        <Link to={`/${userId}/following`}>
-                            {loadedUser && <div><span className="UserChirps-count">{loadedUser.following.length}</span> following</div>}
-                        </Link>
+                <div className="UserChirps-name-follow">
+                    {!isLoading && <div className="UserChirps-name">
+                        {userId}
+                    </div>}
+                    <div className="UserChirps-follow">
+                        <div className="UserChirps-following">
+                            <Link to={`/${userId}/following`}>
+                                {loadedUser && <div><span className="UserChirps-count">{loadedUser.following.length}</span> following</div>}
+                            </Link>
+                        </div>
+                        <div className="UserChirps-followers">            <Link to={`/${userId}/followers`}>
+                            {loadedUser && <div><span className="UserChirps-count">{followCount} </span> followers</div>}
+                        </Link></div>
                     </div>
-                    <div className="UserChirps-followers">            <Link to={`/${userId}/followers`}>
-                        {loadedUser && <div><span className="UserChirps-count">{followCount} </span> followers</div>}
-                    </Link></div>
                 </div>
                 {/* <div className="UserChirps-tab">
                     <div className="UserChirps-chirps" onClick={() => handleView('chirps')}>

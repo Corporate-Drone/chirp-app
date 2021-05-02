@@ -243,10 +243,10 @@ function Chirp(props) {
                         {removeButton}
                     </div>
                     <div>
-                        {!isLiked && <button className="not-liked" onClick={() => handleLikeButton(id)}><FavoriteBorderOutlinedIcon /> {likeCount}</button>}
+                        {!isLiked && <button className="not-liked like-button" onClick={() => handleLikeButton(id)}><FavoriteBorderOutlinedIcon /> {likeCount}</button>}
                     </div>
                     <div>
-                        {isLiked && <button id="liked" onClick={() => handleLikeButton(id)}><FavoriteOutlinedIcon /> {likeCount}</button>}
+                        {isLiked && <button id="liked" className="like-button" onClick={() => handleLikeButton(id)}><FavoriteOutlinedIcon /> {likeCount}</button>}
                     </div>
                 </div>
             </div>

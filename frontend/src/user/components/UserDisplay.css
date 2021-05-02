@@ -22,3 +22,7 @@
     color: #505252;
     text-decoration: none;
 }
+
+.UserDisplay a:hover {
+    text-decoration: underline;
+}

@@ -102,12 +102,14 @@ function UserFollow(props) {
                 <Link to={`/${userId}`}>
                     <KeyboardBackspaceIcon />
                 </Link>
-                <div className="UserFollow-username">{userId}</div>
+                <Link to={`/${userId}`}>
+                    <div className="UserFollow-username">{userId}</div>
+                </Link>
             </div>
             {followDisplay}
             {!isLoading && < div className="UserFollow-users">
-            {users}
-        </div>}
+                {users}
+            </div>}
         </div>
     )
 }

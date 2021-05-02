@@ -58,9 +58,18 @@
 }
 
 #UserSetup-remove-account {
-    background-color: #d95766;
+    color: #d95766;
+    background-color: #fff;
+    border: 1px solid #b3b3b3;
     font-weight: bold;
     text-align: center;
+}
+
+#UserSetup-remove-account:hover {
+    background-color: #d95766;
+    color: #fff;
+    border: 1px solid #d95766;
+    transition: all 150ms ease-in-out;
 }
 
 #UserSetup-save {
@@ -113,5 +122,12 @@ input[type="file"] {
     border: 1px solid #b3b3b3;
     background-color: transparent;
     color: #1DA1F2;
+}
+
+#UserSetup-save:hover {
+    background-color: #1DA1F2;
+    color: #fff;
+    border: 1px solid #1DA1F2;
+    transition: all 150ms ease-in-out;
 }
 
