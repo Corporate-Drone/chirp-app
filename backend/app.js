@@ -6,6 +6,7 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const usersRoutes = require('./routes/users-routes');
 const chirpsRoutes = require('./routes/chirps-routes');
+const allUsersRoutes = require('./routes/allUsers-routes');
 const singleRoutes = require('./routes/single-routes');
 const HttpError = require('./models/http-error');
 const MongoDBStore = require('connect-mongo')(session);
@@ -95,6 +96,7 @@ app.use((req, res, next) => {
 
 app.use('/auth', usersRoutes)
 app.use('/chirps', chirpsRoutes)
+app.use('/users', allUsersRoutes)
 app.use('/:uid', singleRoutes)
 
 
