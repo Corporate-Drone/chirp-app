@@ -44,6 +44,11 @@
     outline: none;
   }
 
+  .input-feedback {
+    position: absolute;
+    margin-top: 4.5em;
+ }
+
   .error {
     color: red;
 }

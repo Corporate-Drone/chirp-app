@@ -51,6 +51,8 @@ function Register(props) {
 
                 validationSchema={Yup.object().shape({
                     username: Yup.string()
+                        .min(2, 'At least 2 characters required.')
+                        .max(15, 'Must be less than 15 characters.')
                         .required("Required"),
                     password: Yup.string()
                         .required("Required"),

@@ -51,7 +51,8 @@ export default function ErrorModal(props) {
     const body = (
         <div style={modalStyle} className={classes.paper} id="ErrorModal-container">
             <button className="ErrorModal-close" onClick={handleClose}><CloseIcon /></button>
-            <h2 id="simple-modal-title"><ErrorIcon className="ErrorIcon" /> Error</h2>
+            <ErrorIcon className="ErrorIcon" /> 
+            <h2 id="simple-modal-title">Error</h2>
             <p id="simple-modal-description">
                 {message}
             </p>

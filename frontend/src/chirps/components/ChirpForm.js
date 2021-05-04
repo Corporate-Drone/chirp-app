@@ -8,62 +8,64 @@ import './ChirpForm.css'
 import SendIcon from '@material-ui/icons/Send';
 
 function ChirpForm(props) {
-    const { fetchChirps } = props;
-    const auth = useContext(AuthContext);
+  const { fetchChirps } = props;
+  const auth = useContext(AuthContext);
 
-    const addChirp = async (newChirp) => {
-        try {
-            const data = {
-                text: newChirp,
-                replies: [],
-                likes: [],
-                date: getDate(),
-                author: auth.userId
-            }
-            await axios.post('http://localhost:5000/chirps', data)
-                .then(response => {
-                    console.log(response.data)
-                    if (response.status === 200) {
-                        console.log('Chirp posted!')
-                        fetchChirps();
-                    }
-                })
-        } catch (error) {
-            console.log(error)
-        }
-
+  const addChirp = async (newChirp) => {
+    try {
+      const data = {
+        text: newChirp,
+        replies: [],
+        likes: [],
+        date: getDate(),
+        author: auth.userId
+      }
+      await axios.post('http://localhost:5000/chirps', data)
+        .then(response => {
+          console.log(response.data)
+          if (response.status === 200) {
+            console.log('Chirp posted!')
+            fetchChirps();
+          }
+        })
+    } catch (error) {
+      console.log(error)
     }
 
-    return (
-        <Formik
-        initialValues={{
-          text: ""
-        }}
-        onSubmit={async values => {
-          addChirp(values.text)
-          values.text = ""
-        }}
-  
-        validationSchema={Yup.object().shape({
-            text: Yup.string()
-            .required("Chirp cannot be blank.")
-        })}
-      >
-        {props => {
-          const {
-            values,
-            touched,
-            errors,
-            dirty,
-            isSubmitting,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            handleReset
-          } = props;
-          return (
-            <form onSubmit={handleSubmit} className="ChirpForm">
-              {/* <label htmlFor="text" style={{ display: "block" }}>
+  }
+
+  return (
+    <Formik
+      initialValues={{
+        text: ""
+      }}
+      onSubmit={async values => {
+        addChirp(values.text)
+        values.text = ""
+      }}
+
+      validationSchema={Yup.object().shape({
+        text: Yup.string()
+          .min(1, 'At least 2 characters required.')
+          .max(140, 'Must be less than 140 characters.')
+          .required("Chirp cannot be blank.")
+      })}
+    >
+      {props => {
+        const {
+          values,
+          touched,
+          errors,
+          dirty,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          handleReset
+        } = props;
+        return (
+          <form onSubmit={handleSubmit} className="ChirpForm">
+            {/* <label htmlFor="text" style={{ display: "block" }}>
                 Chirp
               </label> */}
               <input
@@ -81,17 +83,18 @@ function ChirpForm(props) {
               />
 
               <button type="submit" disabled={isSubmitting}>
-                <SendIcon/>
+                <SendIcon />
               </button>
-              {errors.text && touched.text && (
-                <div className="input-feedback"></div>
-              )}
-  
-            </form>
-          );
-        }}
-      </Formik>
-    );
+
+            {errors.text && touched.text && (
+              <div className="input-feedback">{errors.text}</div>
+            )}
+
+          </form>
+        );
+      }}
+    </Formik>
+  );
 }
 
 

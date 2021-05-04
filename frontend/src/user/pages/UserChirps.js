@@ -81,7 +81,7 @@ function UserChirps(props) {
 
 
     useEffect(() => {
-        if (loadedChirps) {
+        if (loadedChirps && loadedChirps.length > 0) {
             setLoadedUser(loadedChirps[0].author)
 
             if (loadedUser) {
