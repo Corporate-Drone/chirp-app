@@ -14,6 +14,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
+import PeopleIcon from '@material-ui/icons/People';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import "./Navbar-Responsive.css";
 
@@ -105,7 +106,7 @@ export default function Header() {
                 {chirpLogo}
                 <div>
                     {auth.isLoggedIn && <Button component={Link} color="inherit" to="/chirps" onClick={handleDrawerClose}>
-                        <HomeIcon/>
+                        <HomeIcon />
                     </Button>}
                     {!auth.isLoggedIn &&
                         <Button component={Link} to="/auth/login" color="inherit">
@@ -117,11 +118,15 @@ export default function Header() {
                         </Button>}
                     {auth.isLoggedIn &&
                         <Button component={Link} onClick={toProfile} color="inherit">
-                            <PersonIcon/>
+                            <PersonIcon />
+                        </Button>}
+                    {auth.isLoggedIn &&
+                        <Button component={Link} to="/users" color="inherit">
+                            <PeopleIcon />
                         </Button>}
                     {auth.isLoggedIn &&
                         <Button color="inherit" onClick={logout}>
-                            <ExitToAppIcon/>
+                            <ExitToAppIcon />
                         </Button>}</div>
             </Toolbar>
         );
@@ -155,6 +160,10 @@ export default function Header() {
                                 Profile
                         </Button>}
                         {auth.isLoggedIn &&
+                            <Button component={Link} to="/users" color="inherit" onClick={handleDrawerClose}>
+                                Users
+                        </Button>}
+                        {auth.isLoggedIn &&
                             <Button color="inherit" onClick={logout}>
                                 Logout
                         </Button>}</div>
@@ -181,9 +190,9 @@ export default function Header() {
     const chirpLogo = (
         <Typography variant="h6" component="h1" className={logo}>
             <Link to={"/chirps"} className="logo-name">
-            Chirp
+                Chirp
             </Link>
-            
+
         </Typography>
     );
 

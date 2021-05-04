@@ -7,6 +7,7 @@ import Register from './user/pages/Register';
 import UserChirps from './user/pages/UserChirps'
 import UserSetup from './user/pages/UserSetup';
 import UserFollow from './user/pages/UserFollow';
+import Users from './user/pages/Users';
 
 import { AuthContext } from './shared/context/auth-context';
 import Header from './shared/components/Navigation/Navbar-Responsive';
@@ -48,6 +49,9 @@ function App() {
         <Route path="/chirps" exact>
           <ChirpApp />
         </Route>
+        <Route path="/users" exact>
+          <Users />
+        </Route>
         <Route path="/:userId" exact>
           <UserChirps />
         </Route>
@@ -74,6 +78,9 @@ function App() {
         </Route>
         <Route path="/chirps" exact>
           <ChirpApp />
+        </Route>
+        <Route path="/users" exact>
+          <Users />
         </Route>
         <Route path="/:userId" exact>
           <UserChirps />
