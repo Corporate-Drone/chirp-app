@@ -95,6 +95,7 @@ const deleteUser = async (req, res, next) => {
         console.log('***DELETE REQUEST RECEIVED***')
         const { userId, url, filename, username } = req.body;
         const user = await User.findById(userId);
+        const users = await User.find({});
 
         const chirps = await (await Chirp.find({}).populate({
             path: 'replies',
@@ -119,6 +120,15 @@ const deleteUser = async (req, res, next) => {
             for (let likes of chirp.likes) {
                 if (likes.username === username) {
                     await Chirp.findByIdAndUpdate(chirp._id, { $pull: { likes: likes._id } })
+                }
+            }
+        }
+        
+        for (let user of users) {
+            //remove user from followers
+            for (let follower of user.followers) {
+                if (follower == userId) {
+                    await User.findByIdAndUpdate(user._id, { $pull: { followers: follower } })
                 }
             }
         }
