@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../shared/context/auth-context';
+import followUser from "../../javascripts/followUser";
 import { Link, useParams, useLocation } from 'react-router-dom';
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 import Chirp from '../../chirps/components/Chirp';
@@ -61,25 +62,6 @@ function UserChirps(props) {
         getLikedChirps();
     }, [location])
 
-    const followUser = async () => {
-        try {
-            const data = {
-                actionUsername: userId,
-                reqUserId: auth.userId
-            }
-            axios.post('http://localhost:5000/:userId', data)
-                .then(response => {
-                    console.log(response.data)
-                    if (response.status === 200) {
-                        console.log('post req made!')
-                    }
-                })
-        } catch (error) {
-
-        }
-    }
-
-
     useEffect(() => {
         if (loadedChirps && loadedChirps.length > 0) {
             setLoadedUser(loadedChirps[0].author)
@@ -105,7 +87,7 @@ function UserChirps(props) {
         } else {
             setFollowCount(followCount + 1)
         }
-        followUser()
+        followUser(userId,auth.userId)
         toggle()
     }
 
@@ -186,27 +168,27 @@ function UserChirps(props) {
         )
     }
 
+    let profilePicture;
+    if (loadedUser) {
+        if (!loadedUser.image || loadedUser.image.url === undefined) {
+            profilePicture = (
+                <img src={avatarplaceholder} className="UserDisplay-image" />
+            )
+        } else {
+            profilePicture = (
+                <img src={loadedUser.image.url} className="UserDisplay-image" />
+            )
+        }
+    } else { //no loadedUser if user hasn't created any Chirps
+        profilePicture = (
+            <img src={avatarplaceholder} className="UserDisplay-image" />
+        )
+    }
+
 
     return (
         <div>
             {isLoading && <CircularIndeterminate />}
-            {/* {!isLoading && <div>
-                {userId}
-            </div>}
-            {!isLoading && followtButton}
-            {!isLoading && loadedChirps && <div>
-                {loadedChirps.length} Chirps
-                </div>}
-            {!isLoading && <div>{editButton}</div>}
-            {loadedUser && loadedUser.image && <img className="UserChirps-picture" src={loadedUser.image.url} />}
-            {loadedUser && !loadedUser.image && <img className="UserChirps-picture" src={avatarplaceholder} />}
-            {loadedUser && loadedUser.about && <div>{loadedUser.about}</div>}
-            <Link to={`/${userId}/following`}>
-                {loadedUser && <div>{loadedUser.following.length} following</div>}
-            </Link>
-            <Link to={`/${userId}/followers`}>
-                {loadedUser && <div>{followCount} followers</div>}
-            </Link> */}
             {!isLoading && <div className="UserChirps-profile">
                 <div className="UserChirps-edit">
                     <div><PersonIcon /> Profile</div>
@@ -217,8 +199,7 @@ function UserChirps(props) {
                 </div>
                 <div className="UserChirps-image-name">
                     <div>
-                        {loadedUser && loadedUser.image && <img className="UserChirps-picture" src={loadedUser.image.url} />}
-                        {loadedUser && !loadedUser.image && <img className="UserChirps-picture" src={avatarplaceholder} />}
+                        {profilePicture}
                     </div>
                     <div className="UserChirps-about-container">
                         <div className="UserChirps-about">

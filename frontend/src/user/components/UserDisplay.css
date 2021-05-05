@@ -26,3 +26,30 @@
 .UserDisplay a:hover {
     text-decoration: underline;
 }
+
+.UserDisplay-username {
+    margin-right: auto;
+}
+
+.UserDisplay button {
+    padding: 10px;
+    border-style: none;
+    border-radius: 5px;
+    background: transparent;
+    border: none;
+    font-size: 17px;
+    font-weight: bold;
+    border: 1px solid #b3b3b3;
+    color: #1DA1F2;
+    cursor: pointer;
+    outline: none;
+    margin-left: 3em;
+    -webkit-appearance: none;
+}
+
+.UserDisplay button:hover {
+    background-color: #1DA1F2;
+    color: #fff;
+    border: 1px solid #1DA1F2;
+    transition: all 150ms ease-in-out;
+}
