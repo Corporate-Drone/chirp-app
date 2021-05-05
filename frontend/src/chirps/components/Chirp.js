@@ -141,7 +141,7 @@ function Chirp(props) {
                         <div>Replying to {parentUsername}</div>
                     </Link>
                     <Link to={`/${username}/status/${id}`}>
-                        <div>{date}</div>
+                        <div>{date.slice(0, 9)}</div>
                     </Link>
                 </div>
                 <Link to={`/${username}/status/${id}`} id="Chirp-text">
@@ -165,7 +165,7 @@ function Chirp(props) {
                             <div>Replying to {parentUsername}</div>
                         </Link>
                         <Link to={`/${username}/status/${id}`}>
-                            <div>{date}</div>
+                            <div>{date.slice(0, 9)}</div>
                         </Link>
                     </div>
                     <Link to={`/${username}/status/${id}`} id="Chirp-text">
@@ -189,7 +189,7 @@ function Chirp(props) {
                             <div>Replying to {parentUsername}</div>
                         </Link>
                         <Link to={`/${username}/status/${id}`}>
-                            <div>{date}</div>
+                            <div>{date.slice(0, 9)}</div>
                         </Link>
                     </div>
                     <Link to={`/${username}/status/${id}`} id="Chirp-text">
@@ -210,7 +210,7 @@ function Chirp(props) {
                             <div>{username}</div>
                         </Link>
                         <Link to={`/${username}/status/${id}`}>
-                            <div>{date}</div>
+                            <div>{date.slice(0, 9)}</div>
                         </Link>
                     </div>
                     <Link to={`/${username}/status/${id}`} id="Chirp-text">

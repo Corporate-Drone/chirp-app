@@ -79,21 +79,6 @@ function App() {
         <Route path="/chirps" exact>
           <ChirpApp />
         </Route>
-        <Route path="/users" exact>
-          <Users />
-        </Route>
-        <Route path="/:userId" exact>
-          <UserChirps />
-        </Route>
-        <Route path="/:userId/followers" exact>
-          <UserFollow type={"followers"}/>
-        </Route >
-        <Route path="/:userId/following" exact>
-          <UserFollow type={"following"} />
-        </Route>
-        <Route path="/:userId/status/:chirpId" exact>
-          <ChirpDetail />
-        </Route>
         <Route path="/auth/login" exact>
           <Login />
         </Route>

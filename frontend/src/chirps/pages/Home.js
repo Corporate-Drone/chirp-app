@@ -9,8 +9,11 @@ function Home() {
 
     return (
         <div className="Home">
-            <h1>Happening Now</h1>
-            <h2>Join Chirp today.</h2>
+            <div className="Home-titles">
+                <h1>Happening Now</h1>
+                <h2>Join Chirp today.</h2>
+            </div>
+
             <Link to="auth/register">
                 <button>Register</button>
             </Link>

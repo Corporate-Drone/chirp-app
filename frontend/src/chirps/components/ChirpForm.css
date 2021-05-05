@@ -44,9 +44,10 @@
     outline: none;
   }
 
-  .input-feedback {
+  .chirp-input-feedback {
      position: absolute;
      margin-top: 4.5em;
+     color: red;
   }
 
   .error {

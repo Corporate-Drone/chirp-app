@@ -55,3 +55,7 @@
     -webkit-appearance: none;
   }
 
+  .Login button:active {
+    background-color:#2379af;
+  }
+

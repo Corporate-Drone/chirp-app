@@ -87,7 +87,7 @@ function ChirpForm(props) {
               </button>
 
             {errors.text && touched.text && (
-              <div className="input-feedback">{errors.text}</div>
+              <div className="chirp-input-feedback">{errors.text}</div>
             )}
 
           </form>

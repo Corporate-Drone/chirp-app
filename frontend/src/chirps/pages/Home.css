@@ -10,6 +10,11 @@
     margin-bottom: -0.5em;
 }
 
+.Home-titles {
+    text-align: center;
+    color: #505252;
+}
+
 .Home button {
     width: 214px;
     margin: 5px 0;
@@ -24,4 +29,8 @@
     cursor: pointer;
     outline: none;
     -webkit-appearance: none;
+}
+
+.Home button:active {
+    background-color:#2379af;
 }
