@@ -68,9 +68,6 @@ export default function ErrorModal(props) {
 
     return (
         <div>
-            {/* <button type="button" onClick={handleOpen}>
-                Open Modal
-      </button> */}
             <Modal
                 open={open}
                 onClose={handleClose}

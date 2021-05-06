@@ -5,6 +5,7 @@ import useInputState from "../../hooks/useInputState";
 import { AuthContext } from '../../shared/context/auth-context';
 import avatarplaceholder from '../../images/avatarplaceholder.gif'
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
+import AlertDialog from '../../shared/components/UIElements/AlertDialog'
 import './UserSetup.css'
 
 function UserSetup() {
@@ -13,6 +14,7 @@ function UserSetup() {
     const [loadedImage, setLoadedImage] = useState();
     const [isLoading, setLoading] = useState(true);
     const [value, handleChange, reset] = useInputState("");
+    const [displayConfirmation, setDisplayConfirmation] = useState(false);
 
     const history = useHistory();
 
@@ -170,6 +172,10 @@ function UserSetup() {
         history.push('/');
     }
 
+    const handleDeleteAccount = () => {
+        setDisplayConfirmation(true)
+    }
+
     let userAbout;
     if (loadedUser && loadedUser.about) {
         userAbout = (loadedUser.about)
@@ -186,6 +192,7 @@ function UserSetup() {
 
     return (
         <div>
+            {displayConfirmation && <AlertDialog setDisplayConfirmation={setDisplayConfirmation} deleteAccount={deleteAccount} />}
             {isLoading && <CircularIndeterminate />}
             {!isLoading && <div className="UserSetup">
                 <div className="UserSetup-profile">
@@ -201,7 +208,7 @@ function UserSetup() {
                         {userAbout}
                     </div>
                     <div>
-                        <button id="UserSetup-remove-account" onClick={deleteAccount}>Delete User</button>
+                        <button id="UserSetup-remove-account" onClick={handleDeleteAccount}>Delete User</button>
                     </div>
                 </div>
 
