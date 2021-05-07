@@ -123,12 +123,19 @@ const deleteUser = async (req, res, next) => {
                 }
             }
         }
-        
+
         for (let user of users) {
             //remove user from followers
             for (let follower of user.followers) {
                 if (follower == userId) {
                     await User.findByIdAndUpdate(user._id, { $pull: { followers: follower } })
+                }
+            }
+
+            //remove user from following
+            for (let following of user.following) {
+                if (following == userId) {
+                    await User.findByIdAndUpdate(user._id, { $pull: { following: following } })
                 }
             }
         }
