@@ -24,14 +24,19 @@ function UserChirps(props) {
     const auth = useContext(AuthContext);
     const location = useLocation();
 
-    const getUserChirps = async (userId) => {
+    const getUserChirps = async (userId, type = 'chirps') => {
         setLoading(true);
         try {
-            const res = await axios.get("http://localhost:5000/:userId", { params: { id: userId } })
+            const res = await axios.get("http://localhost:5000/:userId", { params: { id: userId, type } })
                 .then(response => {
 
                     if (response.status === 200) {
-                        setLoadedChirps(response.data)
+                        if (type === 'chirps') {
+                            setLoadedChirps(response.data)
+                        } else {
+                            setLoadedUser(response.data)
+                        }
+
                     }
                 })
         } catch (error) { console.log(error) }
@@ -56,26 +61,28 @@ function UserChirps(props) {
         setLoading(false);
     }
 
+    const getUser = () => {
+        let type = 'user'
+        getUserChirps(userId, type)
+    }
+
     useEffect(() => {
         // Update chirps on refresh
-        getUserChirps(userId);
+        getUserChirps(userId); //fetch user chirps
+        getUser() //fetch user data
         getLikedChirps();
     }, [location])
 
     useEffect(() => {
-        if (loadedChirps && loadedChirps.length > 0) {
-            setLoadedUser(loadedChirps[0].author)
-
-            if (loadedUser) {
-                setFollowCount(loadedUser.followers.length);
-            }
+        if (loadedUser) {
+            setFollowCount(loadedUser.followers.length);
 
             //set isFollowing to true if current user is following
-            if (loadedUser && loadedUser.followers.includes(auth.userId)) {
+            if (loadedUser.followers.includes(auth.userId)) {
                 toggle()
             }
         }
-    }, [isLoading, loadedChirps]); //run when changes to isLoading or chirps
+    }, [loadedChirps,loadedUser]) //run when changes to chirps or user
 
     const handleView = async (type) => {
         setViewState(type)
@@ -87,7 +94,7 @@ function UserChirps(props) {
         } else {
             setFollowCount(followCount + 1)
         }
-        followUser(userId,auth.userId)
+        followUser(userId, auth.userId)
         toggle()
     }
 
@@ -222,16 +229,6 @@ function UserChirps(props) {
                         </Link></div>
                     </div>
                 </div>
-                {/* <div className="UserChirps-tab">
-                    <div className="UserChirps-chirps" onClick={() => handleView('chirps')}>
-                        {!isLoading && loadedChirps && <div>
-                            Chirps {loadedChirps.length}
-                        </div>}
-                    </div>
-                    {!isLoading && loadedLikes && <div className="UserChirps-likes" onClick={() => handleView('likes')}>
-                        Likes {loadedLikes.length}
-                    </div>}
-                </div> */}
                 {viewDisplay}
             </div>}
             {!isLoading && viewState === 'chirps' && <div>{chirps}</div>}

@@ -66,14 +66,14 @@ function UserFollow(props) {
     if (type === 'following') {
         followDisplay = (
             <div className="UserFollow-tabs">
-                <Link to={`/${userId}/followers`}>
-                    <div className="UserFollow-followers">
-                        Followers
-                    </div>
-                </Link>
                 <Link to={`/${userId}/following`}>
                     <div className="UserFollow-following" id="clicked">
                         Following
+                    </div>
+                </Link>
+                <Link to={`/${userId}/followers`}>
+                    <div className="UserFollow-followers">
+                        Followers
                     </div>
                 </Link>
             </div>
@@ -81,14 +81,14 @@ function UserFollow(props) {
     } else {
         followDisplay = (
             <div className="UserFollow-tabs">
-                <Link to={`/${userId}/followers`}>
-                    <div className="UserFollow-followers" id="clicked">
-                        Followers
-                    </div>
-                </Link>
                 <Link to={`/${userId}/following`}>
                     <div className="UserFollow-following">
                         Following
+                    </div>
+                </Link>
+                <Link to={`/${userId}/followers`}>
+                    <div className="UserFollow-followers" id="clicked">
+                        Followers
                     </div>
                 </Link>
             </div>
