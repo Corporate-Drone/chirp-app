@@ -35,18 +35,26 @@ const getSingleChirp = async (req, res, next) => {
 
 const getUserChirps = async (req, res, next) => {
     const username = req.query.id
+    const type = req.query.type
 
     try {
         const chirps = await Chirp.find({}).populate('author');
 
         let userChirps = [];
 
-        for (chirp of chirps) {
-            if (username === chirp.author.username) {
-                userChirps.push(chirp)
+        if (type === 'chirps') {
+            for (chirp of chirps) {
+                if (username === chirp.author.username) {
+                    userChirps.push(chirp)
+                }
             }
+            res.send(userChirps)
+        } else {
+            const user = await User.findOne({ username: username })
+            res.send(user)
         }
-        res.send(userChirps)
+        
+        // res.send(userChirps)
 
     } catch (error) {
         console.log(error)
