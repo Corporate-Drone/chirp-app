@@ -58,7 +58,7 @@ function ChirpApp() {
 
     return (
         <div className="ChirpApp">
-            {isLoading && <CircularIndeterminate/>}
+            {isLoading && <CircularIndeterminate />}
             {auth.isLoggedIn && !isLoading &&
                 <ChirpForm fetchChirps={fetchChirps} />}
             {!isLoading && <ChirpList

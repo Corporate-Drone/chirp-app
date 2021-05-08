@@ -129,26 +129,26 @@ function Chirp(props) {
     if (isReply && detailView) {
         replyUsername = (
             <div className="Chirp-container">
-            <Link to={`/${username}`} className="Chirp-picture">
-                <div>{profilePicture}</div>
-            </Link>
-            <div className="top">
-                <div className="username-date">
-                    <Link to={`/${username}`} className="Chirp-username">
-                        <div>{username}</div>
-                    </Link>
+                <Link to={`/${username}`} className="Chirp-picture">
+                    <div>{profilePicture}</div>
+                </Link>
+                <div className="top">
+                    <div className="username-date">
+                        <Link to={`/${username}`} className="Chirp-username">
+                            <div>{username}</div>
+                        </Link>
+                        <Link to={`/${username}/status/${id}`}>
+                            <div>{date.slice(0, 9)}</div>
+                        </Link>
+                    </div>
                     <Link to={`/${parentUsername}`}>
-                        <div>Replying to {parentUsername}</div>
+                        <div id="Chirp-replying">Replying to {parentUsername}</div>
                     </Link>
-                    <Link to={`/${username}/status/${id}`}>
-                        <div>{date.slice(0, 9)}</div>
+                    <Link to={`/${username}/status/${id}`} id="Chirp-text">
+                        <p>{text}</p>
                     </Link>
                 </div>
-                <Link to={`/${username}/status/${id}`} id="Chirp-text">
-                    <p>{text}</p>
-                </Link>
             </div>
-        </div>
         )
     } else if (isReply) {
         replyUsername = (
@@ -161,13 +161,13 @@ function Chirp(props) {
                         <Link to={`/${username}`} className="Chirp-username">
                             <div>{username}</div>
                         </Link>
-                        <Link to={`/${parentUsername}`}>
-                            <div>Replying to {parentUsername}</div>
-                        </Link>
                         <Link to={`/${username}/status/${id}`}>
                             <div>{date.slice(0, 9)}</div>
                         </Link>
                     </div>
+                    <Link to={`/${parentUsername}`}>
+                        <div id="Chirp-replying">Replying to {parentUsername}</div>
+                    </Link>
                     <Link to={`/${username}/status/${id}`} id="Chirp-text">
                         <p>{text}</p>
                     </Link>
@@ -185,13 +185,13 @@ function Chirp(props) {
                         <Link to={`/${username}`} className="Chirp-username">
                             <div>{username}</div>
                         </Link>
-                        <Link to={`/${parentUsername}`}>
-                            <div>Replying to {parentUsername}</div>
-                        </Link>
                         <Link to={`/${username}/status/${id}`}>
                             <div>{date.slice(0, 9)}</div>
                         </Link>
                     </div>
+                    <Link to={`/${parentUsername}`}>
+                        <div id="Chirp-replying">Replying to {parentUsername}</div>
+                    </Link>
                     <Link to={`/${username}/status/${id}`} id="Chirp-text">
                         <p>{text}</p>
                     </Link>

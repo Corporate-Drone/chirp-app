@@ -44,6 +44,10 @@
     min-width: 350px;
 }
 
+.Chirp:hover {
+    background-color: #f3f3f3;
+}
+
 .Chirp a{
     text-decoration: none;
 }
@@ -52,6 +56,13 @@
     display: flex;
     justify-content: end;
     align-items: center;
+}
+
+#Chirp-replying {
+    color: #b3b3b3;
+    text-align: left;
+    font-weight:normal;
+    margin-top: 5px;
 }
 
 #Chirp-text {

@@ -56,7 +56,7 @@ function App() {
           <UserChirps />
         </Route>
         <Route path="/:userId/followers" exact>
-          <UserFollow type={"followers"}/>
+          <UserFollow type={"followers"} />
         </Route >
         <Route path="/:userId/following" exact>
           <UserFollow type={"following"} />
@@ -95,7 +95,7 @@ function App() {
       value={{ isLoggedIn: isLoggedIn, userId: userId, username: username, login: login, logout: logout }}
     >
       <Router>
-        <Header/>
+        <Header />
         <main className="App">{routes}</main>
       </Router>
     </AuthContext.Provider>
