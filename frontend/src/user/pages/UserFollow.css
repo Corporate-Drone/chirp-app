@@ -28,6 +28,7 @@
 
 .UserFollow-top{
     display: flex;
+    margin-top: 1em;
 }
 
 .UserFollow-top a {

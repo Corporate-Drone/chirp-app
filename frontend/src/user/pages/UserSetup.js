@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import axios from 'axios';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import useInputState from "../../hooks/useInputState";
 import { AuthContext } from '../../shared/context/auth-context';
 import avatarplaceholder from '../../images/avatarplaceholder.gif'
@@ -195,6 +196,14 @@ function UserSetup() {
             {displayConfirmation && <AlertDialog setDisplayConfirmation={setDisplayConfirmation} deleteAccount={deleteAccount} />}
             {isLoading && <CircularIndeterminate />}
             {!isLoading && <div className="UserSetup">
+                <div className="UserSetup-back">
+                <Link to={`/${auth.username}`}>
+                    <KeyboardBackspaceIcon />
+                </Link>
+                <Link to={`/${auth.username}`}>
+                    <div className="UserSetup-back-user">Back to Profile</div>
+                </Link>
+                </div>
                 <div className="UserSetup-profile">
                     <div>
                         <div>

@@ -8,6 +8,24 @@
     min-width: 350px;
 }
 
+.UserSetup-back{
+    display: flex;
+    margin-top: 1em;
+}
+
+.UserSetup-back a {
+    color: #1DA1F2;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+    margin-left: 1em;
+}
+
+.UserSetup-back a:hover {
+    color:#2379af;
+    text-decoration: underline;
+}
+
 .UserSetup-profile {
     display: flex;
     margin: auto;
