@@ -20,8 +20,6 @@ import "./Navbar-Responsive.css";
 
 import { AuthContext } from '../../context/auth-context';
 
-let headersData = [];
-
 const useStyles = makeStyles(() => ({
     header: {
         backgroundColor: "#1DA1F2",
@@ -31,17 +29,17 @@ const useStyles = makeStyles(() => ({
         },
     },
     logo: {
-        fontFamily: "Work Sans, sans-serif",
+        // fontFamily: "Work Sans, sans-serif",
         fontWeight: 600,
-        color: "#FFFEFE",
+        color: "#FFF",
         textAlign: "left",
     },
-    menuButton: {
-        fontFamily: "Open Sans, sans-serif",
-        fontWeight: 700,
-        size: "18px",
-        marginLeft: "38px",
-    },
+    // menuButton: {
+    //     fontFamily: "Open Sans, sans-serif",
+    //     fontWeight: 700,
+    //     size: "18px",
+    //     marginLeft: "38px",
+    // },
     toolbar: {
         display: "flex",
         justifyContent: "space-between",
@@ -109,11 +107,11 @@ export default function Header() {
                         <HomeIcon />
                     </Button>}
                     {!auth.isLoggedIn &&
-                        <Button component={Link} to="/auth/login" color="inherit">
+                        <Button component={Link} to="/auth/login" color="inherit" style={{ fontFamily: 'Segoe UI' }}>
                             Login
                         </Button>}
                     {!auth.isLoggedIn &&
-                        <Button component={Link} to="/auth/register" color="inherit">
+                        <Button component={Link} to="/auth/register" color="inherit" style={{ fontFamily: 'Segoe UI' }}>
                             Register
                         </Button>}
                     {auth.isLoggedIn &&
@@ -144,27 +142,27 @@ export default function Header() {
                 >
                     <div className={drawerContainer}>
 
-                        {auth.isLoggedIn && <Button component={Link} color="inherit" to="/chirps" onClick={handleDrawerClose}>
+                        {auth.isLoggedIn && <Button component={Link} color="inherit" to="/chirps" onClick={handleDrawerClose} style={{ fontFamily: 'Segoe UI' }}>
                             Chirps
                     </Button>}
                         {!auth.isLoggedIn &&
-                            <Button component={Link} to="/auth/login" color="inherit" onClick={handleDrawerClose}>
+                            <Button component={Link} to="/auth/login" color="inherit" onClick={handleDrawerClose} style={{ fontFamily: 'Segoe UI' }}>
                                 Login
                         </Button>}
                         {!auth.isLoggedIn &&
-                            <Button component={Link} to="/auth/register" color="inherit" onClick={handleDrawerClose}>
+                            <Button component={Link} to="/auth/register" color="inherit" onClick={handleDrawerClose} style={{ fontFamily: 'Segoe UI' }}>
                                 Register
                         </Button>}
                         {auth.isLoggedIn &&
-                            <Button component={Link} onClick={toProfile} color="inherit">
+                            <Button component={Link} onClick={toProfile} color="inherit" style={{ fontFamily: 'Segoe UI' }}>
                                 Profile
                         </Button>}
                         {auth.isLoggedIn &&
-                            <Button component={Link} to="/users" color="inherit" onClick={handleDrawerClose}>
+                            <Button component={Link} to="/users" color="inherit" onClick={handleDrawerClose} style={{ fontFamily: 'Segoe UI' }}>
                                 Users
                         </Button>}
                         {auth.isLoggedIn &&
-                            <Button color="inherit" onClick={logout}>
+                            <Button color="inherit" onClick={logout} style={{ fontFamily: 'Segoe UI' }}>
                                 Logout
                         </Button>}</div>
                 </Drawer>
