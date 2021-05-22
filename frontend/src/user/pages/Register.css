@@ -7,6 +7,13 @@
     color: #505252;
 }
 
+.Register a {
+  color: #1DA1F2;
+  text-decoration: none;
+  display: flex;
+  margin-right: 10em;
+}
+
 .Register-Username {
     margin-bottom: 1em;
 }

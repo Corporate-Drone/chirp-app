@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import { AuthContext } from '../../shared/context/auth-context';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import './Login.css'
@@ -69,6 +71,9 @@ function Login(props) {
           } = props;
           return (
             <div className="Login">
+              <Link to={'/'}>
+                <KeyboardBackspaceIcon /> Back
+              </Link>
               <h1>Log in to Chirp</h1>
               <form onSubmit={handleSubmit}>
                 <div className="Login-Username">

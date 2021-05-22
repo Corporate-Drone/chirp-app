@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import { AuthContext } from '../../shared/context/auth-context';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import './Register.css'
@@ -37,6 +38,9 @@ function Register(props) {
 
     return (
         <div className="Register">
+            <Link to={'/'}>
+                <KeyboardBackspaceIcon /> Back
+              </Link>
             <h1>Create your account</h1>
             {displayError && <ErrorModal message={displayError} setDisplayError={setDisplayError} />}
             <Formik
