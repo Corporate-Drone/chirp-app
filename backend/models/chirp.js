@@ -31,11 +31,3 @@ const chirpSchema = new Schema({
 }, opts);
 
 module.exports = mongoose.model('Chirp', chirpSchema);
-
-// id: 1, 
-// info: 'Clean Fishtank',
-// replies: [{ yuri: 'hello' }],
-// rechirps: 0,
-// rechirpId: 0,
-// likes: 0,
-// date: '1/1/21'

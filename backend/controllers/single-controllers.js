@@ -53,8 +53,6 @@ const getUserChirps = async (req, res, next) => {
             const user = await User.findOne({ username: username })
             res.send(user)
         }
-        
-        // res.send(userChirps)
 
     } catch (error) {
         console.log(error)

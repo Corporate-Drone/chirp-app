@@ -19,7 +19,6 @@ const register = async (req, res, next) => {
                 filename: undefined
             }
         }, { new: true });
-        // const newUser = (req.body.username)
         res.send(updatedUser);
 
     } catch (error) {
@@ -155,10 +154,6 @@ const deleteUser = async (req, res, next) => {
 }
 
 const logout = (req, res, next) => {
-    // if (req.user) {
-    //     req.logout();
-    //     console.log('user logged out!')
-    // }
     req.logout()
     res.send({ message: 'Logged out!' })
 

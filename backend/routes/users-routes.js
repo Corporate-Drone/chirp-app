@@ -21,8 +21,6 @@ router.delete('/setup/upload', usersControllers.deleteImage);
 
 router.get('/setup', usersControllers.getUser);
 
-// router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), usersControllers.login);
-
 router.post(
     '/login',
     passport.authenticate('local'),
@@ -30,10 +28,6 @@ router.post(
         try {
              
          const fullUser = await User.findOne({ username: req.user.username })
-
-         //  console.log(req.user)
-         //  console.log(req.session)
-          
           res.send(fullUser);
         } catch (error) {
             console.log(error)
