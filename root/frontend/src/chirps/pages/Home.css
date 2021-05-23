@@ -1,0 +1,63 @@
+.Background .Home {
+    animation: animationFrames ease 2s;
+    animation-iteration-count: 1;
+    transform-origin: 50% 50%;
+    animation-fill-mode:forwards; /*when the spec is finished*/
+}
+
+.Background {
+    background: linear-gradient(rgba(29, 161, 242,0.3),rgba(255, 255, 255, 0.5)), url("../../images/map.png");
+    background-size: cover;
+    height: 100vh;
+    /* margin-top: -5em; */
+}
+
+.Home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 35%;
+    width: 100%;
+}
+
+.Home h1 {
+    margin-bottom: -0.5em;
+}
+
+.Home-titles {
+    text-align: center;
+    color: #505252;
+}
+
+.Home button {
+    width: 214px;
+    margin: 5px 0;
+    padding: 12px 20px;
+    border-style: none;
+    border-radius: 5px;
+    background-color: #1DA1F2;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+    font-size: 17px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.Home button:active {
+    background-color:#2379af;
+}
+
+@keyframes animationFrames{
+    0% {
+      opacity:0;
+      transform:  translate(0px,-25px)  ;
+    }
+    100% {
+      opacity:1;
+      transform:  translate(0px,0px)  ;
+    }
+  }

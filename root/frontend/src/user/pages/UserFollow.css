@@ -1,0 +1,64 @@
+.UserFollow {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 650px;
+    min-width: 350px;
+}
+
+.UserFollow a {
+    text-decoration: none;
+}
+
+.UserFollow-tabs {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+}
+
+.UserFollow-tabs a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #1DA1F2;
+}
+
+.UserFollow-tabs a:hover {
+    color:#2379af;
+}
+
+.UserFollow-top{
+    display: flex;
+    margin-top: 1em;
+}
+
+.UserFollow-top a {
+    color: #1DA1F2;
+}
+
+.UserFollow-username {
+    font-size: 17px;
+    font-weight: bold;
+    color: #505252;
+    margin-left: 1em;
+}
+
+.UserFollow-username:hover {
+    text-decoration: underline;
+}
+
+.UserFollow-followers {
+    padding: 1em;
+}
+
+.UserFollow-following{
+    padding: 1em;
+}
+
+#clicked {
+    border-bottom: 1px solid #1DA1F2;
+}
+
+.UserFollow-none {
+    margin-top: 1em;
+    text-align: center;
+}

@@ -1,0 +1,107 @@
+.UserChirps-profile {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 1em;
+    border: 1px solid #b3b3b3;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+    padding: 1em;
+    max-width: 650px;
+    min-width: 350px;
+}
+
+.UserChirps-profile a{
+    text-decoration: none;
+    color: #505252;
+}
+
+.UserChirps-count {
+    font-weight: bold;
+}
+
+.UserChirps-edit {
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+}
+
+.UserChirps-image-name {
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+.UserChirps-picture {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-right: 50px;
+}
+
+.UserChirps-name {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.UserChirps-name-follow {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+}
+
+.UserChirps-follow {
+    display: flex;
+}
+
+.UserChirps-follow a:hover{
+    text-decoration: underline;
+}
+
+.UserChirps-following {
+    margin-right: 70px;
+}
+
+.UserChirps-profile button {
+    padding: 10px;
+    border-style: none;
+    border-radius: 5px;
+    background: transparent;
+    border: none;
+    font-size: 17px;
+    font-weight: bold;
+    border: 1px solid #b3b3b3;
+    color: #1DA1F2;
+    cursor: pointer;
+    outline: none;
+    margin-left: 3em;
+    -webkit-appearance: none;
+}
+
+.UserChirps-profile button:hover {
+    background-color: #1DA1F2;
+    color: #fff;
+    border: 1px solid #1DA1F2;
+    transition: all 150ms ease-in-out;
+}
+
+.UserChirps-tab {
+    display: flex;
+    justify-content: center;
+}
+
+.UserChirps-chirps {
+    margin-right: 1em;
+}
+
+.UserChirps-tab {
+    font-weight: bold;
+    color: #1DA1F2;
+    cursor: pointer;
+}
+
+.tab:hover {
+    color:#2379af;
+}
+
+#clicked {
+    border-bottom: 1px solid #1DA1F2;
+}

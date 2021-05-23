@@ -1,0 +1,35 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
+
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+})
+
+const UserSchema = new Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    following: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
+    followers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
+    image: ImageSchema,
+    about: String
+});
+
+//add username & password to UserSchema
+UserSchema.plugin(passportLocalMongoose);
+
+module.exports = mongoose.model('User', UserSchema);
