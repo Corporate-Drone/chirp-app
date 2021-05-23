@@ -16,7 +16,7 @@ require('dotenv').config()
 
 const app = express();
 
-const connectUrl = 'mongodb+srv://our-first-user:leavebudget@cluster0.0xojg.mongodb.net/chirp?retryWrites=true&w=majority'
+const connectUrl = process.env.DB_URL
 
 mongoose.connect(connectUrl, {
     useNewUrlParser: true,
@@ -86,12 +86,12 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // middleware
-app.use((req, res, next) => {
-    // res.setHeader('Access-Control-Allow-Origin', '*'); //set header on resposne
-    // res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-Width, Content-Type, Accept, Authorization'); //incoming requests handle
-    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-    next();
-})
+// app.use((req, res, next) => {
+//     // res.setHeader('Access-Control-Allow-Origin', '*'); //set header on resposne
+//     // res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-Width, Content-Type, Accept, Authorization'); //incoming requests handle
+//     // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+//     next();
+// })
 
 
 app.use('/auth', usersRoutes)
