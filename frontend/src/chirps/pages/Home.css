@@ -1,9 +1,25 @@
+.Background .Home {
+    animation: animationFrames ease 2s;
+    animation-iteration-count: 1;
+    transform-origin: 50% 50%;
+    animation-fill-mode:forwards; /*when the spec is finished*/
+}
+
+.Background {
+    background: linear-gradient(rgba(29, 161, 242,0.3),rgba(255, 255, 255, 0.5)), url("../../images/map.png");
+    background-size: cover;
+    height: 100vh;
+    /* margin-top: -5em; */
+}
+
 .Home {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 5em;
+    position: absolute;
+    bottom: 35%;
+    width: 100%;
 }
 
 .Home h1 {
@@ -34,3 +50,14 @@
 .Home button:active {
     background-color:#2379af;
 }
+
+@keyframes animationFrames{
+    0% {
+      opacity:0;
+      transform:  translate(0px,-25px)  ;
+    }
+    100% {
+      opacity:1;
+      transform:  translate(0px,0px)  ;
+    }
+  }
