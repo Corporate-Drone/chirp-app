@@ -10,7 +10,8 @@
   },
   "author": "D Marcus",
   "license": "MIT",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "concurrently": "^6.1.0"
   }
 }
