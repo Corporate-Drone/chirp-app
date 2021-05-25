@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\" ",
-    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\" ",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build"
+    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\" "
+  },
+  "engines": {
+    "node": "10.16.0"
   },
   "author": "D Marcus",
   "license": "MIT",
