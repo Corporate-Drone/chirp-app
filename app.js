@@ -108,7 +108,7 @@ app.use('/:uid', singleRoutes)
 //     return next(error);
 // })
 
-app.use('/api', createProxyMiddleware({ target: 'http://localhost:5000', changeOrigin: true }));
+app.use('/', createProxyMiddleware({ target: 'http://localhost:5000', changeOrigin: true }));
 
 app.use((error, req, res, next) => {
     if (res.headerSent) {
