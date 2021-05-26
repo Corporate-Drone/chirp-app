@@ -27,7 +27,7 @@ function UserChirps(props) {
     const getUserChirps = async (userId, type = 'chirps') => {
         setLoading(true);
         try {
-            const res = await axios.get("http://localhost:5000/:userId", { params: { id: userId, type } })
+            const res = await axios.get("/:userId", { params: { id: userId, type } })
                 .then(response => {
 
                     if (response.status === 200) {
@@ -47,7 +47,7 @@ function UserChirps(props) {
     const getLikedChirps = async () => {
         setLoading(true)
         try {
-            const res = await axios.get("http://localhost:5000/:userId/likes", { params: { id: userId } })
+            const res = await axios.get("/:userId/likes", { params: { id: userId } })
                 .then(response => {
 
                     if (response.status === 200) {

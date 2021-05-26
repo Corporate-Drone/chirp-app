@@ -21,7 +21,7 @@ function Register(props) {
                 email,
                 password
             }
-            axios.post('http://localhost:5000/auth/register', data)
+            axios.post('/auth/register', data)
                 .then(response => {
                     if (response.status === 200) {
                         auth.login(response.data._id, response.data.username) //login user after registering

@@ -24,7 +24,7 @@ function UserSetup() {
         //if reply fetch the thread and display the whole thread
         //else do below
         try {
-            const res = await axios.get("http://localhost:5000/auth/setup", { params: { id: auth.userId } })
+            const res = await axios.get("/auth/setup", { params: { id: auth.userId } })
                 .then(response => {
 
                     if (response.status === 200) {
@@ -54,7 +54,7 @@ function UserSetup() {
                 url: loadedImage.secure_url,
                 filename: loadedImage.public_id
             }
-            axios.post('http://localhost:5000/auth/setup/upload', data)
+            axios.post('/auth/setup/upload', data)
                 .then(response => {
                     if (response.status === 200) {
                         setLoadedUser(response.data)
@@ -76,7 +76,7 @@ function UserSetup() {
                     userId: auth.userId,
                     about
                 }
-                axios.post('http://localhost:5000/auth/setup', data)
+                axios.post('/auth/setup', data)
                     .then(response => {
                         if (response.status === 200) {
                             setLoadedUser(response.data)
@@ -124,7 +124,7 @@ function UserSetup() {
                     url: loadedUser.image.url,
                     filename: loadedUser.image.filename
                 }
-                axios.delete('http://localhost:5000/auth/setup/upload', { headers, data })
+                axios.delete('/auth/setup/upload', { headers, data })
                     .then(response => {
                         if (response.status === 200) {
                             setLoadedUser(response.data)
@@ -160,7 +160,7 @@ function UserSetup() {
                 }
             }
 
-            axios.delete('http://localhost:5000/auth/setup/', { headers, data })
+            axios.delete('/auth/setup/', { headers, data })
                 .then(response => {
                     if (response.status === 200) {
                         setLoading(false);

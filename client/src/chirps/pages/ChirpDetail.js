@@ -17,7 +17,7 @@ function ChirpDetail(props) {
         //if reply fetch the thread and display the whole thread
         //else do below
         try {
-            const res = await axios.get(`http://localhost:5000/${username}/status/${chirp}`, { params: { id: chirp } })
+            const res = await axios.get(`/${username}/status/${chirp}`, { params: { id: chirp } })
                 .then(response => {
 
                     if (response.status === 200) {
@@ -26,11 +26,7 @@ function ChirpDetail(props) {
                         } else {
                             setLoadedChirp(response.data);
                         }
-                        // if (!response.data.isReply) {
-                        //     setLoadedParent(response.data)
-                        // } else {
-                        //     setLoadedChirp(response.data);
-                        // }
+
                     }
                     setLoading(false);
                 })
@@ -40,49 +36,9 @@ function ChirpDetail(props) {
         }
     }
 
-    // const fetchSingleChirp = async () => {
-    //     setLoading(true);
-    //     //if reply fetch the thread and display the whole thread
-    //     //else do below
-    //     try {
-    //         const res = await axios.get(`http://localhost:5000/${userId}/status/${chirpId}`, { params: { id: chirpId } })
-    //             .then(response => {
-
-    //                 if (response.status === 200) {
-    //                     setLoadedChirp(response.data);
-    //                     setLoading(false);
-    //                     console.log('request made!')
-    //                 }
-    //             })
-    //     } catch (error) {
-    //         console.log(error)
-    //         setLoading(false);
-    //     }
-    // }
-
-    // const fetchParentChirp = async () => {
-    //     setLoading(true);
-    //     //if reply fetch the thread and display the whole thread
-    //     //else do below
-    //     try {
-    //         const res = await axios.get(`http://localhost:5000/${loadedChirp.parentUsername}/status/${loadedChirp.parentChirpId}`, { params: { id: loadedChirp.parentChirpId } })
-    //             .then(response => {
-
-    //                 if (response.status === 200) {
-    //                     setLoadedParent(response.data);
-    //                     setLoading(false);
-    //                 }
-    //             })
-    //     } catch (error) {
-    //         console.log(error)
-    //         setLoading(false);
-    //     }
-    // }
-
     useEffect(() => {
         // Update chirps on refresh
         fetchChirp(userId, chirpId)
-        // fetchSingleChirp();
     }, []);
 
     //reload chirps when one is clicked on

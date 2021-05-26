@@ -32,7 +32,7 @@ function App() {
     setIsLoggedIn(false);
     setUserId(null);
     setUsername(null);
-    axios.post('http://localhost:5000/auth/logout')
+    axios.post('/auth/logout')
       .then(response => {
         // console.log(response.data)
         if (response.status === 200) {

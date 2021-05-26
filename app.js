@@ -1,5 +1,4 @@
 const express = require('express');
-const { createProxyMiddleware } = require('http-proxy-middleware');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
@@ -107,8 +106,6 @@ app.use('/:uid', singleRoutes)
 //     const error = new HttpError('Could not find this route.', 404);
 //     return next(error);
 // })
-
-app.use('/', createProxyMiddleware({ target: 'http://localhost:5000', changeOrigin: true }));
 
 app.use((error, req, res, next) => {
     if (res.headerSent) {

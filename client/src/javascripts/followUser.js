@@ -7,7 +7,7 @@ const followUser = async (userId,authUser) => {
             actionUsername: userId,
             reqUserId: authUser
         }
-        axios.post('http://localhost:5000/:userId', data)
+        axios.post('/:userId', data)
             .then(response => {
                 console.log(response.data)
                 if (response.status === 200) {

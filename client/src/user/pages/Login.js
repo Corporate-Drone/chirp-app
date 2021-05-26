@@ -22,7 +22,7 @@ function Login(props) {
         username,
         password
       }
-      axios.post('http://localhost:5000/auth/login', data)
+      axios.post('/auth/login', data)
         .then(response => {
           console.log(response.data)
           if (response.status === 200) {

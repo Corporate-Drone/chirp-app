@@ -20,7 +20,7 @@ function ChirpForm(props) {
         date: getDate(),
         author: auth.userId
       }
-      await axios.post('http://localhost:5000/chirps', data)
+      await axios.post('/chirps', data)
         .then(response => {
           console.log(response.data)
           if (response.status === 200) {

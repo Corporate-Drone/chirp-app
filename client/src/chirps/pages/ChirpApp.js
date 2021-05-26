@@ -25,7 +25,7 @@ function ChirpApp() {
         setLoading(true);
         try {
             if (auth.isLoggedIn) {
-                await axios.get('http://localhost:5000/chirps', { params: { userId: auth.userId } })
+                await axios.get('/chirps', { params: { userId: auth.userId } })
                 .then(response => {
                     if (response.status === 200) {
                         console.log(response.data)

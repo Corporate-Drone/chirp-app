@@ -27,7 +27,7 @@ function Users(props) {
 
         setLoading(true);
         try {
-            const res = await axios.get('http://localhost:5000/users')
+            const res = await axios.get('/users')
                 .then(response => {
 
                     if (response.status === 200) {

@@ -26,7 +26,7 @@ function Chirp(props) {
 
     const addReply = async (chirpId, value) => {
         try {
-            const res = await axios.post(`http://localhost:5000/${username}/status/${chirpId}/reply`, {
+            const res = await axios.post(`/${username}/status/${chirpId}/reply`, {
                 id: chirpId,
                 text: value,
                 username: auth.username,
@@ -51,7 +51,7 @@ function Chirp(props) {
 
     const likeChirp = async (chirpId) => {
         try {
-            await axios.post(`http://localhost:5000/${username}/status/${chirpId}/like`, {
+            await axios.post(`/${username}/status/${chirpId}/like`, {
                 id: chirpId,
                 username: auth.username
             })
@@ -76,7 +76,7 @@ function Chirp(props) {
             isReply: isReply
         }
         try {
-            await axios.delete('http://localhost:5000/chirps', { headers, data })
+            await axios.delete('/chirps', { headers, data })
                 .then(response => {
                     // console.log(response.data)
                     if (response.status === 200) {
