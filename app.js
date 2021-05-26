@@ -1,4 +1,5 @@
 const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
@@ -107,6 +108,7 @@ app.use('/:uid', singleRoutes)
 //     return next(error);
 // })
 
+app.use('/api', createProxyMiddleware({ target: 'http://localhost:5000', changeOrigin: true }));
 
 app.use((error, req, res, next) => {
     if (res.headerSent) {
