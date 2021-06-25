@@ -1,15 +1,29 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
 const Chirp = require('../models/chirp');
-const Reply = require('../models/reply');
 const { cloudinary } = require('../cloudinary');
+require('dotenv').config()
 
 
 const register = async (req, res, next) => {
     try {
         const { email, username, password } = req.body;
-        const user = new User({ email, username });
-        const registeredUser = await User.register(user, password);
+
+        let user = new User({
+            username,
+            email,
+            password
+        });
+
+        //encrypt password
+        const salt = await bcrypt.genSalt(10);
+
+        user.password = await bcrypt.hash(password, salt);
+
+        await user.save();
+
         const fullUser = await User.findOne({ username: req.body.username })
 
         //add image object to new user
@@ -19,7 +33,27 @@ const register = async (req, res, next) => {
                 filename: undefined
             }
         }, { new: true });
-        res.send(updatedUser);
+
+        user = await User.findOne({ username: username })
+
+        const payload = {
+            user: {
+                id: user.id
+            }
+        };
+
+        //return jsonwebtoken
+        jwt.sign(
+            payload,
+            process.env.jwtSecret,
+            { expiresIn: 360000 },
+            (err, token) => {
+                if (err) throw err;
+                res.send({ token, updatedUser });
+            }
+        );
+
+        // res.send(updatedUser);
 
     } catch (error) {
         console.log(error.message)
@@ -28,6 +62,46 @@ const register = async (req, res, next) => {
         );
     }
 
+}
+
+const login = async (req, res, next) => {
+    const { username, password } = req.body;
+    try {
+        let fullUser = await User.findOne({ username: username })
+        
+        if (fullUser) {
+            const isMatch = await bcrypt.compare(password, fullUser.password);
+
+            if (isMatch) {
+                const user = await User.findOne({ username: username }).select('-password');
+
+                const payload = {
+                    user: {
+                      id: user.id
+                    }
+                };
+
+                jwt.sign(
+                    payload,
+                    process.env.jwtSecret,
+                    { expiresIn: 360000 },
+                    (err, token) => {
+                        if (err) throw err;
+                        res.send({ token, user });
+                    }
+                );
+            } else {
+                return next(new Error("Invalid user credentials, please try again."));
+            }
+        } else {
+            return next(new Error("Invalid user credentials, please try again."));
+        }
+    } catch (error) {
+        console.log(error)
+        return next(
+            new HttpError('Login failed, please try again.', 500)
+        );
+    }
 }
 
 const getUser = async (req, res, next) => {
@@ -160,6 +234,7 @@ const logout = (req, res, next) => {
 }
 
 exports.register = register;
+exports.login = login;
 exports.getUser = getUser;
 exports.setup = setup;
 exports.deleteImage = deleteImage;

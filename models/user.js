@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const passportLocalMongoose = require('passport-local-mongoose');
 
 const ImageSchema = new Schema({
     url: String,
@@ -8,11 +7,20 @@ const ImageSchema = new Schema({
 })
 
 const UserSchema = new Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
     email: {
         type: String,
         required: true,
         unique: true
     },
+    password: {
+        type: String,
+        required: true
+      },
     following: [
         {
             type: Schema.Types.ObjectId,
@@ -29,7 +37,5 @@ const UserSchema = new Schema({
     about: String
 });
 
-//add username & password to UserSchema
-UserSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('User', UserSchema);

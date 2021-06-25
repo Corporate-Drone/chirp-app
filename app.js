@@ -1,9 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const User = require('./models/user');
 const usersRoutes = require('./routes/users-routes');
 const chirpsRoutes = require('./routes/chirps-routes');
 const allUsersRoutes = require('./routes/allUsers-routes');
@@ -19,30 +16,26 @@ const app = express();
 
 const connectUrl = process.env.DB_URL
 
-mongoose.connect(connectUrl, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-});
+const connectDB = async () => {
+	try {
+		await mongoose.connect(connectUrl, {
+			useNewUrlParser: true,
+			useCreateIndex: true,
+			useFindAndModify: false,
+			useUnifiedTopology: true
+		});
 
-mongoose.connection.on('error', (err) => {
-    console.error(`🚫 → ${err.message}`);
-});
+		console.log('MongoDB Connected...');
+	} catch (err) {
+		console.error(err.message);
+		// Exit process with failure
+        console.log(err)
+		process.exit(1);
+	}
+};
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Database connected");
-});
+connectDB();
 
-
-// const connectConfig = {
-//     useNewUrlParser: true,
-//     useCreateIndex: true,
-//     useUnifiedTopology: true,
-//     useFindAndModify: false
-// }
 
 app.use(morgan('dev'))
 app.use(cors());
@@ -77,24 +70,6 @@ const sessionConfig = {
 }
 
 app.use(session(sessionConfig))
-
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-
-//Add user to session
-passport.serializeUser(User.serializeUser());
-//Remove user from session
-passport.deserializeUser(User.deserializeUser());
-
-// middleware
-// app.use((req, res, next) => {
-//     // res.setHeader('Access-Control-Allow-Origin', '*'); //set header on resposne
-//     // res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-Width, Content-Type, Accept, Authorization'); //incoming requests handle
-//     // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-//     next();
-// })
-
 
 app.use('/auth', usersRoutes)
 app.use('/chirps', chirpsRoutes)
