@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator/check');
+
 const HttpError = require('../models/http-error');
 const Chirp = require('../models/chirp');
 const User = require('../models/user');
@@ -29,6 +31,11 @@ const getAllChirps = async (req, res, next) => {
 
 const createChirp = async (req, res, next) => {
     try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
+
         const { text, replies, likes, date, author } = req.body;
         const chirp = new Chirp(req.body);
         await chirp.save();

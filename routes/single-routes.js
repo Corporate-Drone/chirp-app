@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true }); //access route params
+const { check } = require('express-validator/check');
+
 const HttpError = require('../models/http-error');
 // const { validationResult } = require('express-validator')
 const User = require('../models/user');
@@ -10,7 +12,9 @@ router.get('/status/:id', singleControllers.getSingleChirp);
 
 router.post('/status/:id/like', singleControllers.likeChirp);
 
-router.post('/status/:id/reply', singleControllers.replyToChirp);
+router.post('/status/:id/reply', [
+    check('text', 'Chirp needs to be at least 2 characters and less than 140 characters.').isLength({ min: 2, max: 140 })
+], singleControllers.replyToChirp);
 
 router.delete('/status/:id/reply', singleControllers.deleteReply);
 

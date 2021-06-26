@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator/check');
+
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
 const Chirp = require('../models/chirp');
@@ -106,6 +108,11 @@ const likeChirp = async (req, res, next) => {
 
 const replyToChirp = async (req, res, next) => {
     try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
+
         const { id, text, username, date } = req.body;
         const chirp = await Chirp.findById(id);
         const parentChirpUser = await User.findOne({ _id: chirp.author })

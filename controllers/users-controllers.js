@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator/check');
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
 const Chirp = require('../models/chirp');
@@ -9,6 +10,11 @@ require('dotenv').config()
 
 const register = async (req, res, next) => {
     try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
+
         const { email, username, password } = req.body;
 
         let user = new User({
@@ -67,6 +73,11 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
     const { username, password } = req.body;
     try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
+
         let fullUser = await User.findOne({ username: username })
         
         if (fullUser) {
@@ -228,9 +239,7 @@ const deleteUser = async (req, res, next) => {
 }
 
 const logout = (req, res, next) => {
-    req.logout()
     res.send({ message: 'Logged out!' })
-
 }
 
 exports.register = register;
