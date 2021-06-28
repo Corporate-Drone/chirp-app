@@ -26,7 +26,7 @@ function Login(props) {
         .then(response => {
           console.log(response.data)
           if (response.status === 200) {
-            auth.login(response.data.user._id, response.data.user.username)
+            auth.login(response.data.user._id, response.data.user.username, response.data.token)
             history.push('/chirps');
           }
         })

@@ -11,7 +11,7 @@ const User = require('../models/user');
 const usersControllers = require('../controllers/users-controllers');
 
 router.post('/register', [
-    check('name', 'Name is required').isLength({ min: 2, max: 15 }),
+    check('username', 'Name is required').isLength({ min: 2, max: 15 }),
     check('email', 'Please include a valid email').isEmail(),
     check(
         'password',
@@ -20,13 +20,15 @@ router.post('/register', [
         .isEmpty()
 ], usersControllers.register);
 
-router.post('/setup', usersControllers.setup);
+router.get('/', auth, usersControllers.getUserLogin);
 
-router.delete('/setup', usersControllers.deleteUser);
+router.post('/setup', auth, idMatch, usersControllers.setup);
 
-router.post('/setup/upload', usersControllers.updateImage);
+router.delete('/setup', auth, idMatch, usersControllers.deleteUser);
 
-router.delete('/setup/upload', usersControllers.deleteImage);
+router.post('/setup/upload', auth, idMatch, usersControllers.updateImage);
+
+router.delete('/setup/upload', auth, idMatch, usersControllers.deleteImage);
 
 router.get('/setup', usersControllers.getUser);
 

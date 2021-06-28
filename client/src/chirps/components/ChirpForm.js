@@ -18,7 +18,8 @@ function ChirpForm(props) {
         replies: [],
         likes: [],
         date: getDate(),
-        author: auth.userId
+        author: auth.userId,
+        userId: auth.userId
       }
       await axios.post('/chirps', data)
         .then(response => {
@@ -46,7 +47,7 @@ function ChirpForm(props) {
 
       validationSchema={Yup.object().shape({
         text: Yup.string()
-          .min(1, 'At least 2 characters required.')
+          .min(2, 'At least 2 characters required.')
           .max(140, 'Must be less than 140 characters.')
           .required("Chirp cannot be blank.")
       })}

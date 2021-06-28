@@ -5,7 +5,8 @@ const followUser = async (userId,authUser) => {
     try {
         const data = {
             actionUsername: userId,
-            reqUserId: authUser
+            reqUserId: authUser,
+            userId: authUser
         }
         axios.post('/:userId', data)
             .then(response => {

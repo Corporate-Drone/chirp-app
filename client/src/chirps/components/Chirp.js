@@ -30,6 +30,7 @@ function Chirp(props) {
                 id: chirpId,
                 text: value,
                 username: auth.username,
+                userId: auth.userId,
                 date: getDate()
             })
                 .then(response => {
@@ -53,7 +54,8 @@ function Chirp(props) {
         try {
             await axios.post(`/${username}/status/${chirpId}/like`, {
                 id: chirpId,
-                username: auth.username
+                username: auth.username,
+                userId: auth.userId
             })
                 .then(response => {
                     if (response.status === 200) {
@@ -73,7 +75,8 @@ function Chirp(props) {
         const data = {
             id: chirpId,
             chirpId: parentChirpId,
-            isReply: isReply
+            isReply: isReply,
+            userId: auth.userId
         }
         try {
             await axios.delete('/chirps', { headers, data })

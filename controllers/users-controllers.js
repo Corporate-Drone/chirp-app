@@ -126,6 +126,16 @@ const getUser = async (req, res, next) => {
     }
 }
 
+const getUserLogin = async (req, res, next) => {
+    try {
+        const { id } = req.user;
+        const user = await User.findById(id).select('-password');
+        res.send(user)
+    } catch (error) {
+
+    }
+}
+
 const setup = async (req, res, next) => {
     try {
         const { userId, about } = req.body;
@@ -244,6 +254,7 @@ const logout = (req, res, next) => {
 
 exports.register = register;
 exports.login = login;
+exports.getUserLogin = getUserLogin;
 exports.getUser = getUser;
 exports.setup = setup;
 exports.deleteImage = deleteImage;

@@ -19,7 +19,7 @@ function ChirpReplyForm(props) {
 
       validationSchema={Yup.object().shape({
         text: Yup.string()
-          .min(1, 'At least 2 characters required.')
+          .min(2, 'At least 2 characters required.')
           .max(140, 'Must be less than 140 characters.')
           .required("Chirp cannot be blank.")
       })}

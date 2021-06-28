@@ -10,40 +10,68 @@ import UserFollow from './user/pages/UserFollow';
 import Users from './user/pages/Users';
 
 import { AuthContext } from './shared/context/auth-context';
+import setAuthToken from './javascripts/setAuthToken';
 import Header from './shared/components/Navigation/Navbar-Responsive';
 import ChirpDetail from "./chirps/pages/ChirpDetail"
 import ChirpApp from './chirps/pages/ChirpApp';
 import Home from './chirps/pages/Home';
-
 import './App.css';
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token); //set token for header
+  console.log('token set!')
+}
+
+
 function App() {
+  const auth = useContext(AuthContext);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(false);
   const [username, setUsername] = useState(false);
+  const [jwtToken, setJwttoken] = useState(false);
 
-  const login = useCallback((uid, username) => {   //useCallback prevents rerender (not recreated)
+  const login = useCallback((uid, username, token) => {   //useCallback prevents rerender (not recreated)
     setIsLoggedIn(true);
     setUserId(uid);
     setUsername(username);
+    localStorage.setItem('token', token);
+    setAuthToken(localStorage.token);
+    setJwttoken(token);
+
   }, []);
 
   const logout = useCallback(() => {
+    localStorage.removeItem('token');
     setIsLoggedIn(false);
     setUserId(null);
     setUsername(null);
+    setJwttoken(null);
     axios.post('/auth/logout')
       .then(response => {
-        // console.log(response.data)
         if (response.status === 200) {
           console.log(response.data)
         }
       })
   }, []);
 
+  useEffect(() => {
+    const loadUser = async () => {
+      await axios.get('/auth')
+      .then(response => {
+        if (response.status === 200) {
+          login(response.data._id, response.data.username, auth.jwtToken)
+        }
+      })
+    }
+
+    loadUser()
+  
+  }, [])
+
   let routes;
 
-  if (isLoggedIn) {
+  if (localStorage.token) {
     routes = (
       <Switch>
         <Route path="/chirps" exact>
@@ -77,7 +105,7 @@ function App() {
           <Home />
         </Route>
         <Route path="/chirps" exact>
-          <ChirpApp />
+          <Redirect to="/" />
         </Route>
         <Route path="/auth/login" exact>
           <Login />
@@ -92,9 +120,10 @@ function App() {
 
   return (
     <AuthContext.Provider //wrapped around all links
-      value={{ isLoggedIn: isLoggedIn, userId: userId, username: username, login: login, logout: logout }}
+      value={{ jwtToken: jwtToken, isLoggedIn: isLoggedIn, userId: userId, username: username, login: login, logout: logout }}
     >
       <Router>
+
         <Header />
         <main className="App">{routes}</main>
       </Router>

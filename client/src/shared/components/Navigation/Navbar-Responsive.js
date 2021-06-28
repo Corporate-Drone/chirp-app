@@ -75,7 +75,6 @@ export default function Header() {
         if (drawerOpen) {
             handleDrawerClose()
         }
-        history.push(`/${auth.username}`)
     }
 
 
@@ -115,7 +114,7 @@ export default function Header() {
                             Register
                         </Button>}
                     {auth.isLoggedIn &&
-                        <Button component={Link} onClick={toProfile} color="inherit">
+                        <Button component={Link} to={`/${auth.username}`} onClick={toProfile} color="inherit">
                             <PersonIcon />
                         </Button>}
                     {auth.isLoggedIn &&
@@ -154,7 +153,7 @@ export default function Header() {
                                 Register
                         </Button>}
                         {auth.isLoggedIn &&
-                            <Button component={Link} onClick={toProfile} color="inherit" style={{ fontFamily: 'Segoe UI' }}>
+                            <Button component={Link} to={`/${auth.username}`} onClick={toProfile} color="inherit" style={{ fontFamily: 'Segoe UI' }}>
                                 Profile
                         </Button>}
                         {auth.isLoggedIn &&

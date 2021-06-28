@@ -24,7 +24,7 @@ function Register(props) {
             axios.post('/auth/register', data)
                 .then(response => {
                     if (response.status === 200) {
-                        auth.login(response.data.updatedUser._id, response.data.updatedUser.username) //login user after registering
+                        auth.login(response.data.updatedUser._id, response.data.updatedUser.username,response.data.token) //login user after registering
                         history.push('/chirps'); //redirect to chirps
                     }
                 })
