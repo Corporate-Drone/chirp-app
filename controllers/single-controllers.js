@@ -1,11 +1,10 @@
 const { validationResult } = require('express-validator/check');
 
-const HttpError = require('../models/http-error');
 const User = require('../models/user');
 const Chirp = require('../models/chirp');
 const Reply = require('../models/reply');
 
-const getSingleChirp = async (req, res, next) => {
+const getSingleChirp = async (req, res) => {
     const chirpId = req.query.id;
     try {
         //find Chirp, else find reply
@@ -35,7 +34,7 @@ const getSingleChirp = async (req, res, next) => {
     }
 }
 
-const getUserChirps = async (req, res, next) => {
+const getUserChirps = async (req, res) => {
     const username = req.query.id
     const type = req.query.type
 
@@ -53,6 +52,9 @@ const getUserChirps = async (req, res, next) => {
             res.send(userChirps)
         } else {
             const user = await User.findOne({ username: username })
+            if (!user) {
+                res.status(401).send({ msg: 'User such user exists.' });
+            }
             res.send(user)
         }
 
@@ -61,7 +63,7 @@ const getUserChirps = async (req, res, next) => {
     }
 }
 
-const getLikedChirps = async (req, res, next) => {
+const getLikedChirps = async (req, res) => {
     const username = req.query.id
     const user = await User.findOne({ username: username })
 
@@ -85,7 +87,7 @@ const getLikedChirps = async (req, res, next) => {
     }
 }
 
-const likeChirp = async (req, res, next) => {
+const likeChirp = async (req, res) => {
     const chirp = await Chirp.findById(req.body.id).populate('author');
     const username = req.body.username
 
@@ -102,11 +104,11 @@ const likeChirp = async (req, res, next) => {
         console.log(user)
         res.send(chirp)
     } catch (error) {
-
+        console.log(error)
     }
 }
 
-const replyToChirp = async (req, res, next) => {
+const replyToChirp = async (req, res) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -136,7 +138,7 @@ const replyToChirp = async (req, res, next) => {
     }
 }
 
-const deleteReply = async (req, res, next) => {
+const deleteReply = async (req, res) => {
     const replyId = req.body.id;
     const chirpId = req.body.chirpId
     try {
@@ -146,11 +148,11 @@ const deleteReply = async (req, res, next) => {
         await Chirp.findByIdAndDelete(replyId)
         res.send('Reply deleted!')
     } catch (error) {
-
+        console.log(error)
     }
 }
 
-const followUser = async (req, res, next) => {
+const followUser = async (req, res) => {
     const { actionUsername, reqUserId } = req.body;
     const userToFollow = await User.findOne({ username: actionUsername })
     const requestingUser = await User.findById(reqUserId)
@@ -176,7 +178,7 @@ const followUser = async (req, res, next) => {
     res.send('Saved')
 }
 
-const getConnections = async (req, res, next) => {
+const getConnections = async (req, res) => {
     //type = 'followers' or 'following'
     const { id, type } = req.query
     const user = await User.findOne({ username: id }).populate({

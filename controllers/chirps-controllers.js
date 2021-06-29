@@ -29,7 +29,7 @@ const getAllChirps = async (req, res, next) => {
     }
 }
 
-const createChirp = async (req, res, next) => {
+const createChirp = async (req, res) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -45,7 +45,7 @@ const createChirp = async (req, res, next) => {
     }
 }
 
-const deleteChirp = async (req, res, next) => {
+const deleteChirp = async (req, res) => {
     const chirpId = req.body.id;
     const parentId = req.body.chirpId;
     const isReply = req.body.isReply;

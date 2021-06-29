@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from 'axios';
 import { AuthContext } from '../../shared/context/auth-context';
 import followUser from "../../javascripts/followUser";
 import { Link } from 'react-router-dom';
@@ -48,11 +47,11 @@ function UserDisplay(props) {
     let profilePicture;
     if (!image || image.url === undefined) {
         profilePicture = (
-            <img src={avatarplaceholder} className="UserDisplay-image" />
+            <img src={avatarplaceholder} className="UserDisplay-image" alt="avatar"/>
         )
     } else {
         profilePicture = (
-            <img src={image.url} className="UserDisplay-image" />
+            <img src={image.url} className="UserDisplay-image" alt="avatar"/>
         )
     }
 

@@ -1,11 +1,7 @@
-import React, { useState, useContext } from 'react';
-import { useHistory, Link } from 'react-router-dom';
-import { AuthContext } from '../../shared/context/auth-context';
+import { Link } from 'react-router-dom';
 import './Home.css';
 
 function Home() {
-    const auth = useContext(AuthContext);
-    const history = useHistory();
 
     return (
         <div className="Background">

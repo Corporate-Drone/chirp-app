@@ -4,7 +4,7 @@ import UserDisplay from '../components/UserDisplay';
 import './Users.css';
 import CircularIndeterminate from '../../shared/components/UIElements/CircularIndeterminate'
 
-function Users(props) {
+function Users() {
 
     const [loadedUsers, setLoadedUsers] = useState();
     const [isLoading, setLoading] = useState(true);

@@ -11,7 +11,7 @@ import useToggleState from "../../hooks/useToggleState";
 import PersonIcon from '@material-ui/icons/Person';
 import './UserChirps.css';
 
-function UserChirps(props) {
+function UserChirps() {
     const { userId } = useParams()
     const [loadedChirps, setLoadedChirps] = useState();
     const [loadedLikes, setLoadedLikes] = useState();
@@ -36,10 +36,12 @@ function UserChirps(props) {
                         } else {
                             setLoadedUser(response.data)
                         }
-
-                    }
+                    } 
                 })
-        } catch (error) { console.log(error) }
+        } catch (error) {
+            console.log(error)
+            setLoadedUser(false) //if no user found set to false
+        }
 
         setLoading(false);
     }
@@ -179,17 +181,22 @@ function UserChirps(props) {
     if (loadedUser) {
         if (!loadedUser.image || loadedUser.image.url === undefined) {
             profilePicture = (
-                <img src={avatarplaceholder} className="UserDisplay-image" />
+                <img src={avatarplaceholder} className="UserDisplay-image" alt="avatar"/>
             )
         } else {
             profilePicture = (
-                <img src={loadedUser.image.url} className="UserDisplay-image" />
+                <img src={loadedUser.image.url} className="UserDisplay-image" alt="avatar"/>
             )
         }
     } else { //no loadedUser if user hasn't created any Chirps
         profilePicture = (
-            <img src={avatarplaceholder} className="UserDisplay-image" />
+            <img src={avatarplaceholder} className="UserDisplay-image" alt="avatar"/>
         )
+    }
+
+    let noUser;
+    if (loadedUser == false) {
+        noUser = (<div className="UserChirps-nouser">This account doesn’t exist.</div>)
     }
 
 
@@ -233,6 +240,7 @@ function UserChirps(props) {
             </div>}
             {!isLoading && viewState === 'chirps' && <div>{chirps}</div>}
             {!isLoading && viewState === 'likes' && <div>{likedChirps}</div>}
+            {noUser}
         </div>
     )
 }

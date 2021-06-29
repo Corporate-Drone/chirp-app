@@ -122,21 +122,21 @@ const getUser = async (req, res, next) => {
         console.log(foundUser)
         res.send(foundUser);
     } catch (error) {
-
+        console.log(error)
     }
 }
 
-const getUserLogin = async (req, res, next) => {
+const getUserLogin = async (req, res) => {
     try {
         const { id } = req.user;
         const user = await User.findById(id).select('-password');
         res.send(user)
     } catch (error) {
-
+        console.log(error)
     }
 }
 
-const setup = async (req, res, next) => {
+const setup = async (req, res) => {
     try {
         const { userId, about } = req.body;
         // update about me text
@@ -147,7 +147,7 @@ const setup = async (req, res, next) => {
     }
 }
 
-const deleteImage = async (req, res, next) => {
+const deleteImage = async (req, res) => {
     try {
         console.log('***DELETE REQUEST RECEIVED***')
         console.log(req.body)
@@ -165,7 +165,7 @@ const deleteImage = async (req, res, next) => {
     }
 }
 
-const updateImage = async (req, res, next) => {
+const updateImage = async (req, res) => {
     try {
         const { userId, url, filename } = req.body;
         const foundUser = await User.findById(userId)
@@ -184,7 +184,7 @@ const updateImage = async (req, res, next) => {
     }
 }
 
-const deleteUser = async (req, res, next) => {
+const deleteUser = async (req, res) => {
     try {
         console.log('***DELETE REQUEST RECEIVED***')
         const { userId, url, filename, username } = req.body;
@@ -248,7 +248,7 @@ const deleteUser = async (req, res, next) => {
     }
 }
 
-const logout = (req, res, next) => {
+const logout = (res) => {
     res.send({ message: 'Logged out!' })
 }
 

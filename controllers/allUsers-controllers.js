@@ -1,7 +1,6 @@
-const HttpError = require('../models/http-error');
 const User = require('../models/user');
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req,res) => {
     try {
         const users = await User.find({});
         res.send(users);

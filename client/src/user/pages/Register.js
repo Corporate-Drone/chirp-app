@@ -8,7 +8,7 @@ import { AuthContext } from '../../shared/context/auth-context';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import './Register.css'
 
-function Register(props) {
+function Register() {
     const auth = useContext(AuthContext);
     const [displayError, setDisplayError] = useState();
 

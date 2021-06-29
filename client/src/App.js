@@ -95,7 +95,7 @@ function App() {
         <Route path="/:userId/status/:chirpId" exact>
           <ChirpDetail />
         </Route>
-        <Redirect to="/" />
+        <Redirect to="/chirps" />
       </Switch>
     )
   } else {

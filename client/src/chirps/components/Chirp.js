@@ -120,11 +120,11 @@ function Chirp(props) {
     let profilePicture;
     if (!author.image || author.image.url === undefined) {
         profilePicture = (
-            <img src={avatarplaceholder} width="100" height="100" />
+            <img src={avatarplaceholder} width="100" height="100" alt="avatar" />
         )
     } else {
         profilePicture = (
-            <img src={author.image.url} width="100" height="100" />
+            <img src={author.image.url} width="100" height="100"  alt="avatar" />
         )
     }
 

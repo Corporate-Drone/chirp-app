@@ -10,7 +10,7 @@ import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import './Login.css'
 
 
-function Login(props) {
+function Login() {
   const auth = useContext(AuthContext);
   const [displayError, setDisplayError] = useState();
 

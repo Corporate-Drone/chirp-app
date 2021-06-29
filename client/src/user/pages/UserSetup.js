@@ -186,9 +186,9 @@ function UserSetup() {
 
     let userImage;
     if (loadedUser && !loadedUser.image || loadedUser && loadedUser.image.url === undefined) {
-        userImage = (< img className="UserSetup-image" src={avatarplaceholder} />)
+        userImage = (< img className="UserSetup-image" src={avatarplaceholder} alt="avatar"/>)
     } else if (loadedUser && loadedUser.image) {
-        userImage = (< img className="UserSetup-image" src={loadedUser.image.url} />)
+        userImage = (< img className="UserSetup-image" src={loadedUser.image.url} alt="avatar"/>)
     }
 
     return (

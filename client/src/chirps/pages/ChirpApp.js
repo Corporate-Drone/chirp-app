@@ -40,7 +40,13 @@ function ChirpApp() {
 
     useEffect(() => {
         fetchChirps()
-    },[auth])
+    }, [auth])
+
+
+    let noChirps;
+    if (chirps && chirps.length === 0) {
+        noChirps = (<div className="ChirpApp-noChirps">There are no chirps to display! Follow more users to see chirps. </div>)
+    }
 
     return (
         <div className="ChirpApp">
@@ -51,6 +57,7 @@ function ChirpApp() {
                 allChirps={chirps}
                 fetchChirps={fetchChirps}
             />}
+            {!isLoading && noChirps}
         </div>
     );
 }

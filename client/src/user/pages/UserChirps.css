@@ -83,6 +83,12 @@
     transition: all 150ms ease-in-out;
 }
 
+.UserChirps-nouser {
+    margin-top: 5rem;
+    text-align: center;
+    font-weight: bold;
+}
+
 .UserChirps-tab {
     display: flex;
     justify-content: center;
